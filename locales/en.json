@@ -1,1 +1,17 @@
-{}
+{
+  "pair": {
+    "setup": {
+      "apikey": {
+        "label": "API Key",
+        "placeholder": "407b4865c3456789a0b1546456452202"
+      },
+      "failed": "Failed to validate API Key",
+      "loading": "Loading",
+      "location": {
+        "label": "Location",
+        "placeholder": "Hamburg"
+      },
+      "title": "Please enter location and your WeatherAPI.com API Key"
+    }
+  }
+}

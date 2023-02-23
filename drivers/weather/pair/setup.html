@@ -1,0 +1,238 @@
+<link href="https://63c568c5e1c0180b8a2acafe.connect.athom.com/manager/webserver/assets/css/homey.css"
+      rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../../../assets/css/autoComplete.min.css"/>
+<div class="hy-view __private__weather_api-setup__view" data-id="setup" data-template-id="setup"
+     id="684836237846456.454564564561236">
+    <style>
+        .__private__weather_api-setup__view {
+            min-height: 100%;
+            height: 100%;
+        }
+
+        .__private__weather_api-setup {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .__private__weather_api-setup__form {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .__private__weather_api-setup__center {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .__private__weather_api-setup__information {
+            margin-top: auto;
+            margin-bottom: 60px;
+        }
+
+        .__private__weather_api-setup__information li {
+            font-family: "Roboto", Helvetica, sans-serif;
+            font-size: var(--homey-font-size-default);
+            line-height: 24px;
+            text-align: left;
+        }
+
+        .__private__weather_api-setup__footer {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .__private__weather_api-setup__button {
+            white-space: nowrap;
+        }
+
+        .autocomplete {
+            border-radius: var(--homey-border-radius) !important;
+            color: var(--homey-color-text) !important;
+            border: var(--border) !important;
+            width: 100% !important;
+        }
+
+        .autocomplete::placeholder {
+            color: var(--homey-color-text-placeholder) !important;
+        }
+
+        .autoComplete_wrapper > ul > li mark {
+            color: var(--homey-color-blue);
+        }
+
+
+        .autoComplete_wrapper > ul > li {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        .autoComplete_wrapper > input:focus {
+            color: var(--homey-color-text) !important;
+            border: none !important;
+        }
+
+        .autoComplete_wrapper {
+            display: block;
+            position: relative;
+        }
+
+        .noResult {
+            font-size: 16px;
+            padding: 0.2rem 1rem 0.2rem 1rem;
+        }
+
+        .search-icon {
+            height: 20px;
+            padding-right: 10px;
+            vertical-align: middle;
+            width: 20px;
+        }
+
+        .icon-padding {
+            padding-left: 30px;
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .autoComplete_wrapper > ul::-webkit-scrollbar {
+            display: none;
+        }
+        .autoComplete_wrapper > ul {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+    </style>
+
+    <div class="__private__weather_api-setup">
+        <form id="setup-form" class="__private__weather_api-setup__form homey-form" action="/" method="post">
+            <div class="__private__weather_api-setup__center">
+                <h1 id="setup-title" class="homey-title homey-text-align-center">Search of your location</h1>
+                <div class="homey-form-group-large">
+                    <label class="homey-form-label autocomplete" for="location">Location</label>
+                    <input class="homey-form-input-large" id="location" name="location" type="text" value=""
+                           placeholder="Hamburg">
+                </div>
+            </div>
+            <div class="__private__weather_api-setup__information">
+                <a href="https://open-meteo.com/" target="_blank">Weather data by Open-Meteo.com</a>
+            </div>
+            <div class="__private__weather_api-setup__footer">
+                <button tabindex="0" class="homey-button-primary-shadow-full __private__weather_api-setup__button"
+                        type="submit">
+                    Next
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../../../assets/js/autoComplete.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            const $tmpl = document.getElementById('684836237846456.454564564561236');
+            const $form = $tmpl.querySelector('#setup-form');
+            const $title = $tmpl.querySelector('#setup-title');
+            const $location = $tmpl.querySelector('input[name="location"]');
+            const $locationLabel = $tmpl.querySelector('label[for="location"]');
+            let locationObject;
+            let working = false;
+            autoCompleteHandler();
+
+            // Hide default title bar
+            Homey.setTitle(null);
+
+            // Show custom title
+            $title.textContent = Homey.__('pair.setup.title');
+            $location.placeholder = Homey.__('pair.setup.location.placeholder');
+            $locationLabel.textContent = Homey.__('pair.setup.location.label');
+
+            $form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                if (working) return;
+                working = true;
+                Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
+                console.log(locationObject)
+                Homey.emit('setup', locationObject,
+                    function (error, valid) {
+                        if (error) {
+                            Homey.error(error);
+                        } else if (!valid) {
+                            Homey.error(Homey.__('pair.setup.failed'));
+                        } else if (valid) {
+                            Homey.nextView();
+                        }
+                        working = false;
+                        Homey.hideLoadingOverlay();
+                    }
+                );
+                return false;
+            });
+
+            function autoCompleteHandler() {
+                const autoCompleteJS = new autoComplete({
+                    selector: "#location",
+                    placeHolder: "Search for location...",
+                    data: {
+                        src: async (query) => {
+                            try {
+                                const source = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&language=de`);
+                                const data = await source.json();
+                                return data.results;
+                            } catch (error) {
+                                return error;
+                            }
+                        },
+                        keys: ["name"],
+                    },
+                    resultsList: {
+                        element: (list, data) => {
+                            if (!data.results.length) {
+                                const message = document.createElement("div");
+                                message.classList.add("noResult");
+                                message.innerHTML = `<span>Found no results for "${data.query}"</span>`;
+                                list.prepend(message);
+                            }
+                        },
+                        noResults: true,
+                        maxResults: 25
+                    },
+                    resultItem: {
+                        element: (item, data) => {
+                            let reg = new RegExp("(" + autoCompleteJS.feedback.query + ")")
+                            let split = data.value.name.split(reg);
+                            if (split.length > 1)
+                                split[1] = "<mark>" + split[1] + "</mark>";
+
+                            item.innerHTML = split.join("");
+                            const img = document.createElement("img");
+                            img.classList.add("search-icon");
+                            img.src = `https://hatscripts.github.io/circle-flags/flags/${data.value.country_code.toLowerCase()}.svg`;
+                            img.title = data.value.country;
+                            item.prepend(img)
+
+                            const description = document.createElement("div");
+                            description.classList.add("description");
+                            description.classList.add("icon-padding");
+                            description.innerHTML = data.value.admin1 + " - " + data.value.country
+                            item.append(description)
+                        },
+                        highlight: false,
+                    },
+                });
+
+                autoCompleteJS.input.addEventListener("selection", function (event) {
+                    const feedback = event.detail;
+                    //Setting the selection to the value of the input.
+                    autoCompleteJS.input.value = feedback.selection.value.name;
+                    //Set the selection object to variable for later use
+                    locationObject = feedback.selection.value;
+                });
+            }
+        })();
+    </script>
+</div>
