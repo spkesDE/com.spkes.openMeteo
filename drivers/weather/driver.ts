@@ -1,8 +1,9 @@
 import Homey from 'homey';
 import * as crypto from "crypto";
+import Location from "../../lib/weather/interface/location";
 
 class WeatherDriver extends Homey.Driver {
-        private location: any;
+        private location?: Location;
 
     /**
      * onInit is called when the driver is initialized.
@@ -23,13 +24,11 @@ class WeatherDriver extends Homey.Driver {
         });
 
         //Handle Login
-        session.setHandler("setup", async (data: any) => {
+        session.setHandler("setup", async (data: Location) => {
             //TODO:
-            //Validation
-            //AutoComplete using search.json?key=${key}&q=Lübeck
-            //  Returns Location[]
-            //Translate How To
             //Translate Next Button
+            if(data == undefined) return false;
+            console.log(data);
             this.location = data;
             return true;
         });
@@ -38,7 +37,7 @@ class WeatherDriver extends Homey.Driver {
         session.setHandler("list_devices", async () => {
             return [
                 {
-                    name: this.location.name,
+                    name: this.location?.name,
                     // The data object is required and should be unique for the device.
                     // So a device's MAC address would be good, but an IP address would
                     // be bad since it can change over time.
@@ -48,7 +47,9 @@ class WeatherDriver extends Homey.Driver {
                     // Optional: sets the devices initial settings, this allows users to change
                     // them after pairing in the device settings screen.
                     settings: {
-                        location: this.location.name
+                        location: this.location?.name,
+                        latitude:this.location?.latitude,
+                        longitude:this.location?.longitude,
                     }
                 },
             ];

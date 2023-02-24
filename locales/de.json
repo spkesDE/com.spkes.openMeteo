@@ -1,0 +1,33 @@
+{
+  "pair": {
+    "setup": {
+      "failed": "Fehler beim Abrufen der Standortdaten. Bitte versuchen Sie es erneut",
+      "loading": "Lädt",
+      "location": {
+        "label": "Standort",
+        "placeholder": "Hamburg"
+      },
+      "next": "Weiter",
+      "open-meteo": "Wetterdaten von Open-Meteo.com",
+      "precipitation_unit": {
+        "inch": "Zoll",
+        "label": "Niederschlagseinheit",
+        "mm": "Millimeter"
+      },
+      "selectedLocation": "Ausgewählter Standort",
+      "tempUnit": {
+        "celsius": "Celsius ℃",
+        "fahrenheit": "Fahrenheit ℉",
+        "label": "Temperatureinheit"
+      },
+      "timezone": {
+        "auto": "Zeitzone automatisch erkennen",
+        "label": "Zeitzone"
+      },
+      "title": "Bitte geben Sie Ihren Standort ein",
+      "windspeed_unit": {
+        "label": "Windgeschwindigkeitseinheit"
+      }
+    }
+  }
+}

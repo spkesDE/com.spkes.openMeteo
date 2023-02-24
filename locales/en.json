@@ -1,17 +1,33 @@
 {
   "pair": {
     "setup": {
-      "apikey": {
-        "label": "API Key",
-        "placeholder": "407b4865c3456789a0b1546456452202"
-      },
-      "failed": "Failed to validate API Key",
+      "failed": "Failed to get Location data. Please try again",
       "loading": "Loading",
       "location": {
         "label": "Location",
         "placeholder": "Hamburg"
       },
-      "title": "Please enter location and your WeatherAPI.com API Key"
+      "next": "Next",
+      "open-meteo": "Weather data by Open-Meteo.com",
+      "precipitation_unit": {
+        "inch": "Inch",
+        "label": "Precipitation Unit",
+        "mm": "Millimeter"
+      },
+      "selectedLocation": "Selected Location",
+      "tempUnit": {
+        "celsius": "Celsius &#8451;",
+        "fahrenheit": "Fahrenheit &#8457;",
+        "label": "Temperature Unit"
+      },
+      "timezone": {
+        "auto": "Automatically detect time zone",
+        "label": "TimeZone"
+      },
+      "title": "Please enter your location",
+      "windspeed_unit": {
+        "label": "Windspeed Unit"
+      }
     }
   }
 }
