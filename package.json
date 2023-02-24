@@ -1,5 +1,5 @@
 {
-  "name": "com.spkes.weatherApi",
+  "name": "com.spkes.openMeteo",
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {

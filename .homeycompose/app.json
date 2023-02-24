@@ -1,20 +1,21 @@
 {
-  "id": "com.spkes.weatherApi",
+  "id": "com.spkes.openMeteo",
   "version": "1.0.0",
-  "compatibility": ">=5.0.0",
+  "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
     "local"
   ],
   "name": {
-    "en": "WeatherAPI"
+    "en": "Open Meteo"
   },
   "description": {
-    "en": "Adds support for WeatherAPI.com API"
+    "en": "Weather data from Open-Meteo.com"
   },
   "category": [
     "tools"
   ],
+  "brandColor": "#ff8e00",
   "permissions": [],
   "images": {
     "small": "/assets/images/small.png",

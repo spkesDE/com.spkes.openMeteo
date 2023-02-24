@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/com.spkes.weatherApi.iml" filepath="$PROJECT_DIR$/.idea/com.spkes.weatherApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/com.spkes.openMeteo.iml" filepath="$PROJECT_DIR$/.idea/com.spkes.openMeteo.iml" />
     </modules>
   </component>
 </project>
