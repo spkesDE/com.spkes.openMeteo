@@ -1,3 +1,3 @@
 # WeatherAPI
 
-Adds support for WeatherAPI.com API
+Adds support for Open-Meteo.com API

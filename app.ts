@@ -2,7 +2,7 @@ import Homey from 'homey';
 import axios, {AxiosInstance} from 'axios';
 import WeatherUtils from "./lib/weather/weatherUtils";
 
-export default class WeatherApi extends Homey.App {
+export default class OpenMeteo extends Homey.App {
   api!: AxiosInstance;
   token = "407b4865c3174419a0b161636232202";
   location = "Bad Oldesloe";
@@ -19,9 +19,9 @@ export default class WeatherApi extends Homey.App {
     let forecast = await WeatherUtils.getForecast(this, 3);
     this.log(result.location.name);
     this.log(forecast.forecast.forecastday[0].hour[0].time);
-    this.log('WeatherApi has been initialized');
+    this.log('OpenMeteo has been initialized');
   }
 
 }
 
-module.exports = WeatherApi;
+module.exports = OpenMeteo;
