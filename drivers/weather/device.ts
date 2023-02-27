@@ -15,17 +15,18 @@ class WeatherDevice extends Homey.Device {
 
     public async update() {
         let store = this.getStore();
-        let weather = await this.getCurrentWeather(store.location, store.location.timezone, store.hourlyWeatherVariables, store.dailyWeatherVariables);
+        let weather = await this.getCurrentWeather(store.location, store.timezone, store.hourlyWeatherVariables, store.dailyWeatherVariables);
         for (let v of store.dailyWeatherVariables) {
             await this.updateWeather(v, weather.daily);
         }
+        let timeIndex = new Date(new Date().toLocaleString("en-US", {timeZone: store.timezone})).getHours();
         for (let v of store.hourlyWeatherVariables) {
-            await this.updateWeather(v, weather.hourly);
+            await this.updateWeather(v, weather.hourly, timeIndex);
         }
         this.log(`Updating weather for location: ${store.location.name}`)
     }
 
-    public async updateWeather(weatherValue: string, weatherArray: any) {
+    public async updateWeather(weatherValue: string, weatherArray: any, index: number = 0) {
         let config = this.getConfig(weatherValue);
         if (config === null) {
             this.error("No config found for " + weatherValue);
@@ -35,18 +36,18 @@ class WeatherDevice extends Homey.Device {
         for (const key of Object.keys(weatherArray)) {
             //Custom setCapabilityValue for sunrise and sunset to format date to hours:minutes
             if (key === config?.value && key == "sunrise") {
-                let d = new Date(weatherArray[key][0]);
+                let d = new Date(weatherArray[key][index]);
                 await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
                 break;
             }
             if (key === config?.value && key == "sunset") {
-                let d = new Date(weatherArray[key][0]);
+                let d = new Date(weatherArray[key][index]);
                 await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
                 break;
             }
             //If number capability set value.
             if (key === config?.value)
-                await this.setCapabilityValue(config.capability, weatherArray[key][0])
+                await this.setCapabilityValue(config.capability, weatherArray[key][index])
         }
     }
 
