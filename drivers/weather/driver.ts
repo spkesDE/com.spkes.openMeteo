@@ -18,17 +18,14 @@ class WeatherDriver extends Homey.Driver {
      */
     async onPair(session: any) {
 
-        //Skip login if there is valid session
         session.setHandler('showView', async (data: any) => {
             if (data === 'setup') {}
         });
 
-        //Handle Login
+        //Handle Setup
         session.setHandler("setup", async (data: Location) => {
-            //TODO:
-            //Translate Next Button
             if(data == undefined) return false;
-            console.log(data);
+            this.log(data);
             this.location = data;
             return true;
         });

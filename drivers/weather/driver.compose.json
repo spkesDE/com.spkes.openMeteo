@@ -31,6 +31,10 @@
       "$template": "setup"
     },
     {
+      "id": "weatherVariables",
+      "$template": "weatherVariables"
+    },
+    {
       "id": "list_my_devices",
       "template": "list_devices",
       "navigation": {

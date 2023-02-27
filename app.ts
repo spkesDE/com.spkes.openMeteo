@@ -4,21 +4,19 @@ import WeatherUtils from "./lib/weather/weatherUtils";
 
 export default class OpenMeteo extends Homey.App {
   api!: AxiosInstance;
-  token = "407b4865c3174419a0b161636232202";
-  location = "Bad Oldesloe";
 
   /**
    * onInit is called when the app is initialized.
    */
   async onInit() {
+    let cloudId = await this.homey.cloud.getHomeyId();
     this.api = axios.create({
-      baseURL: 'https://api.weatherapi.com/v1/',
+      baseURL: 'https://api.open-meteo.com/v1/',
       timeout: 5000,
+      headers: {
+        "User-Agent": `HomeyPro/${this.manifest.version} - ${cloudId}`
+      }
     });
-    let result = await WeatherUtils.getCurrentWeather(this);
-    let forecast = await WeatherUtils.getForecast(this, 3);
-    this.log(result.location.name);
-    this.log(forecast.forecast.forecastday[0].hour[0].time);
     this.log('OpenMeteo has been initialized');
   }
 

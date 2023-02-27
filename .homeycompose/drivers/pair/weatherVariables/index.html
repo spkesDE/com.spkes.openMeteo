@@ -1,0 +1,189 @@
+<link href="https://63c568c5e1c0180b8a2acafe.connect.athom.com/manager/webserver/assets/css/homey.css"
+      rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../../../assets/css/autoComplete.css"/>
+<link rel="stylesheet" type="text/css" href="../../../assets/css/setup.css"/>
+
+<div class="hy-view __private__open_meteo-setup__view" data-id="setup" data-template-id="setup"
+     id="87645378645645.67869978456456">
+
+    <div class="__private__open_meteo-setup">
+        <form id="setup-form" class="__private__open_meteo-setup__form homey-form" action="/" method="post">
+            <div class="__private__open_meteo-setup__center">
+                <h1 id="setup-title" data-i18n="pair.setup.title" class="homey-title homey-text-align-center">Please
+                    enter your location</h1>
+
+                <div class="homey-form-group">
+                    <fieldset class="homey-form-checkbox-set">
+                        <legend class="homey-form-checkbox-set-title">Hourly Weather Variables</legend>
+
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="temperature_2m"
+                                   value="temperature_2m"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Temperature
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="relativehumidity_2m"
+                                   value="relativehumidity_2m"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Relative Humidity
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="dewpoint_2m"
+                                   value="dewpoint_2m"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Dewpoint
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="apparent_temperature"
+                                   value="apparent_temperature"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Apparent Temperature
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="precipitation_probability"
+                                   value="precipitation_probability"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Precipitation Probability
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="precipitation"
+                                   value="precipitation"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Precipitation (rain + showers + snow)
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="rain"
+                                   value="rain"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Rain
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="showers"
+                                   value="showers"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Showers
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="snowfall"
+                                   value="snowfall"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Snowfall
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                            <input class="homey-form-checkbox-input" type="checkbox"
+                                   name="snow_depth"
+                                   value="snow_depth"
+                            />
+                            <span class="homey-form-checkbox-checkmark"></span>
+                            <span class="homey-form-checkbox-text">
+                                Snow Depth
+                            </span>
+                        </label>
+                        <label class="homey-form-checkbox">
+                        <input class="homey-form-checkbox-input" type="checkbox"
+                               name="freezinglevel_height"
+                               value="freezinglevel_height"
+                        />
+                        <span class="homey-form-checkbox-checkmark"></span>
+                        <span class="homey-form-checkbox-text">
+                               Freezinglevel Height
+                            </span>
+                    </label>
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="__private__open_meteo-setup__information">
+                <a href="https://open-meteo.com/" target="_blank"
+                   data-i18n="pair.setup.open-meteo"
+                   onclick="Homey.popup('https://open-meteo.com/')">
+                    Weather data by Open-Meteo.com</a>
+            </div>
+
+            <div class="__private__open_meteo-setup__footer">
+                <button tabindex="0" id="setup-next"
+                        data-i18n="pair.setup.next"
+                        class="homey-button-primary-shadow-full __private__open_meteo-setup__button"
+                        type="submit">
+                    Next
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <script type="text/javascript">
+        (function () {
+            const $tmpl = document.getElementById('87645378645645.67869978456456');
+            const $form = $tmpl.querySelector('#setup-form');
+            let placeHolder = "Hamburg";
+            let locationObject;
+            let working = false;
+
+            placeHolder = Homey.__('pair.setup.location.placeholder');
+            // Hide default title bar
+            Homey.setTitle(null);
+
+            $form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                if (working) return;
+                working = true;
+                Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
+                console.log(locationObject)
+                Homey.emit('setup', locationObject,
+                    function (error, valid) {
+                        if (error) {
+                            Homey.error(error);
+                        } else if (!valid) {
+                            Homey.error(Homey.__('pair.setup.failed'));
+                        } else if (valid) {
+                            Homey.nextView();
+                        }
+                        working = false;
+                        Homey.hideLoadingOverlay();
+                    }
+                );
+                return false;
+            });
+
+        })();
+    </script>
+</div>
