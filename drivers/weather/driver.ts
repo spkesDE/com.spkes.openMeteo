@@ -1,8 +1,8 @@
 import Homey from 'homey';
 import * as crypto from "crypto";
 import Location from "../../lib/weather/interface/location";
-import DailyWeatherVariables from "../../assets/json/dailyWeatherVariables.json";
-import HourlyWeatherVariables from "../../assets/json/hourlyWeatherVariables.json";
+import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
+import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
 
 class WeatherDriver extends Homey.Driver {
     private location?: Location;
@@ -41,7 +41,7 @@ class WeatherDriver extends Homey.Driver {
             this.location = data.location;
             this.tempUnit = data.tempUnit;
             this.windSpeedUnit = data.windSpeedUnit;
-            this.timezone = data.timezone;
+            this.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
             this.precipitationUnit = data.precipitationUnit;
             return true;
         });
@@ -61,13 +61,13 @@ class WeatherDriver extends Homey.Driver {
         //Get devices
         session.setHandler("list_devices", async () => {
             let capabilities: string[] = [];
-            DailyWeatherVariables.forEach((d) => {
+            DailyWeatherVariablesConfig.forEach((d) => {
                 if (this.dailyWeatherVariables.includes(d.value) && d.capability != "")
                     capabilities.push(d.capability);
                 else if (this.dailyWeatherVariables.includes(d.value))
                     this.error(d.value + " has no capability")
             });
-            HourlyWeatherVariables.forEach((d) => {
+            HourlyWeatherVariablesConfig.forEach((d) => {
                 if (this.hourlyWeatherVariables.includes(d.value) && d.capability != "")
                     capabilities.push(d.capability);
                 else if (this.hourlyWeatherVariables.includes(d.value))

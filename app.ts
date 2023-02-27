@@ -1,10 +1,8 @@
 import Homey from 'homey';
 import axios, {AxiosInstance} from 'axios';
-import WeatherUtils from "./lib/weather/weatherUtils";
 
 export default class OpenMeteo extends Homey.App {
-  api!: AxiosInstance;
-
+  private api!: AxiosInstance;
   /**
    * onInit is called when the app is initialized.
    */
@@ -18,6 +16,10 @@ export default class OpenMeteo extends Homey.App {
       }
     });
     this.log('OpenMeteo has been initialized');
+  }
+
+  public getApi(){
+    return this.api;
   }
 
 }

@@ -1,49 +1,88 @@
 import Homey from 'homey';
+import Location from "../../lib/weather/interface/location";
+import OpenMeteo from "../../app";
+import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
+import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
 
 class WeatherDevice extends Homey.Device {
+    private updateInterval!: NodeJS.Timeout;
 
-  /**
-   * onInit is called when the device is initialized.
-   */
-  async onInit() {
-    this.log(this.getStore());
-    this.log('WeatherDevice has been initialized');
-  }
+    async onInit() {
+        await this.update();
+        this.updateInterval = this.homey.setInterval(this.update, 1000 * 60 * 60);
+        this.log('WeatherDevice has been initialized');
+    }
 
-  /**
-   * onAdded is called when the user adds the device, called just after pairing.
-   */
-  async onAdded() {
-    this.log('WeatherDevice has been added');
-  }
+    public async update() {
+        let store = this.getStore();
+        let weather = await this.getCurrentWeather(store.location, store.location.timezone, store.hourlyWeatherVariables, store.dailyWeatherVariables);
+        for (let v of store.dailyWeatherVariables) {
+            await this.updateWeather(v, weather.daily);
+        }
+        for (let v of store.hourlyWeatherVariables) {
+            await this.updateWeather(v, weather.hourly);
+        }
+        this.log(`Updating weather for location: ${store.location.name}`)
+    }
 
-  /**
-   * onSettings is called when the user updates the device's settings.
-   * @param {object} event the onSettings event data
-   * @param {object} event.oldSettings The old settings object
-   * @param {object} event.newSettings The new settings object
-   * @param {string[]} event.changedKeys An array of keys changed since the previous version
-   * @returns {Promise<string|void>} return a custom message that will be displayed
-   */
-  async onSettings({ oldSettings: {}, newSettings: {}, changedKeys: [] }): Promise<string|void> {
-    this.log('WeatherDevice settings where changed');
-  }
+    public async updateWeather(weatherValue: string, weatherArray: any) {
+        let config = this.getConfig(weatherValue);
+        if (config === null) {
+            this.error("No config found for " + weatherValue);
+            return;
+        }
+        if (!this.hasCapability(config.capability)) return;
+        for (const key of Object.keys(weatherArray)) {
+            //Custom setCapabilityValue for sunrise and sunset to format date to hours:minutes
+            if (key === config?.value && key == "sunrise") {
+                let d = new Date(weatherArray[key][0]);
+                await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
+                break;
+            }
+            if (key === config?.value && key == "sunset") {
+                let d = new Date(weatherArray[key][0]);
+                await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
+                break;
+            }
+            //If number capability set value.
+            if (key === config?.value)
+                await this.setCapabilityValue(config.capability, weatherArray[key][0])
+        }
+    }
 
-  /**
-   * onRenamed is called when the user updates the device's name.
-   * This method can be used this to synchronise the name to the device.
-   * @param {string} name The new name
-   */
-  async onRenamed(name: string) {
-    this.log('WeatherDevice was renamed');
-  }
+    public getConfig(query: string): { value: string; i18n: string; default: string; capability: string } | null {
+        let result = null;
+        HourlyWeatherVariablesConfig.forEach((v) => {
+            if (v.value === query) {
+                result = v;
+                return;
+            }
+        })
+        DailyWeatherVariablesConfig.forEach((v) => {
+            if (v.value === query) {
+                result = v;
+                return;
+            }
+        })
+        return result;
+    }
 
-  /**
-   * onDeleted is called when the user deleted the device.
-   */
-  async onDeleted() {
-    this.log('WeatherDevice has been deleted');
-  }
+    public async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[]): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let endpoint = "forecast";
+            (this.homey.app as OpenMeteo).getApi().get<any>(`${endpoint}?latitude=${location.latitude}&longitude=${location.longitude}&timezone=${timeZone}&current_weather=true&hourly=${hourlyWeatherValues.join(",")}&daily=${dailyWeatherValues.join(",")}`).then((r) => {
+                if (r.status == 200) {
+                    resolve(r.data);
+                } else {
+                    reject(`Failed to get weather. Status ${r.status}`);
+                }
+            }).catch((err) => reject(err));
+        });
+    }
+
+    onDeleted() {
+        super.onDeleted();
+    }
 
 }
 

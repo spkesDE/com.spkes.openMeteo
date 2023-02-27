@@ -381,10 +381,6 @@
       "getable": true,
       "setable": false,
       "insights": true,
-      "units": {
-        "en": "Index",
-        "de": "Index"
-      },
       "icon": "/assets/icons/placeholder.svg"
     },
     "measure_uv_index_max": {
@@ -401,10 +397,6 @@
       "getable": true,
       "setable": false,
       "insights": true,
-      "units": {
-        "en": "Index",
-        "de": "Index"
-      },
       "icon": "/assets/icons/placeholder.svg"
     },
     "measure_wind_direction_dominant": {

@@ -12,9 +12,5 @@
   "getable": true,
   "setable": false,
   "insights": true,
-  "units": {
-    "en": "Index",
-    "de": "Index"
-  },
   "icon": "/assets/icons/placeholder.svg"
 }
