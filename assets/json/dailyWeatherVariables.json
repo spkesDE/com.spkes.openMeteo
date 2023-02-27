@@ -1,0 +1,97 @@
+﻿[
+  {
+    "value": "temperature_2m_min",
+    "i18n": "pair.weatherVariables.daily.temperature_2m_min",
+    "default": true
+  },
+  {
+    "value": "temperature_2m_max",
+    "i18n": "pair.weatherVariables.daily.temperature_2m_max",
+    "default": true
+  },
+  {
+    "value": "apparent_temperature_min",
+    "i18n": "pair.weatherVariables.daily.apparent_temperature_min",
+    "default": true
+  },
+  {
+    "value": "apparent_temperature_max",
+    "i18n": "pair.weatherVariables.daily.apparent_temperature_max",
+    "default": true
+  },
+  {
+    "value": "sunrise",
+    "i18n": "pair.weatherVariables.daily.sunrise",
+    "default": false
+  },
+  {
+    "value": "sunset",
+    "i18n": "pair.weatherVariables.daily.sunset",
+    "default": false
+  },
+  {
+    "value": "uv_index_max",
+    "i18n": "pair.weatherVariables.daily.uv_index_max",
+    "default": false
+  },
+  {
+    "value": "uv_index_clear_sky_max",
+    "i18n": "pair.weatherVariables.daily.uv_index_clear_sky_max",
+    "default": false
+  },
+  {
+    "value": "precipitation_sum",
+    "i18n": "pair.weatherVariables.daily.precipitation_sum",
+    "default": false
+  },
+  {
+    "value": "rain_sum",
+    "i18n": "pair.weatherVariables.daily.rain_sum",
+    "default": false
+  },
+  {
+    "value": "showers_sum",
+    "i18n": "pair.weatherVariables.daily.showers_sum",
+    "default": false
+  },
+  {
+    "value": "snowfall_sum",
+    "i18n": "pair.weatherVariables.daily.snowfall_sum",
+    "default": false
+  },
+  {
+    "value": "precipitation_hours",
+    "i18n": "pair.weatherVariables.daily.precipitation_hours",
+    "default": false
+  },
+  {
+    "value": "precipitation_probability_max",
+    "i18n": "pair.weatherVariables.daily.precipitation_probability_max",
+    "default": false
+  },
+  {
+    "value": "windspeed_10m_max",
+    "i18n": "pair.weatherVariables.daily.windspeed_10m_max",
+    "default": false
+  },
+  {
+    "value": "windgusts_10m_max",
+    "i18n": "pair.weatherVariables.daily.windgusts_10m_max",
+    "default": false
+  },
+  {
+    "value": "winddirection_10m_dominant",
+    "i18n": "pair.weatherVariables.daily.winddirection_10m_dominant",
+    "default": false
+  },
+  {
+    "value": "shortwave_radiation_sum",
+    "i18n": "pair.weatherVariables.daily.shortwave_radiation_sum",
+    "default": false
+  },
+  {
+    "value": "et0_fao_evapotranspiration",
+    "i18n": "pair.weatherVariables.daily.et0_fao_evapotranspiration",
+    "default": false
+  }
+]

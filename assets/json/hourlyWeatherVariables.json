@@ -1,0 +1,127 @@
+﻿[
+  {
+    "value": "temperature_2m",
+    "i18n": "pair.weatherVariables.hourly.temperature_2m",
+    "default": true
+  },
+  {
+    "value": "relativehumidity_2m",
+    "i18n": "pair.weatherVariables.hourly.relativehumidity_2m",
+    "default": true
+  },
+  {
+    "value": "dewpoint_2m",
+    "i18n": "pair.weatherVariables.hourly.dewpoint_2m",
+    "default": false
+  },
+  {
+    "value": "apparent_temperature",
+    "i18n": "pair.weatherVariables.hourly.apparent_temperature",
+    "default": false
+  },
+  {
+    "value": "precipitation_probability",
+    "i18n": "pair.weatherVariables.hourly.precipitation_probability",
+    "default": false
+  },
+  {
+    "value": "precipitation",
+    "i18n": "pair.weatherVariables.hourly.precipitation",
+    "default": false
+  },
+  {
+    "value": "rain",
+    "i18n": "pair.weatherVariables.hourly.rain",
+    "default": false
+  },
+  {
+    "value": "showers",
+    "i18n": "pair.weatherVariables.hourly.showers",
+    "default": false
+  },
+  {
+    "value": "snowfall",
+    "i18n": "pair.weatherVariables.hourly.snowfall",
+    "default": false
+  },
+  {
+    "value": "snow_depth",
+    "i18n": "pair.weatherVariables.hourly.snow_depth",
+    "default": false
+  },
+  {
+    "value": "freezinglevel_height",
+    "i18n": "pair.weatherVariables.hourly.freezinglevel_height",
+    "default": false
+  },
+  {
+    "value": "weathercode",
+    "i18n": "pair.weatherVariables.hourly.weathercode",
+    "default": false
+  },
+  {
+    "value": "pressure_msl",
+    "i18n": "pair.weatherVariables.hourly.pressure_msl",
+    "default": false
+  },
+  {
+    "value": "surface_pressure",
+    "i18n": "pair.weatherVariables.hourly.surface_pressure",
+    "default": false
+  },
+  {
+    "value": "cloudcover",
+    "i18n": "pair.weatherVariables.hourly.cloudcover",
+    "default": false
+  },
+  {
+    "value": "visibility",
+    "i18n": "pair.weatherVariables.hourly.visibility",
+    "default": false
+  },
+  {
+    "value": "evapotranspiration",
+    "i18n": "pair.weatherVariables.hourly.evapotranspiration",
+    "default": false
+  },
+  {
+    "value": "et0_fao_evapotranspiration",
+    "i18n": "pair.weatherVariables.hourly.et0_fao_evapotranspiration",
+    "default": false
+  },
+  {
+    "value": "vapor_pressure_deficit",
+    "i18n": "pair.weatherVariables.hourly.vapor_pressure_deficit",
+    "default": false
+  },
+  {
+    "value": "cape",
+    "i18n": "pair.weatherVariables.hourly.cape",
+    "default": false
+  },
+  {
+    "value": "windspeed_10m",
+    "i18n": "pair.weatherVariables.hourly.windspeed_10m",
+    "default": false
+  },
+  {
+    "value": "winddirection_10m",
+    "i18n": "pair.weatherVariables.hourly.winddirection_10m",
+    "default": false
+  },
+  {
+    "value": "windgusts_10m",
+    "i18n": "pair.weatherVariables.hourly.windgusts_10m",
+    "default": false
+  },
+  {
+    "value": "soil_temperature_0cm",
+    "i18n": "pair.weatherVariables.hourly.soil_temperature_0cm",
+    "default": false
+  },
+  {
+    "value": "soil_moisture_0_1cm",
+    "i18n": "pair.weatherVariables.hourly.soil_moisture_0_1cm",
+    "default": false
+  }
+]

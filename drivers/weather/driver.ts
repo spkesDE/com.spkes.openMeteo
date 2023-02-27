@@ -3,7 +3,13 @@ import * as crypto from "crypto";
 import Location from "../../lib/weather/interface/location";
 
 class WeatherDriver extends Homey.Driver {
-        private location?: Location;
+    private location?: Location;
+    private tempUnit?: string;
+    private windSpeedUnit?: string;
+    private timezone?: string;
+    private precipitationUnit?: string;
+    private hourlyWeatherVariables: string[] = [];
+    private dailyWeatherVariables: string[] = [];
 
     /**
      * onInit is called when the driver is initialized.
@@ -19,14 +25,38 @@ class WeatherDriver extends Homey.Driver {
     async onPair(session: any) {
 
         session.setHandler('showView', async (data: any) => {
-            if (data === 'setup') {}
+            console.log(data);
         });
 
         //Handle Setup
-        session.setHandler("setup", async (data: Location) => {
-            if(data == undefined) return false;
+        session.setHandler("setup", async (data: {
+            location: Location
+            tempUnit: string
+            windSpeedUnit: string
+            timezone: string
+            precipitationUnit: string
+        }) => {
+            if (data == undefined) return false;
             this.log(data);
-            this.location = data;
+            this.location = data.location;
+            this.tempUnit = data.tempUnit;
+            this.windSpeedUnit = data.windSpeedUnit;
+            this.timezone = data.timezone;
+            this.precipitationUnit = data.precipitationUnit;
+            return true;
+        });
+
+        session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
+            if (data == undefined) return false;
+            this.log(data);
+            this.hourlyWeatherVariables = data;
+            return true;
+        });
+
+        session.setHandler("dailyWeatherVariables", async (data: string[]) => {
+            if (data == undefined) return false;
+            this.log(data);
+            this.dailyWeatherVariables = data;
             return true;
         });
 
@@ -45,8 +75,8 @@ class WeatherDriver extends Homey.Driver {
                     // them after pairing in the device settings screen.
                     settings: {
                         location: this.location?.name,
-                        latitude:this.location?.latitude,
-                        longitude:this.location?.longitude,
+                        latitude: this.location?.latitude,
+                        longitude: this.location?.longitude,
                     }
                 },
             ];

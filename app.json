@@ -8,7 +8,8 @@
     "local"
   ],
   "name": {
-    "en": "Weather by Open-Meteo"
+    "en": "Weather by Open-Meteo",
+    "de": "Wetter bei Open-Meteo"
   },
   "description": {
     "en": "Free Weather data for your smart home"
@@ -60,7 +61,26 @@
           "id": "setup"
         },
         {
-          "id": "weatherVariables"
+          "id": "hourlyWeatherVariables",
+          "options": {
+            "id": "hourlyWeatherVariables",
+            "title": {
+              "en": "Hourly Weather Variables",
+              "de": "Stündliche Wetter Variablen"
+            },
+            "json": "../../../assets/json/hourlyWeatherVariables.json"
+          }
+        },
+        {
+          "id": "dailyWeatherVariables",
+          "options": {
+            "id": "dailyWeatherVariables",
+            "title": {
+              "en": "Daily Weather Variables",
+              "de": "Tägliche Wetter Variablen"
+            },
+            "json": "../../../assets/json/dailyWeatherVariables.json"
+          }
         },
         {
           "id": "list_my_devices",

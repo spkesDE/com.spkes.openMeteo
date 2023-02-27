@@ -7,7 +7,8 @@
     "local"
   ],
   "name": {
-    "en": "Weather by Open-Meteo"
+    "en": "Weather by Open-Meteo",
+    "de": "Wetter bei Open-Meteo"
   },
   "description": {
     "en": "Free Weather data for your smart home"

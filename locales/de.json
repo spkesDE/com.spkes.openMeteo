@@ -28,6 +28,57 @@
       "windspeed_unit": {
         "label": "Windgeschwindigkeitseinheit"
       }
+    },
+    "weatherVariables": {
+      "hourly": {
+        "apparent_temperature": "Apparent Temperature",
+        "cape": "Convective Available Potential Energy",
+        "cloudcover": "Cloudcover",
+        "dewpoint_2m": "Dewpoint",
+        "et0_fao_evapotranspiration": "Reference Evapotranspiration (ET₀)",
+        "evapotranspiration": "Evapotranspiration",
+        "freezinglevel_height": "Freezinglevel Height",
+        "precipitation": "Precipitation (rain + showers + snow)",
+        "precipitation_probability": "Precipitation Probability",
+        "pressure_msl": "Sealevel Pressure",
+        "rain": "Rain",
+        "relativehumidity_2m": "Relative Humidity",
+        "showers": "Showers",
+        "snow_depth": "Snow Depth",
+        "snowfall": "Snowfall",
+        "soil_moisture_0_1cm": "Soil Moisture (0-1 cm)",
+        "soil_temperature_0cm": "Soil Temperature (0 cm)",
+        "surface_pressure": "Surface Pressure",
+        "temperature_2m": "Temperature",
+        "vapor_pressure_deficit": "Vapor Pressure Deficit",
+        "visibility": "Visibility",
+        "weathercode": "Weathercode",
+        "winddirection_10m": "Wind Direction",
+        "windgusts_10m": "Wind Gusts",
+        "windspeed_10m": "Wind Speed"
+      },
+      "daily": {
+        "weathercode": "Weathercode",
+        "temperature_2m_max": "Maximum Temperature",
+        "temperature_2m_min": "Minimum Temperature",
+        "apparent_temperature_max": "Maximum Apparent Temperature",
+        "apparent_temperature_min": "Minimum Apparent Temperature",
+        "sunrise": "Sunrise",
+        "sunset": "Sunset",
+        "uv_index_max": "UV Index",
+        "uv_index_clear_sky_max": "UV Index Clear Sky",
+        "precipitation_sum": "Precipitation Sum",
+        "rain_sum": "Rain Sum",
+        "showers_sum": "Showers Sum",
+        "snowfall_sum": "Snowfall Sum",
+        "precipitation_hours": "Precipitation Hours",
+        "precipitation_probability_max": "Precipitation Probability Max",
+        "windspeed_10m_max": "Maximum Wind Speed",
+        "windgusts_10m_max": "Maximum Wind Gusts",
+        "winddirection_10m_dominant": "Dominant Wind Direction",
+        "shortwave_radiation_sum": "Shortwave Radiation Sum",
+        "et0_fao_evapotranspiration": "Reference Evapotranspiration (ET₀)"
+      }
     }
   }
 }

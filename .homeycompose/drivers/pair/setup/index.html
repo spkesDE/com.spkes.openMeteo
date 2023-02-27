@@ -22,7 +22,6 @@
                             Selected Location
                         </div>
                         <div class="selectedResultItem" id="selectedResultItem">
-
                         </div>
                     </div>
                 </div>
@@ -124,8 +123,13 @@
                 if (working) return;
                 working = true;
                 Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
-                console.log(locationObject)
-                Homey.emit('setup', locationObject,
+                Homey.emit('setup', {
+                        location: locationObject,
+                        tempUnit: document.getElementById("select-tempUnit").value,
+                        windSpeedUnit: document.getElementById("select-windspeed_unit").value,
+                        timezone: document.getElementById("select-timezone").value,
+                        precipitationUnit: document.getElementById("select-precipitation_unit").value,
+                    },
                     function (error, valid) {
                         if (error) {
                             Homey.error(error);
@@ -150,7 +154,6 @@
                             try {
                                 const source = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&language=de`);
                                 const data = await source.json();
-                                console.log(data)
                                 return data.results ?? [];
                             } catch (error) {
                                 return error;
