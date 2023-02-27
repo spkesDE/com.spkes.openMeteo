@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Probability of precipitation",
+    "de": "Probability of precipitation"
+  },
+  "title": {
+    "en": "Probability of precipitation",
+    "de": "Probability of precipitation"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "%",
+    "de": "%"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

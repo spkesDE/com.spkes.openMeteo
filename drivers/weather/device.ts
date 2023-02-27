@@ -6,6 +6,7 @@ class WeatherDevice extends Homey.Device {
    * onInit is called when the device is initialized.
    */
   async onInit() {
+    this.log(this.getStore());
     this.log('WeatherDevice has been initialized');
   }
 

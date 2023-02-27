@@ -2,6 +2,7 @@
   "extends": "@tsconfig/node12/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
+    "resolveJsonModule": true,
     "outDir": ".homeybuild/"
   }
 }

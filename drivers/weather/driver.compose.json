@@ -4,18 +4,7 @@
     "de": "Wetter"
   },
   "class": "other",
-  "capabilities": [
-    "measure_co",
-    "measure_pm25",
-    "measure_humidity",
-    "measure_pressure",
-    "measure_rain",
-    "measure_wind_strength",
-    "measure_wind_angle",
-    "measure_gust_strength",
-    "measure_gust_angle",
-    "measure_temperature"
-  ],
+  "capabilities": [],
   "platforms": [
     "local"
   ],

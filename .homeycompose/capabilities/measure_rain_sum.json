@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Sum of daily rain",
+    "de": "Sum of daily rain"
+  },
+  "title": {
+    "en": "Sum of daily rain",
+    "de": "Sum of daily rain"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "mm",
+    "de": "mm"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Daily maximum in UV Index",
+    "de": "Daily maximum in UV Index"
+  },
+  "title": {
+    "en": "Daily maximum in UV Index",
+    "de": "Daily maximum in UV Index"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "Index",
+    "de": "Index"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

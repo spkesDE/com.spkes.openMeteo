@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Sum of daily snowfall",
+    "de": "Sum of daily snowfall"
+  },
+  "title": {
+    "en": "Sum of daily snowfall",
+    "de": "Sum of daily snowfall"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "mm",
+    "de": "mm"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

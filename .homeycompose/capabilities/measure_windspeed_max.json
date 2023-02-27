@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Maximum wind speed",
+    "de": "Maximum wind speed"
+  },
+  "title": {
+    "en": "Maximum wind speed",
+    "de": "Maximum wind speed"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "km/h",
+    "de": "km/h"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

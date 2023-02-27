@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="../../../assets/css/autoComplete.css"/>
 <link rel="stylesheet" type="text/css" href="../../../assets/css/setup.css"/>
 
-<div class="hy-view __private__open_meteo-setup__view" data-id="setup" data-template-id="setup"
+<div class="hy-view __private__open_meteo-setup__view" data-id="weatherVariables" data-template-id="weatherVariables"
      id="87645378645645-67869978456456">
     <div class="__private__open_meteo-setup">
         <form id="setup-form" class="__private__open_meteo-setup__form homey-form" action="/" method="post">
@@ -58,7 +58,7 @@
 
             const data = [...$form.querySelectorAll('input[type="checkbox"]:checked')].map(e => e.value);
 
-            Homey.emit('setup', data,
+            Homey.emit(options.id, data,
                 function (error, valid) {
                     if (error) {
                         Homey.error(error);

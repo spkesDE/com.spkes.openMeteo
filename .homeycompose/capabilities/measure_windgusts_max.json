@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Maximum wind gusts",
+    "de": "Maximum wind gusts"
+  },
+  "title": {
+    "en": "Maximum wind gusts",
+    "de": "Maximum wind gusts"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "km/h",
+    "de": "km/h"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

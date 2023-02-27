@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M12.71,20.71L15.82,17.6C16.21,17.21 16.21,16.57 15.82,16.18C15.43,15.79 14.8,15.79 14.41,16.18L12,18.59L9.59,16.18C9.2,15.79 8.57,15.79 8.18,16.18C7.79,16.57 7.79,17.21 8.18,17.6L11.29,20.71C11.5,20.9 11.74,21 12,21C12.26,21 12.5,20.9 12.71,20.71Z"/>
+    <path d="M3,12L21,12C21.549,12 22,12.451 22,13C22,13.549 21.549,14 21,14L3,14C2.451,14 2,13.549 2,13C2,12.451 2.451,12 3,12Z"/>
+    <g id="moonphase.svg" transform="matrix(0.56875,0,0,0.56875,13.825,7.825)">
+        <g transform="matrix(1,0,0,1,-12,-12)">
+            <path d="M2,11.999L2,12.001C2,17.486 6.514,22.001 12,22.001C13.018,22.001 14.029,21.845 15,21.54C10.844,20.234 7.998,16.356 7.998,12C7.998,7.644 10.844,3.766 15,2.46C14.029,2.155 13.018,1.999 12,1.999C6.514,1.999 2,6.514 2,11.999Z" style="fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>

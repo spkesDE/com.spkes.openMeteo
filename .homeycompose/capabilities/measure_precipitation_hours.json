@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Hours with rain",
+    "de": "Hours with rain"
+  },
+  "title": {
+    "en": "Hours with rain",
+    "de": "Hours with rain"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "Hours",
+    "de": "Stunden"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

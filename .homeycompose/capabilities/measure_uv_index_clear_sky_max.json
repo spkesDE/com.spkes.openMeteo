@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Daily maximum in UV Index (cloud free conditions)",
+    "de": "Daily maximum in UV Index (cloud free conditions)"
+  },
+  "title": {
+    "en": "Daily maximum in UV Index (cloud free conditions)",
+    "de": "Daily maximum in UV Index (cloud free conditions)"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "Index",
+    "de": "Index"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

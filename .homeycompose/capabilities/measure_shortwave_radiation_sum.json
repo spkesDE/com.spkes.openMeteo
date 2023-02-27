@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Solar radiation",
+    "de": "Solar radiation"
+  },
+  "title": {
+    "en": "Solar radiation",
+    "de": "Solar radiation"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "MJ/m²",
+    "de": "MJ/m²"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

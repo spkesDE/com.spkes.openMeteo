@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Dominant wind direction",
+    "de": "Dominant wind direction"
+  },
+  "title": {
+    "en": "Dominant wind direction",
+    "de": "Dominant wind direction"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "°",
+    "de": "°"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

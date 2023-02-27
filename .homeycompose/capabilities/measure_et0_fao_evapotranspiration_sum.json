@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Daily Sum ET₀ Reference Evapotranspiration",
+    "de": "Daily Sum ET₀ Reference Evapotranspiration"
+  },
+  "title": {
+    "en": "Daily Sum ET₀ Reference Evapotranspiration",
+    "de": "Daily Sum ET₀ Reference Evapotranspiration"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "mm",
+    "de": "mm"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

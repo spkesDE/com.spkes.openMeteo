@@ -30,6 +30,28 @@
       }
     },
     "weatherVariables": {
+      "daily": {
+        "apparent_temperature_max": "Maximale gefühlte Temperatur",
+        "apparent_temperature_min": "Minimale gefühlte Temperatur",
+        "et0_fao_evapotranspiration": "Referenzverdunstung (ET₀)",
+        "precipitation_hours": "Niederschlagsstunden",
+        "precipitation_probability_max": "Maximale Niederschlagswahrscheinlichkeit",
+        "precipitation_sum": "Niederschlagssumme",
+        "rain_sum": "Regensumme",
+        "shortwave_radiation_sum": "Summe der kurzwellige Strahlung",
+        "showers_sum": "Schauersumme",
+        "snowfall_sum": "Schneefallsumme",
+        "sunrise": "Sonnenaufgang",
+        "sunset": "Sonnenuntergang",
+        "temperature_2m_max": "Maximale Temperatur",
+        "temperature_2m_min": "Minimale Temperatur",
+        "uv_index_clear_sky_max": "UV-Index bei wolkenlosem Himmel",
+        "uv_index_max": "UV-Index",
+        "weathercode": "Wettercode",
+        "winddirection_10m_dominant": "Dominante Windrichtung",
+        "windgusts_10m_max": "Maximale Windböen",
+        "windspeed_10m_max": "Maximale Windgeschwindigkeit"
+      },
       "hourly": {
         "apparent_temperature": "Gefühlte Temperatur",
         "cape": "Konvektive verfügbare potenzielle Energie",
@@ -56,28 +78,6 @@
         "winddirection_10m": "Windrichtung",
         "windgusts_10m": "Windböen",
         "windspeed_10m": "Windgeschwindigkeit"
-      },
-      "daily": {
-        "weathercode": "Wettercode",
-        "temperature_2m_max": "Maximale Temperatur",
-        "temperature_2m_min": "Minimale Temperatur",
-        "apparent_temperature_max": "Maximale gefühlte Temperatur",
-        "apparent_temperature_min": "Minimale gefühlte Temperatur",
-        "sunrise": "Sonnenaufgang",
-        "sunset": "Sonnenuntergang",
-        "uv_index_max": "UV-Index",
-        "uv_index_clear_sky_max": "UV-Index bei wolkenlosem Himmel",
-        "precipitation_sum": "Niederschlagssumme",
-        "rain_sum": "Regensumme",
-        "showers_sum": "Schauersumme",
-        "snowfall_sum": "Schneefallsumme",
-        "precipitation_hours": "Niederschlagsstunden",
-        "precipitation_probability_max": "Maximale Niederschlagswahrscheinlichkeit",
-        "windspeed_10m_max": "Maximale Windgeschwindigkeit",
-        "windgusts_10m_max": "Maximale Windböen",
-        "winddirection_10m_dominant": "Dominante Windrichtung",
-        "shortwave_radiation_sum": "Summe der kurzwellige Strahlung",
-        "et0_fao_evapotranspiration": "Referenzverdunstung (ET₀)"
       }
     }
   }

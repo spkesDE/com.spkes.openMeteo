@@ -35,18 +35,7 @@
         "de": "Wetter"
       },
       "class": "other",
-      "capabilities": [
-        "measure_co",
-        "measure_pm25",
-        "measure_humidity",
-        "measure_pressure",
-        "measure_rain",
-        "measure_wind_strength",
-        "measure_wind_angle",
-        "measure_gust_strength",
-        "measure_gust_angle",
-        "measure_temperature"
-      ],
+      "capabilities": [],
       "platforms": [
         "local"
       ],
@@ -96,5 +85,409 @@
       ],
       "id": "weather"
     }
-  ]
+  ],
+  "capabilities": {
+    "measure_apparent_temperature": {
+      "type": "number",
+      "label": {
+        "en": "Apparent Temperature",
+        "de": "Gefühlte Temperatur"
+      },
+      "title": {
+        "en": "Apparent Temperature",
+        "de": "Gefühlte Temperatur"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_temperature_feelslike.svg"
+    },
+    "measure_apparent_temperature_max": {
+      "type": "number",
+      "label": {
+        "en": "Apparent Temperature Maximum",
+        "de": "Gefühlte Temperatur Maximum"
+      },
+      "title": {
+        "en": "Apparent Temperature Maximum",
+        "de": "Gefühlte Temperatur Maximum"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_temperature_feelslike.svg"
+    },
+    "measure_apparent_temperature_min": {
+      "type": "number",
+      "label": {
+        "en": "Apparent Temperature Minimum",
+        "de": "Gefühlte Temperatur Minimum"
+      },
+      "title": {
+        "en": "Apparent Temperature Minimum",
+        "de": "Gefühlte Temperatur Minimum"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_temperature_feelslike.svg"
+    },
+    "measure_et0_fao_evapotranspiration": {
+      "type": "number",
+      "label": {
+        "en": "ET₀ Reference Evapotranspiration",
+        "de": "ET₀ Reference Evapotranspiration"
+      },
+      "title": {
+        "en": "ET₀ Reference Evapotranspiration",
+        "de": "ET₀ Reference Evapotranspiration"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_et0_fao_evapotranspiration_sum": {
+      "type": "number",
+      "label": {
+        "en": "Daily Sum ET₀ Reference Evapotranspiration",
+        "de": "Daily Sum ET₀ Reference Evapotranspiration"
+      },
+      "title": {
+        "en": "Daily Sum ET₀ Reference Evapotranspiration",
+        "de": "Daily Sum ET₀ Reference Evapotranspiration"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_precipitation_hours": {
+      "type": "number",
+      "label": {
+        "en": "Hours with rain",
+        "de": "Hours with rain"
+      },
+      "title": {
+        "en": "Hours with rain",
+        "de": "Hours with rain"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Hours",
+        "de": "Stunden"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_precipitation_probability_max": {
+      "type": "number",
+      "label": {
+        "en": "Probability of precipitation",
+        "de": "Probability of precipitation"
+      },
+      "title": {
+        "en": "Probability of precipitation",
+        "de": "Probability of precipitation"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_precipitation_sum": {
+      "type": "number",
+      "label": {
+        "en": "Sum of daily precipitation",
+        "de": "Sum of daily precipitation"
+      },
+      "title": {
+        "en": "Sum of daily precipitation",
+        "de": "Sum of daily precipitation"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_rain_sum": {
+      "type": "number",
+      "label": {
+        "en": "Sum of daily rain",
+        "de": "Sum of daily rain"
+      },
+      "title": {
+        "en": "Sum of daily rain",
+        "de": "Sum of daily rain"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_shortwave_radiation_sum": {
+      "type": "number",
+      "label": {
+        "en": "Solar radiation",
+        "de": "Solar radiation"
+      },
+      "title": {
+        "en": "Solar radiation",
+        "de": "Solar radiation"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "MJ/m²",
+        "de": "MJ/m²"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_showers_sum": {
+      "type": "number",
+      "label": {
+        "en": "Sum of daily showers",
+        "de": "Sum of daily showers"
+      },
+      "title": {
+        "en": "Sum of daily showers",
+        "de": "Sum of daily showers"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_snowfall_sum": {
+      "type": "number",
+      "label": {
+        "en": "Sum of daily snowfall",
+        "de": "Sum of daily snowfall"
+      },
+      "title": {
+        "en": "Sum of daily snowfall",
+        "de": "Sum of daily snowfall"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_temperature_max": {
+      "type": "number",
+      "label": {
+        "en": "Maximum",
+        "de": "Maximum"
+      },
+      "title": {
+        "en": "Maximum temperature",
+        "de": "Maximale Temperatur"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_temperature_max.svg"
+    },
+    "measure_temperature_min": {
+      "type": "number",
+      "label": {
+        "en": "Minimum",
+        "de": "Minimum"
+      },
+      "title": {
+        "en": "Minimum temperature",
+        "de": "Minimale Temperatur"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_temperature_min.svg"
+    },
+    "measure_uv_index_clear_sky_max": {
+      "type": "number",
+      "label": {
+        "en": "Daily maximum in UV Index (cloud free conditions)",
+        "de": "Daily maximum in UV Index (cloud free conditions)"
+      },
+      "title": {
+        "en": "Daily maximum in UV Index (cloud free conditions)",
+        "de": "Daily maximum in UV Index (cloud free conditions)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Index",
+        "de": "Index"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_uv_index_max": {
+      "type": "number",
+      "label": {
+        "en": "Daily maximum in UV Index",
+        "de": "Daily maximum in UV Index"
+      },
+      "title": {
+        "en": "Daily maximum in UV Index",
+        "de": "Daily maximum in UV Index"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Index",
+        "de": "Index"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_wind_direction_dominant": {
+      "type": "number",
+      "label": {
+        "en": "Dominant wind direction",
+        "de": "Dominant wind direction"
+      },
+      "title": {
+        "en": "Dominant wind direction",
+        "de": "Dominant wind direction"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°",
+        "de": "°"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_windgusts_max": {
+      "type": "number",
+      "label": {
+        "en": "Maximum wind gusts",
+        "de": "Maximum wind gusts"
+      },
+      "title": {
+        "en": "Maximum wind gusts",
+        "de": "Maximum wind gusts"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "km/h",
+        "de": "km/h"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_windspeed_max": {
+      "type": "number",
+      "label": {
+        "en": "Maximum wind speed",
+        "de": "Maximum wind speed"
+      },
+      "title": {
+        "en": "Maximum wind speed",
+        "de": "Maximum wind speed"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "km/h",
+        "de": "km/h"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "sunrise": {
+      "type": "string",
+      "title": {
+        "en": "Sunrise",
+        "de": "Sonnenaufgang"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/sunrise.svg"
+    },
+    "sunset": {
+      "type": "string",
+      "title": {
+        "en": "Sunset",
+        "de": "Sonnenuntergang"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/sunset.svg"
+    }
+  }
 }

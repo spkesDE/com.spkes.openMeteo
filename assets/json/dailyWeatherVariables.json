@@ -2,96 +2,115 @@
   {
     "value": "temperature_2m_min",
     "i18n": "pair.weatherVariables.daily.temperature_2m_min",
-    "default": true
+    "default": true,
+    "capability": "measure_temperature_min"
   },
   {
     "value": "temperature_2m_max",
     "i18n": "pair.weatherVariables.daily.temperature_2m_max",
-    "default": true
+    "default": true,
+    "capability": "measure_temperature_max"
   },
   {
     "value": "apparent_temperature_min",
     "i18n": "pair.weatherVariables.daily.apparent_temperature_min",
-    "default": true
+    "default": true,
+    "capability": "measure_apparent_temperature_min"
   },
   {
     "value": "apparent_temperature_max",
     "i18n": "pair.weatherVariables.daily.apparent_temperature_max",
-    "default": true
+    "default": true,
+    "capability": "measure_apparent_temperature_max"
   },
   {
     "value": "sunrise",
     "i18n": "pair.weatherVariables.daily.sunrise",
-    "default": false
+    "default": false,
+    "capability": "sunrise"
   },
   {
     "value": "sunset",
     "i18n": "pair.weatherVariables.daily.sunset",
-    "default": false
+    "default": false,
+    "capability": "sunset"
   },
   {
     "value": "uv_index_max",
     "i18n": "pair.weatherVariables.daily.uv_index_max",
-    "default": false
+    "default": false,
+    "capability": "measure_uv_index_max"
   },
   {
     "value": "uv_index_clear_sky_max",
     "i18n": "pair.weatherVariables.daily.uv_index_clear_sky_max",
-    "default": false
+    "default": false,
+    "capability": "measure_uv_index_clear_sky_max"
   },
   {
     "value": "precipitation_sum",
     "i18n": "pair.weatherVariables.daily.precipitation_sum",
-    "default": false
+    "default": false,
+    "capability": "measure_precipitation_sum"
   },
   {
     "value": "rain_sum",
     "i18n": "pair.weatherVariables.daily.rain_sum",
-    "default": false
+    "default": false,
+    "capability": "measure_rain_sum"
   },
   {
     "value": "showers_sum",
     "i18n": "pair.weatherVariables.daily.showers_sum",
-    "default": false
+    "default": false,
+    "capability": "measure_showers_sum"
   },
   {
     "value": "snowfall_sum",
     "i18n": "pair.weatherVariables.daily.snowfall_sum",
-    "default": false
+    "default": false,
+    "capability": "measure_snowfall_sum"
   },
   {
     "value": "precipitation_hours",
     "i18n": "pair.weatherVariables.daily.precipitation_hours",
-    "default": false
+    "default": false,
+    "capability": "measure_precipitation_hours"
   },
   {
     "value": "precipitation_probability_max",
     "i18n": "pair.weatherVariables.daily.precipitation_probability_max",
-    "default": false
+    "default": false,
+    "capability": "measure_precipitation_probability_max"
   },
   {
     "value": "windspeed_10m_max",
     "i18n": "pair.weatherVariables.daily.windspeed_10m_max",
-    "default": false
+    "default": false,
+    "capability": "measure_windspeed_max"
   },
   {
     "value": "windgusts_10m_max",
     "i18n": "pair.weatherVariables.daily.windgusts_10m_max",
-    "default": false
+    "default": false,
+    "capability": "measure_windgusts_max"
   },
   {
     "value": "winddirection_10m_dominant",
     "i18n": "pair.weatherVariables.daily.winddirection_10m_dominant",
-    "default": false
+    "default": false,
+    "capability": "measure_wind_direction_dominant"
   },
   {
     "value": "shortwave_radiation_sum",
     "i18n": "pair.weatherVariables.daily.shortwave_radiation_sum",
-    "default": false
+    "default": false,
+    "capability": "measure_shortwave_radiation_sum"
   },
   {
     "value": "et0_fao_evapotranspiration",
     "i18n": "pair.weatherVariables.daily.et0_fao_evapotranspiration",
-    "default": false
+    "default": false,
+    "capability": "measure_et0_fao_evapotranspiration_sum"
   }
 ]

@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Sum of daily precipitation",
+    "de": "Sum of daily precipitation"
+  },
+  "title": {
+    "en": "Sum of daily precipitation",
+    "de": "Sum of daily precipitation"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "mm",
+    "de": "mm"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

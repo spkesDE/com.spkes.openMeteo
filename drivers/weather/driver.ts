@@ -1,6 +1,8 @@
 import Homey from 'homey';
 import * as crypto from "crypto";
 import Location from "../../lib/weather/interface/location";
+import DailyWeatherVariables from "../../assets/json/dailyWeatherVariables.json";
+import HourlyWeatherVariables from "../../assets/json/hourlyWeatherVariables.json";
 
 class WeatherDriver extends Homey.Driver {
     private location?: Location;
@@ -25,7 +27,6 @@ class WeatherDriver extends Homey.Driver {
     async onPair(session: any) {
 
         session.setHandler('showView', async (data: any) => {
-            console.log(data);
         });
 
         //Handle Setup
@@ -37,7 +38,6 @@ class WeatherDriver extends Homey.Driver {
             precipitationUnit: string
         }) => {
             if (data == undefined) return false;
-            this.log(data);
             this.location = data.location;
             this.tempUnit = data.tempUnit;
             this.windSpeedUnit = data.windSpeedUnit;
@@ -48,20 +48,32 @@ class WeatherDriver extends Homey.Driver {
 
         session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
-            this.log(data);
             this.hourlyWeatherVariables = data;
             return true;
         });
 
         session.setHandler("dailyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
-            this.log(data);
             this.dailyWeatherVariables = data;
             return true;
         });
 
         //Get devices
         session.setHandler("list_devices", async () => {
+            let capabilities: string[] = [];
+            DailyWeatherVariables.forEach((d) => {
+                if (this.dailyWeatherVariables.includes(d.value) && d.capability != "")
+                    capabilities.push(d.capability);
+                else if (this.dailyWeatherVariables.includes(d.value))
+                    this.error(d.value + " has no capability")
+            });
+            HourlyWeatherVariables.forEach((d) => {
+                if (this.hourlyWeatherVariables.includes(d.value) && d.capability != "")
+                    capabilities.push(d.capability);
+                else if (this.hourlyWeatherVariables.includes(d.value))
+                    this.error(d.value + " has no capability")
+            });
+
             return [
                 {
                     name: this.location?.name,
@@ -71,13 +83,16 @@ class WeatherDriver extends Homey.Driver {
                     data: {
                         id: crypto.randomUUID()
                     },
-                    // Optional: sets the devices initial settings, this allows users to change
-                    // them after pairing in the device settings screen.
-                    settings: {
-                        location: this.location?.name,
-                        latitude: this.location?.latitude,
-                        longitude: this.location?.longitude,
-                    }
+                    store: {
+                        location: this.location,
+                        tempUnit: this.tempUnit,
+                        windSpeedUnit: this.windSpeedUnit,
+                        timezone: this.timezone,
+                        precipitationUnit: this.precipitationUnit,
+                        dailyWeatherVariables: this.dailyWeatherVariables,
+                        hourlyWeatherVariables: this.hourlyWeatherVariables,
+                    },
+                    capabilities: capabilities
                 },
             ];
         });
