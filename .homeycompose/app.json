@@ -7,10 +7,10 @@
     "local"
   ],
   "name": {
-    "en": "Open Meteo"
+    "en": "Weather by Open-Meteo"
   },
   "description": {
-    "en": "Weather data from Open-Meteo.com"
+    "en": "Free Weather data for your smart home"
   },
   "category": [
     "tools"
