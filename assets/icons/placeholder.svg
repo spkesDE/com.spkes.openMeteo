@@ -1,23 +1,202 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg height="800px" width="800px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 viewBox="0 0 512 512"  xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#000000;}
-</style>
-<g>
-	<path class="st0" d="M481.478,250.268c-15.889-15.902-37.029-26.616-60.508-29.59c-2.047-36.756-17.64-70-42.06-94.392
-		c-26.192-26.219-62.529-42.474-102.519-42.465c-37.457-0.009-71.724,14.261-97.427,37.612
-		c-22.111,20.059-37.948,46.94-44.359,77.28c-6.212-1.033-12.575-1.616-19.066-1.616c-31.858-0.008-60.83,12.947-81.696,33.844
-		C12.955,251.804-0.004,280.776,0,312.634c-0.004,31.867,12.955,60.839,33.844,81.701c20.866,20.888,49.838,33.844,81.696,33.844
-		h292.25c28.73,0,54.869-11.684,73.688-30.525c18.837-18.815,30.531-44.954,30.522-73.688
-		C512.009,295.231,500.316,269.083,481.478,250.268z M462.254,378.424c-13.983,13.961-33.151,22.556-54.463,22.564H115.54
-		c-24.441-0.008-46.442-9.866-62.476-25.883c-16.008-16.027-25.87-38.027-25.878-62.472c0.008-24.436,9.87-46.445,25.878-62.472
-		c16.035-16.008,38.036-25.875,62.476-25.883c9.125,0,17.879,1.376,26.135,3.936l15.845,4.898l1.694-16.503
-		c3.044-29.651,17.085-56.03,38.022-75.047c20.951-19,48.639-30.552,79.156-30.552c32.573,0,61.938,13.158,83.299,34.505
-		c21.338,21.357,34.501,50.726,34.505,83.299c0,1.148-0.052,2.489-0.106,4.06l-0.516,14.623l14.441-0.556
-		c21.22,0.07,40.304,8.648,54.238,22.557c13.961,13.987,22.557,33.155,22.561,54.467
-		C484.81,345.277,476.215,364.445,462.254,378.424z"/>
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="800px" height="800px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+
+<rect id="Icons" x="-640" y="-64" width="1280" height="800" style="fill:none;"/>
+
+<g id="Icons1" serif:id="Icons">
+
+<g id="Strike">
+
 </g>
+
+<g id="H1">
+
+</g>
+
+<g id="H2">
+
+</g>
+
+<g id="H3">
+
+</g>
+
+<g id="list-ul">
+
+</g>
+
+<g id="hamburger-1">
+
+</g>
+
+<g id="hamburger-2">
+
+</g>
+
+<g id="list-ol">
+
+</g>
+
+<g id="list-task">
+
+</g>
+
+<g id="trash">
+
+</g>
+
+<g id="vertical-menu">
+
+</g>
+
+<g id="horizontal-menu">
+
+</g>
+
+<g id="sidebar-2">
+
+</g>
+
+<g id="Pen">
+
+</g>
+
+<g id="Pen1" serif:id="Pen">
+
+</g>
+
+<g id="clock">
+
+</g>
+
+<g id="external-link">
+
+</g>
+
+<g id="hr">
+
+</g>
+
+<g id="info">
+
+</g>
+
+<g id="warning">
+
+<path d="M32.427,7.987c2.183,0.124 4,1.165 5.096,3.281l17.936,36.208c1.739,3.66 -0.954,8.585 -5.373,8.656l-36.119,0c-4.022,-0.064 -7.322,-4.631 -5.352,-8.696l18.271,-36.207c0.342,-0.65 0.498,-0.838 0.793,-1.179c1.186,-1.375 2.483,-2.111 4.748,-2.063Zm-0.295,3.997c-0.687,0.034 -1.316,0.419 -1.659,1.017c-6.312,11.979 -12.397,24.081 -18.301,36.267c-0.546,1.225 0.391,2.797 1.762,2.863c12.06,0.195 24.125,0.195 36.185,0c1.325,-0.064 2.321,-1.584 1.769,-2.85c-5.793,-12.184 -11.765,-24.286 -17.966,-36.267c-0.366,-0.651 -0.903,-1.042 -1.79,-1.03Z" style="fill-rule:nonzero;"/>
+
+<path d="M33.631,40.581l-3.348,0l-0.368,-16.449l4.1,0l-0.384,16.449Zm-3.828,5.03c0,-0.609 0.197,-1.113 0.592,-1.514c0.396,-0.4 0.935,-0.601 1.618,-0.601c0.684,0 1.223,0.201 1.618,0.601c0.395,0.401 0.593,0.905 0.593,1.514c0,0.587 -0.193,1.078 -0.577,1.473c-0.385,0.395 -0.929,0.593 -1.634,0.593c-0.705,0 -1.249,-0.198 -1.634,-0.593c-0.384,-0.395 -0.576,-0.886 -0.576,-1.473Z" style="fill-rule:nonzero;"/>
+
+</g>
+
+<g id="plus-circle">
+
+</g>
+
+<g id="minus-circle">
+
+</g>
+
+<g id="vue">
+
+</g>
+
+<g id="cog">
+
+</g>
+
+<g id="logo">
+
+</g>
+
+<g id="radio-check">
+
+</g>
+
+<g id="eye-slash">
+
+</g>
+
+<g id="eye">
+
+</g>
+
+<g id="toggle-off">
+
+</g>
+
+<g id="shredder">
+
+</g>
+
+<g id="spinner--loading--dots-" serif:id="spinner [loading, dots]">
+
+</g>
+
+<g id="react">
+
+</g>
+
+<g id="check-selected">
+
+</g>
+
+<g id="turn-off">
+
+</g>
+
+<g id="code-block">
+
+</g>
+
+<g id="user">
+
+</g>
+
+<g id="coffee-bean">
+
+</g>
+
+<g id="coffee-beans">
+
+<g id="coffee-bean1" serif:id="coffee-bean">
+
+</g>
+
+</g>
+
+<g id="coffee-bean-filled">
+
+</g>
+
+<g id="coffee-beans-filled">
+
+<g id="coffee-bean2" serif:id="coffee-bean">
+
+</g>
+
+</g>
+
+<g id="clipboard">
+
+</g>
+
+<g id="clipboard-paste">
+
+</g>
+
+<g id="clipboard-copy">
+
+</g>
+
+<g id="Layer1">
+
+</g>
+
+</g>
+
 </svg>

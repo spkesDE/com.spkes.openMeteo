@@ -16,5 +16,6 @@
   "decimals": 0,
   "getable": true,
   "setable": false,
-  "uiComponent": "sensor"
+  "uiComponent": "sensor",
+  "icon": "/assets/icons/measure_pressure_msl.svg"
 }
