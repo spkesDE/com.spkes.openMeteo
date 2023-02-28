@@ -102,7 +102,6 @@ class WeatherDevice extends Homey.Device {
     public async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[], startDate: string): Promise<any> {
         return new Promise((resolve, reject) => {
             let endpoint = "forecast";
-            this.log(startDate);
             (this.homey.app as OpenMeteo).getApi()
                 .get<any>(`${endpoint}?latitude=${location.latitude}&longitude=${location.longitude}&timezone=${timeZone}&current_weather=true&hourly=${hourlyWeatherValues.join(",")}&daily=${dailyWeatherValues.join(",")}&start_date=${startDate}&end_date=${startDate}`)
                 .then((r) => {
