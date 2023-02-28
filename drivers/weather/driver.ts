@@ -12,6 +12,7 @@ class WeatherDriver extends Homey.Driver {
     private precipitationUnit?: string;
     private hourlyWeatherVariables: string[] = [];
     private dailyWeatherVariables: string[] = [];
+    private forecast: number = 0;
 
     /**
      * onInit is called when the driver is initialized.
@@ -36,6 +37,7 @@ class WeatherDriver extends Homey.Driver {
             windSpeedUnit: string
             timezone: string
             precipitationUnit: string
+            forecast: number
         }) => {
             if (data == undefined) return false;
             this.location = data.location;
@@ -43,6 +45,7 @@ class WeatherDriver extends Homey.Driver {
             this.windSpeedUnit = data.windSpeedUnit;
             this.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
             this.precipitationUnit = data.precipitationUnit;
+            this.forecast = data.forecast;
             return true;
         });
 
@@ -60,7 +63,7 @@ class WeatherDriver extends Homey.Driver {
 
         //Get devices
         session.setHandler("list_devices", async () => {
-            let capabilities: string[] = [];
+            let capabilities: string[] = ["date"];
             DailyWeatherVariablesConfig.forEach((d) => {
                 if (this.dailyWeatherVariables.includes(d.value) && d.capability != "")
                     capabilities.push(d.capability);
@@ -91,6 +94,7 @@ class WeatherDriver extends Homey.Driver {
                         precipitationUnit: this.precipitationUnit,
                         dailyWeatherVariables: this.dailyWeatherVariables,
                         hourlyWeatherVariables: this.hourlyWeatherVariables,
+                        forecast: this.forecast,
                     },
                     capabilities: capabilities
                 },

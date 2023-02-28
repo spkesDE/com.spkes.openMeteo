@@ -24,6 +24,20 @@
                     </div>
                 </div>
 
+                <div class="homey-form-group">
+                    <label data-i18n="pair.setup.forecast.label" class="homey-form-label"
+                           for="select-forecast">Get forecast</label>
+                    <select class="homey-form-select" name="select-forecast" id="select-forecast">
+                        <option data-i18n="pair.setup.forecast.today" selected value="0">Current Day</option>
+                        <option data-i18n="pair.setup.forecast.1day" value="1">Tomorrow</option>
+                        <option data-i18n="pair.setup.forecast.2day" value="2">In 2 days</option>
+                        <option data-i18n="pair.setup.forecast.3day" value="3">In 3 days</option>
+                        <option data-i18n="pair.setup.forecast.4day" value="4">In 4 days</option>
+                        <option data-i18n="pair.setup.forecast.5day" value="5">In 5 days</option>
+                        <option data-i18n="pair.setup.forecast.6day" value="6">In 6 days</option>
+                        <option data-i18n="pair.setup.forecast.7day" value="7">In 7 days</option>
+                    </select>
+                </div>
 
                 <!--<div class="homey-form-group">
                     <label class="homey-form-label" for="select-tempUnit" data-i18n="pair.setup.tempUnit.label">Temperature
@@ -128,6 +142,7 @@
                         windSpeedUnit: "Km/h", //document.getElementById("select-windspeed_unit").value,
                         timezone: document.getElementById("select-timezone").value,
                         precipitationUnit: "mm", //document.getElementById("select-precipitation_unit").value,
+                        forecast: document.getElementById("select-forecast").value,
                     },
                     function (error, valid) {
                         if (error) {

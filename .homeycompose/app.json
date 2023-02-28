@@ -8,7 +8,7 @@
   ],
   "name": {
     "en": "Weather by Open-Meteo",
-    "de": "Wetter bei Open-Meteo"
+    "de": "Wetter von Open-Meteo"
   },
   "description": {
     "en": "Always be weather-ready."
@@ -22,6 +22,10 @@
     "small": "/assets/images/small.png",
     "large": "/assets/images/large.png",
     "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Julian Suhl",
+    "email": "julian@suhl.de"
   },
   "tags": {
     "en": [

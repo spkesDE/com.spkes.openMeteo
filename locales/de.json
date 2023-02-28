@@ -12,6 +12,17 @@
     },
     "setup": {
       "failed": "Fehler beim Abrufen der Standortdaten. Bitte versuchen Sie es erneut",
+      "forecast": {
+        "1day": "Morgen",
+        "2day": "in 2 tagen",
+        "3day": "in 3 tagen",
+        "4day": "in 4 tagen",
+        "5day": "in 5 tagen",
+        "6day": "in 6 tagen",
+        "7day": "in 7 tagen",
+        "label": "Wetter Prognose von",
+        "today": "Heute"
+      },
       "loading": "Lädt",
       "location": {
         "label": "Standort",

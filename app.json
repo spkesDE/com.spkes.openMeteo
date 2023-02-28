@@ -9,10 +9,10 @@
   ],
   "name": {
     "en": "Weather by Open-Meteo",
-    "de": "Wetter bei Open-Meteo"
+    "de": "Wetter von Open-Meteo"
   },
   "description": {
-    "en": "Free Weather data for your smart home"
+    "en": "Always be weather-ready."
   },
   "category": [
     "tools"
@@ -28,6 +28,72 @@
     "name": "Julian Suhl",
     "email": "julian@suhl.de"
   },
+  "tags": {
+    "en": [
+      "Weather app",
+      "Open-source",
+      "Free API",
+      "Hourly forecast",
+      "Daily forecast",
+      "Accurate weather",
+      "Fast loading",
+      "Simple design",
+      "Global weather",
+      "Weather updates",
+      "Hassle-free",
+      "Weather conditions",
+      "Temperature",
+      "Humidity",
+      "Wind speed",
+      "Precipitation",
+      "Location-based"
+    ],
+    "de": [
+      "Wetter-App",
+      "Open-Source",
+      "Kostenlose API",
+      "Stündliche Vorhersage",
+      "Tägliche Vorhersage",
+      "Genaues Wetter",
+      "Schnelles Laden",
+      "Einfaches Design",
+      "Weltweites Wetter",
+      "Wetteraktualisierungen",
+      "Problemlos",
+      "Wetterbedingungen",
+      "Temperatur",
+      "Luftfeuchtigkeit",
+      "Windgeschwindigkeit",
+      "Niederschlag",
+      "Standortbasiert"
+    ]
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Open-Meteo",
+        "email": "info@open-meteo.com"
+      }
+    ],
+    "translators": [
+      {
+        "name": "🇬🇧 🇩🇪 - spkesDE"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "spikes022"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/spkesDE/com.spkes.openMeteo/issues"
+  },
+  "source": "https://github.com/spkesDE/com.spkes.openMeteo",
+  "support": "https://github.com/spkesDE",
+  "homeyCommunityTopicId": 76977,
   "drivers": [
     {
       "name": {
@@ -93,6 +159,17 @@
     }
   ],
   "capabilities": {
+    "date": {
+      "type": "string",
+      "title": {
+        "en": "Date of Weather",
+        "de": "Wetterdatum"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/date.svg"
+    },
     "measure_apparent_temperature": {
       "type": "number",
       "label": {

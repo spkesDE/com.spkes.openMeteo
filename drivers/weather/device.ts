@@ -23,7 +23,24 @@ class WeatherDevice extends Homey.Device {
         //so the API Servers are not overloaded and check that random number (5-15) to the current minutes of the hour.
         if (new Date().getMinutes() !== this.randomNumber && !ignore) return;
         let store = this.getStore();
-        let weather = await this.getCurrentWeather(store.location, store.timezone, store.hourlyWeatherVariables, store.dailyWeatherVariables);
+
+        //Getting the target date in the right timezone, that's why we have to use 3 new Date();
+        //store.forecast is a number in days. 0 = today, 1 = tomorrow etc..
+        let date = new Date(
+            new Date(new Date().getTime() + (store.forecast * 24 * 60 * 60 * 1000))
+                .toLocaleString("en-US", {timeZone: store.timezone})
+        );
+
+        //Getting the weather data from open-meteo
+        let weather = await this.getCurrentWeather(
+            store.location,
+            store.timezone,
+            store.hourlyWeatherVariables,
+            store.dailyWeatherVariables,
+            date.toISOString().split('T')[0]
+        );
+
+        //Setting the weather variables
         for (let v of store.dailyWeatherVariables) {
             await this.updateWeather(v, weather.daily);
         }
@@ -31,10 +48,18 @@ class WeatherDevice extends Homey.Device {
         for (let v of store.hourlyWeatherVariables) {
             await this.updateWeather(v, weather.hourly, timeIndex);
         }
+
+        //Setting Date capability to current day/time
+        if(this.hasCapability("date")) {
+            let hours = ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
+            let day = ("0" + date.getDate()).slice(-2) + "." + ("0" + date.getMonth()).slice(-2) + "." + date.getFullYear();
+            await this.setCapabilityValue("date", `${hours} ${day}`);
+        }
         this.log(`Updating weather for location: ${store.location.name}`)
     }
 
     public async updateWeather(weatherValue: string, weatherArray: any, index: number = 0) {
+        //Getting JSON entry of the weatherValue
         let config = this.getConfig(weatherValue);
         if (config === null) {
             this.error("No config found for " + weatherValue);
@@ -64,6 +89,7 @@ class WeatherDevice extends Homey.Device {
                 return;
             }
         })
+        if(result != null) return result;
         DailyWeatherVariablesConfig.forEach((v) => {
             if (v.value === query) {
                 result = v;
@@ -73,11 +99,10 @@ class WeatherDevice extends Homey.Device {
         return result;
     }
 
-    public async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[]): Promise<any> {
+    public async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[], startDate: string): Promise<any> {
         return new Promise((resolve, reject) => {
             let endpoint = "forecast";
-            let date = new Date(new Date().toLocaleString("en-US", {timeZone: timeZone}));
-            let startDate = date.toISOString().split('T')[0];
+            this.log(startDate);
             (this.homey.app as OpenMeteo).getApi()
                 .get<any>(`${endpoint}?latitude=${location.latitude}&longitude=${location.longitude}&timezone=${timeZone}&current_weather=true&hourly=${hourlyWeatherValues.join(",")}&daily=${dailyWeatherValues.join(",")}&start_date=${startDate}&end_date=${startDate}`)
                 .then((r) => {
@@ -92,6 +117,7 @@ class WeatherDevice extends Homey.Device {
 
     onDeleted() {
         this.homey.clearInterval(this.updateInterval);
+        this.log("WeatherDevice with location: " + this.getStore().location.name + " deleted. Cleared interval.");
     }
 
 }

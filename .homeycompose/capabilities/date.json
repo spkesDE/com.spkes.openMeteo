@@ -1,0 +1,11 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Date of Weather",
+        "de": "Wetterdatum"
+    },
+    "uiComponent": "sensor",
+    "getable": true,
+    "setable": false,
+    "icon": "/assets/icons/date.svg"
+}
