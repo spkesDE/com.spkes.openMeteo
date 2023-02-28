@@ -24,6 +24,11 @@
     margin-top: auto;
 }
 
+.__private__open_meteo-setup__text {
+    color: var(--homey-color-text) !important;
+    font-size: var(--homey-font-size-default) !important;
+}
+
 .__private__open_meteo-setup__information {
     margin-top: auto;
     margin-bottom: 10px;

@@ -1,20 +1,20 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Temperature in the soil",
+    "de": "Temperature in the soil"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Temperature in the soil",
+    "de": "Temperature in the soil"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "cm",
-    "de": "cm"
+    "en": "°C",
+    "de": "°C"
   },
   "icon": "/assets/icons/placeholder.svg"
 }

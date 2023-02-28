@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Pressure (MSL)",
+    "de": "Druck (MSL)"
+  },
+  "label": {
+    "en": "Pressure (MSL)",
+    "de": "Druck (MSL)"
+  },
+  "units": {
+    "en": "hPa"
+  },
+  "insights": true,
+  "chartType": "spline",
+  "decimals": 0,
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor"
+}

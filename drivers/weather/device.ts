@@ -6,14 +6,22 @@ import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariabl
 
 class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
+    private randomNumber: number = 15;
 
     async onInit() {
-        await this.update();
-        this.updateInterval = this.homey.setInterval(this.update, 1000 * 60 * 60);
+        this.randomNumber = Math.floor(Math.random() * (15 - 5 + 1) + 5);
+
+        await this.update(true);
+        this.updateInterval = this.homey.setInterval(() => this.update(), 1000 * 60);
+
         this.log('WeatherDevice has been initialized');
     }
 
-    public async update() {
+    public async update(ignore: boolean = false) {
+        //Interval runs at 1 minute. But we want weather pooling to be not every minute and
+        //still have weather pooling at the start of the hour. So we have to generate a random number to even out the pooling
+        //so the API Servers are not overloaded and check that random number (5-15) to the current minutes of the hour.
+        if (new Date().getMinutes() !== this.randomNumber && !ignore) return;
         let store = this.getStore();
         let weather = await this.getCurrentWeather(store.location, store.timezone, store.hourlyWeatherVariables, store.dailyWeatherVariables);
         for (let v of store.dailyWeatherVariables) {
@@ -33,22 +41,19 @@ class WeatherDevice extends Homey.Device {
             return;
         }
         if (!this.hasCapability(config.capability)) return;
-        for (const key of Object.keys(weatherArray)) {
-            //Custom setCapabilityValue for sunrise and sunset to format date to hours:minutes
-            if (key === config?.value && key == "sunrise") {
-                let d = new Date(weatherArray[key][index]);
-                await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
-                break;
-            }
-            if (key === config?.value && key == "sunset") {
-                let d = new Date(weatherArray[key][index]);
-                await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
-                break;
-            }
-            //If number capability set value.
-            if (key === config?.value)
-                await this.setCapabilityValue(config.capability, weatherArray[key][index])
+        //Custom setCapabilityValue for sunrise and sunset to format date to hours:minutes
+        if (config.value == "sunrise") {
+            let d = new Date(weatherArray[config.value][index]);
+            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
+            return;
         }
+        if (config.value == "sunset") {
+            let d = new Date(weatherArray[config.value][index]);
+            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
+            return;
+        }
+        //If number capability set value.
+        await this.setCapabilityValue(config.capability, weatherArray[config.value][index])
     }
 
     public getConfig(query: string): { value: string; i18n: string; default: string; capability: string } | null {
@@ -76,12 +81,12 @@ class WeatherDevice extends Homey.Device {
             (this.homey.app as OpenMeteo).getApi()
                 .get<any>(`${endpoint}?latitude=${location.latitude}&longitude=${location.longitude}&timezone=${timeZone}&current_weather=true&hourly=${hourlyWeatherValues.join(",")}&daily=${dailyWeatherValues.join(",")}&start_date=${startDate}&end_date=${startDate}`)
                 .then((r) => {
-                if (r.status == 200) {
-                    resolve(r.data);
-                } else {
-                    reject(`Failed to get weather. Status ${r.status}`);
-                }
-            }).catch((err) => reject(err));
+                    if (r.status == 200) {
+                        resolve(r.data);
+                    } else {
+                        reject(`Failed to get weather. Status ${r.status}`);
+                    }
+                }).catch((err) => reject(err));
         });
     }
 

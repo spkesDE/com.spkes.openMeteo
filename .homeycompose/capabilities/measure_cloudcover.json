@@ -1,12 +1,12 @@
 {
   "type": "number",
   "label": {
-    "en": "Max Probability of precipitation",
-    "de": "Max Probability of precipitation"
+    "en": "Total cloud cover",
+    "de": "Total cloud cover"
   },
   "title": {
-    "en": "Max Probability of precipitation",
-    "de": "Max Probability of precipitation"
+    "en": "Total cloud cover",
+    "de": "Total cloud cover"
   },
   "uiComponent": "sensor",
   "getable": true,

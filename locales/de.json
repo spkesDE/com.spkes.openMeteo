@@ -7,7 +7,7 @@
         "label": "Standort",
         "placeholder": "Hamburg"
       },
-      "next": "Weiter",
+      "next": "Fortfahren",
       "open-meteo": "Wetterdaten von Open-Meteo.com",
       "precipitation_unit": {
         "inch": "Zoll",

@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Freezing level height above sea level",
+    "de": "Freezing level height above sea level"
+  },
+  "title": {
+    "en": "Freezing level height above sea level",
+    "de": "Freezing level height above sea level"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "m",
+    "de": "m"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

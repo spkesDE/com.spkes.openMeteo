@@ -16,6 +16,13 @@
   },
   "pair": [
     {
+      "id": "disclaimer",
+      "$template": "disclaimer",
+      "navigation": {
+        "next": "setup"
+      }
+    },
+    {
       "id": "setup",
       "$template": "setup"
     },

@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Convective available potential energy",
+    "de": "Convective available potential energy"
+  },
+  "title": {
+    "en": "Convective available potential energy",
+    "de": "Convective available potential energy"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "J/kg",
+    "de": "J/kg"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

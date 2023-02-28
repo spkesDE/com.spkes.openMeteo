@@ -1,20 +1,16 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Current Weather Code (WMO)",
+    "de": "Current Weather Code (WMO)"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Current Weather Code (WMO)",
+    "de": "Current Weather Code (WMO)"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "insights": true,
-  "units": {
-    "en": "cm",
-    "de": "cm"
-  },
   "icon": "/assets/icons/placeholder.svg"
 }

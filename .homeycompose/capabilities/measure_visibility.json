@@ -1,20 +1,20 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Viewing distance in meters",
+    "de": "Viewing distance in meters"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Viewing distance in meters",
+    "de": "Viewing distance in meters"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "cm",
-    "de": "cm"
+    "en": "m",
+    "de": "m"
   },
   "icon": "/assets/icons/placeholder.svg"
 }

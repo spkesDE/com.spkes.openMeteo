@@ -1,20 +1,20 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Total precipitation",
+    "de": "Total precipitation"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Total precipitation",
+    "de": "Total precipitation"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "cm",
-    "de": "cm"
+    "en": "mm",
+    "de": "mm"
   },
   "icon": "/assets/icons/placeholder.svg"
 }

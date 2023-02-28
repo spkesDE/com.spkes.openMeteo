@@ -1,12 +1,12 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Snowfall amount of the current hour",
+    "de": "Snowfall amount of the current hour"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Snowfall amount of the current hour",
+    "de": "Snowfall amount of the current hour"
   },
   "uiComponent": "sensor",
   "getable": true,

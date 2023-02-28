@@ -25,7 +25,7 @@
                 </div>
 
 
-                <div class="homey-form-group">
+                <!--<div class="homey-form-group">
                     <label class="homey-form-label" for="select-tempUnit" data-i18n="pair.setup.tempUnit.label">Temperature
                         Unit</label>
                     <select class="homey-form-select" name="select-tempUnit" id="select-tempUnit">
@@ -45,7 +45,7 @@
                         <option value="mph">Mph</option>
                         <option value="kn">Knots</option>
                     </select>
-                </div>
+                </div>-->
 
                 <div class="homey-form-group">
                     <label data-i18n="pair.setup.timezone.label" class="homey-form-label"
@@ -73,6 +73,7 @@
                     </select>
                 </div>
 
+                <!--
                 <div class="homey-form-group">
                     <label data-i18n="pair.setup.precipitation_unit.label" class="homey-form-label"
                            for="select-precipitation_unit">Precipitation Unit</label>
@@ -80,12 +81,12 @@
                         <option data-i18n="pair.setup.precipitation_unit.mm" selected value="mm">Millimeter</option>
                         <option data-i18n="pair.setup.precipitation_unit.inch" value="inch">Inch</option>
                     </select>
-                </div>
+                </div>-->
 
             </div>
 
             <div class="__private__open_meteo-setup__information">
-                <a href="https://open-meteo.com/" target="_blank"
+                <a href="javascript:;"
                    data-i18n="pair.setup.open-meteo"
                    onclick="Homey.popup('https://open-meteo.com/')">
                     Weather data by Open-Meteo.com</a>
@@ -123,10 +124,10 @@
                 Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
                 Homey.emit('setup', {
                         location: locationObject,
-                        tempUnit: document.getElementById("select-tempUnit").value,
-                        windSpeedUnit: document.getElementById("select-windspeed_unit").value,
+                        tempUnit: "celsius", //document.getElementById("select-tempUnit").value,
+                        windSpeedUnit: "Km/h", //document.getElementById("select-windspeed_unit").value,
                         timezone: document.getElementById("select-timezone").value,
-                        precipitationUnit: document.getElementById("select-precipitation_unit").value,
+                        precipitationUnit: "mm", //document.getElementById("select-precipitation_unit").value,
                     },
                     function (error, valid) {
                         if (error) {

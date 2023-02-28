@@ -1,20 +1,20 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Moisture in the soil",
+    "de": "Moisture in the soil"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Moisture in the soil",
+    "de": "Moisture in the soil"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "cm",
-    "de": "cm"
+    "en": "m³",
+    "de": "m³"
   },
   "icon": "/assets/icons/placeholder.svg"
 }

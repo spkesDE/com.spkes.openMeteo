@@ -1,20 +1,20 @@
 {
   "type": "number",
   "label": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Vapor Pressure Deficit",
+    "de": "Vapor Pressure Deficit"
   },
   "title": {
-    "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "en": "Vapor Pressure Deficit",
+    "de": "Vapor Pressure Deficit"
   },
   "uiComponent": "sensor",
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "cm",
-    "de": "cm"
+    "en": "hPa",
+    "de": "hPa"
   },
   "icon": "/assets/icons/placeholder.svg"
 }

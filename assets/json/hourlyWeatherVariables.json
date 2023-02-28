@@ -15,7 +15,7 @@
     "value": "dewpoint_2m",
     "i18n": "pair.weatherVariables.hourly.dewpoint_2m",
     "default": false,
-    "capability": ""
+    "capability": "measure_dewpoint"
   },
   {
     "value": "apparent_temperature",
@@ -27,49 +27,49 @@
     "value": "precipitation_probability",
     "i18n": "pair.weatherVariables.hourly.precipitation_probability",
     "default": false,
-    "capability": ""
+    "capability": "measure_precipitation_probability"
   },
   {
     "value": "precipitation",
     "i18n": "pair.weatherVariables.hourly.precipitation",
     "default": false,
-    "capability": ""
+    "capability": "measure_precipitation"
   },
   {
     "value": "rain",
     "i18n": "pair.weatherVariables.hourly.rain",
     "default": false,
-    "capability": ""
+    "capability": "measure_rain"
   },
   {
     "value": "showers",
     "i18n": "pair.weatherVariables.hourly.showers",
     "default": false,
-    "capability": ""
+    "capability": "measure_showers"
   },
   {
     "value": "snowfall",
     "i18n": "pair.weatherVariables.hourly.snowfall",
     "default": false,
-    "capability": ""
+    "capability": "measure_snowfall"
   },
   {
     "value": "snow_depth",
     "i18n": "pair.weatherVariables.hourly.snow_depth",
     "default": false,
-    "capability": ""
+    "capability": "measure_snowfall_depth"
   },
   {
     "value": "freezinglevel_height",
     "i18n": "pair.weatherVariables.hourly.freezinglevel_height",
     "default": false,
-    "capability": ""
+    "capability": "measure_freezinglevel_height"
   },
   {
     "value": "weathercode",
     "i18n": "pair.weatherVariables.hourly.weathercode",
     "default": false,
-    "capability": ""
+    "capability": "mesaure_weathercode"
   },
   {
     "value": "pressure_msl",
@@ -87,37 +87,37 @@
     "value": "cloudcover",
     "i18n": "pair.weatherVariables.hourly.cloudcover",
     "default": false,
-    "capability": ""
+    "capability": "measure_cloudcover"
   },
   {
     "value": "visibility",
     "i18n": "pair.weatherVariables.hourly.visibility",
     "default": false,
-    "capability": ""
+    "capability": "measure_visibility"
   },
   {
     "value": "evapotranspiration",
     "i18n": "pair.weatherVariables.hourly.evapotranspiration",
     "default": false,
-    "capability": ""
+    "capability": "measure_evapotranspiration"
   },
   {
     "value": "et0_fao_evapotranspiration",
     "i18n": "pair.weatherVariables.hourly.et0_fao_evapotranspiration",
     "default": false,
-    "capability": ""
+    "capability": "measure_et0_fao_evapotranspiration"
   },
   {
     "value": "vapor_pressure_deficit",
     "i18n": "pair.weatherVariables.hourly.vapor_pressure_deficit",
     "default": false,
-    "capability": ""
+    "capability": "measure_vapor_pressure_deficit"
   },
   {
     "value": "cape",
     "i18n": "pair.weatherVariables.hourly.cape",
     "default": false,
-    "capability": ""
+    "capability": "measure_cape"
   },
   {
     "value": "windspeed_10m",
@@ -141,12 +141,12 @@
     "value": "soil_temperature_0cm",
     "i18n": "pair.weatherVariables.hourly.soil_temperature_0cm",
     "default": false,
-    "capability": ""
+    "capability": "measure_soil_temperature_0"
   },
   {
     "value": "soil_moisture_0_1cm",
     "i18n": "pair.weatherVariables.hourly.soil_moisture_0_1cm",
     "default": false,
-    "capability": ""
+    "capability": "measure_soil_moisture_0"
   }
 ]
