@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Sum of daily precipitation",
-    "de": "Sum of daily precipitation"
+    "de": "Summe der täglichen Niederschläge"
   },
   "title": {
     "en": "Sum of daily precipitation",
-    "de": "Sum of daily precipitation"
+    "de": "Summe der täglichen Niederschläge"
   },
   "uiComponent": "sensor",
   "getable": true,

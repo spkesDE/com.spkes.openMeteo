@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Daily Sum ET₀ Reference Evapotranspiration",
-    "de": "Daily Sum ET₀ Reference Evapotranspiration"
+    "de": "Tagessumme ET₀ Referenz Evapotranspiration"
   },
   "title": {
     "en": "Daily Sum ET₀ Reference Evapotranspiration",
-    "de": "Daily Sum ET₀ Reference Evapotranspiration"
+    "de": "Tagessumme ET₀ Referenz Evapotranspiration"
   },
   "uiComponent": "sensor",
   "getable": true,

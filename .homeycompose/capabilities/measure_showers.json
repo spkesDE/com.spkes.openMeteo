@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Showers of the current hour",
-    "de": "Showers of the current hour"
+    "de": "Schauer der laufenden Stunde"
   },
   "title": {
     "en": "Showers of the current hour",
-    "de": "Showers of the current hour"
+    "de": "Schauer der laufenden Stunde"
   },
   "uiComponent": "sensor",
   "getable": true,

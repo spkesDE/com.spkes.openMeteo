@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Dew point temperature",
-    "de": "Dew point temperature"
+    "de": "Taupunkttemperatur"
   },
   "title": {
     "en": "Dew point temperature",
-    "de": "Dew point temperature"
+    "de": "Taupunkttemperatur"
   },
   "uiComponent": "sensor",
   "getable": true,

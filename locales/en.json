@@ -1,5 +1,15 @@
 {
   "pair": {
+    "disclaimer": {
+      "appreciate": "\"Weather by Open-Meteo\" appreciate and thanking ",
+      "freeService": " for offering free service to the community.",
+      "hourly": " is offered free of charge and gets updated hourly.",
+      "mindful": "Please be mindful and select only the required weather data points to avoid overloading the server and to be efficient in using the resources.",
+      "notLiable": "\"Weather by Open-Meteo\" shall not be held liable for any loss, damage, or inconvenience caused by the use or reliance on the weather data provided",
+      "ownRisk": "You use the data at your own risk and are solely responsible for any actions or decisions based on the data.",
+      "provided": "Please acknowledge that the weather data provided by ",
+      "title": "Please acknowledge"
+    },
     "setup": {
       "failed": "Failed to get Location data. Please try again",
       "loading": "Loading",

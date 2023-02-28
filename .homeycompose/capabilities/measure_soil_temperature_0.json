@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Temperature in the soil",
-    "de": "Temperature in the soil"
+    "de": "Temperatur im Boden"
   },
   "title": {
     "en": "Temperature in the soil",
-    "de": "Temperature in the soil"
+    "de": "Temperatur im Boden"
   },
   "uiComponent": "sensor",
   "getable": true,

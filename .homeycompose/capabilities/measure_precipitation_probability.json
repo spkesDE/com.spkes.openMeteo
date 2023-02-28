@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Probability of precipitation",
-    "de": "Probability of precipitation"
+    "de": "Niederschlagswahrscheinlichkeit"
   },
   "title": {
     "en": "Probability of precipitation",
-    "de": "Probability of precipitation"
+    "de": "Niederschlagswahrscheinlichkeit"
   },
   "uiComponent": "sensor",
   "getable": true,

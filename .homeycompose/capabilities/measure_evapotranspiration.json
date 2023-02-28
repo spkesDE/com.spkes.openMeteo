@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Evapotranspration",
-    "de": "Evapotranspration"
+    "de": "Evapotranspiration"
   },
   "title": {
     "en": "Evapotranspration",
-    "de": "Evapotranspration"
+    "de": "Evapotranspiration"
   },
   "uiComponent": "sensor",
   "getable": true,

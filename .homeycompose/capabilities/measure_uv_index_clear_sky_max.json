@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Daily maximum in UV Index (cloud free conditions)",
-    "de": "Daily maximum in UV Index (cloud free conditions)"
+    "de": "Tägliches Maximum des UV-Index (wolkenfreie Bedingungen)"
   },
   "title": {
     "en": "Daily maximum in UV Index (cloud free conditions)",
-    "de": "Daily maximum in UV Index (cloud free conditions)"
+    "de": "Tägliches Maximum des UV-Index (wolkenfreie Bedingungen)"
   },
   "uiComponent": "sensor",
   "getable": true,

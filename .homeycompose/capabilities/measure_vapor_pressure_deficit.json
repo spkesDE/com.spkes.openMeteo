@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Vapor Pressure Deficit",
-    "de": "Vapor Pressure Deficit"
+    "de": "Dampfdruckdefizit"
   },
   "title": {
     "en": "Vapor Pressure Deficit",
-    "de": "Vapor Pressure Deficit"
+    "de": "Dampfdruckdefizit"
   },
   "uiComponent": "sensor",
   "getable": true,

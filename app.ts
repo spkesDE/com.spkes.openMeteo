@@ -1,5 +1,6 @@
 import Homey from 'homey';
 import axios, {AxiosInstance} from 'axios';
+import axiosRetry from "axios-retry";
 
 export default class OpenMeteo extends Homey.App {
   private api!: AxiosInstance;
@@ -15,6 +16,16 @@ export default class OpenMeteo extends Homey.App {
         "User-Agent": `HomeyPro/${this.manifest.version} - ${cloudId}`
       }
     });
+    axiosRetry(this.api , {
+      retries: 3,
+      retryDelay: (retryCount) => {
+        this.log("Failed to call open-meteo.com. Current retry attempt: " + retryCount);
+        if(retryCount == 1) return 1000;
+        if(retryCount == 2) return 1000 * 5;
+        if(retryCount == 2) return 1000 * 10;
+        return retryCount * 1000;
+      },
+      retryCondition: () => true});
     this.log('OpenMeteo has been initialized');
   }
 

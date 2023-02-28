@@ -12,7 +12,7 @@ class WeatherDevice extends Homey.Device {
         this.randomNumber = Math.floor(Math.random() * (15 - 5 + 1) + 5);
 
         await this.update(true);
-        this.updateInterval = this.homey.setInterval(() => this.update(), 1000 * 60);
+        this.updateInterval = this.homey.setInterval(() => this.update().catch(this.error), 1000 * 60);
 
         this.log('WeatherDevice has been initialized');
     }
@@ -86,12 +86,12 @@ class WeatherDevice extends Homey.Device {
                     } else {
                         reject(`Failed to get weather. Status ${r.status}`);
                     }
-                }).catch((err) => reject(err));
+                }).catch((err) => reject(err.message));
         });
     }
 
     onDeleted() {
-        super.onDeleted();
+        this.homey.clearInterval(this.updateInterval);
     }
 
 }

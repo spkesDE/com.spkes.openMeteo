@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Hours with rain",
-    "de": "Hours with rain"
+    "de": "Stunden mit Regen"
   },
   "title": {
     "en": "Hours with rain",
-    "de": "Hours with rain"
+    "de": "Stunden mit Regen"
   },
   "uiComponent": "sensor",
   "getable": true,

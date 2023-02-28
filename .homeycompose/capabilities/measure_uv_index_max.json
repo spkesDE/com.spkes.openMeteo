@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Daily maximum in UV Index",
-    "de": "Daily maximum in UV Index"
+    "de": "Tägliches Maximum des UV-Index"
   },
   "title": {
     "en": "Daily maximum in UV Index",
-    "de": "Daily maximum in UV Index"
+    "de": "Tägliches Maximum des UV-Index"
   },
   "uiComponent": "sensor",
   "getable": true,

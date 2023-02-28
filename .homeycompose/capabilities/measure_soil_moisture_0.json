@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Moisture in the soil",
-    "de": "Moisture in the soil"
+    "de": "Feuchtigkeit im Boden"
   },
   "title": {
     "en": "Moisture in the soil",
-    "de": "Moisture in the soil"
+    "de": "Feuchtigkeit im Boden"
   },
   "uiComponent": "sensor",
   "getable": true,

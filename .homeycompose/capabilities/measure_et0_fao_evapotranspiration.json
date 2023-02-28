@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "ET₀ Reference Evapotranspiration",
-    "de": "ET₀ Reference Evapotranspiration"
+    "de": "ET₀ Referenz Evapotranspiration"
   },
   "title": {
     "en": "ET₀ Reference Evapotranspiration",
-    "de": "ET₀ Reference Evapotranspiration"
+    "de": "ET₀ Referenz Evapotranspiration"
   },
   "uiComponent": "sensor",
   "getable": true,

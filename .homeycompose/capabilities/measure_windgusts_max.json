@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Maximum wind gusts",
-    "de": "Maximum wind gusts"
+    "de": "Maximale Windböen"
   },
   "title": {
     "en": "Maximum wind gusts",
-    "de": "Maximum wind gusts"
+    "de": "Maximale Windböen"
   },
   "uiComponent": "sensor",
   "getable": true,

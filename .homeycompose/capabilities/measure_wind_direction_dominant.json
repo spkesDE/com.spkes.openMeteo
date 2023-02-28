@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Dominant wind direction",
-    "de": "Dominant wind direction"
+    "de": "Dominierende Windrichtung"
   },
   "title": {
     "en": "Dominant wind direction",
-    "de": "Dominant wind direction"
+    "de": "Dominierende Windrichtung"
   },
   "uiComponent": "sensor",
   "getable": true,

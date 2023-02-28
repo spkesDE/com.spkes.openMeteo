@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Viewing distance in meters",
-    "de": "Viewing distance in meters"
+    "de": "Sichtweite in Metern"
   },
   "title": {
     "en": "Viewing distance in meters",
-    "de": "Viewing distance in meters"
+    "de": "Sichtweite in Metern"
   },
   "uiComponent": "sensor",
   "getable": true,

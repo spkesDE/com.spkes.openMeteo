@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Freezing level height above sea level",
-    "de": "Freezing level height above sea level"
+    "de": "Höhe des Gefrierpunkts über dem Meeresspiegel"
   },
   "title": {
     "en": "Freezing level height above sea level",
-    "de": "Freezing level height above sea level"
+    "de": "Höhe des Gefrierpunkts über dem Meeresspiegel"
   },
   "uiComponent": "sensor",
   "getable": true,

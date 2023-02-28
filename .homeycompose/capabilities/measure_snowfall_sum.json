@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "de": "Summe der täglichen Schneefälle"
   },
   "title": {
     "en": "Sum of daily snowfall",
-    "de": "Sum of daily snowfall"
+    "de": "Summe des täglichen Schneefalls"
   },
   "uiComponent": "sensor",
   "getable": true,

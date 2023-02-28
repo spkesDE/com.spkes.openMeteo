@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Maximum wind speed",
-    "de": "Maximum wind speed"
+    "de": "Maximale Windgeschwindigkeit"
   },
   "title": {
     "en": "Maximum wind speed",
-    "de": "Maximum wind speed"
+    "de": "Maximale Windgeschwindigkeit"
   },
   "uiComponent": "sensor",
   "getable": true,

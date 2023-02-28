@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Snowfall amount of the current hour",
-    "de": "Snowfall amount of the current hour"
+    "de": "Schneefallmenge der aktuellen Stunde"
   },
   "title": {
     "en": "Snowfall amount of the current hour",
-    "de": "Snowfall amount of the current hour"
+    "de": "Schneemenge der aktuellen Stunde"
   },
   "uiComponent": "sensor",
   "getable": true,

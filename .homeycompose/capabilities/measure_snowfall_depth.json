@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Snow depth on the ground",
-    "de": "Snow depth on the ground"
+    "de": "Schneehöhe am Boden"
   },
   "title": {
     "en": "Snow depth on the ground",
-    "de": "Snow depth on the ground"
+    "de": "Schneehöhe am Boden"
   },
   "uiComponent": "sensor",
   "getable": true,

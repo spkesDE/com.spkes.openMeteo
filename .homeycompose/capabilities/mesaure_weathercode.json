@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Current Weather Code (WMO)",
-    "de": "Current Weather Code (WMO)"
+    "de": "Aktueller Wettercode (WMO)"
   },
   "title": {
     "en": "Current Weather Code (WMO)",
-    "de": "Current Weather Code (WMO)"
+    "de": "Aktueller Wettercode (WMO)"
   },
   "uiComponent": "sensor",
   "getable": true,

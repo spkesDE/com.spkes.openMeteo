@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Rain of the current hour",
-    "de": "Rain of the current hour"
+    "de": "Regen der aktuellen Stunde"
   },
   "title": {
     "en": "Rain of the current hour",
-    "de": "Rain of the current hour"
+    "de": "Regen der aktuellen Stunde"
   },
   "uiComponent": "sensor",
   "getable": true,

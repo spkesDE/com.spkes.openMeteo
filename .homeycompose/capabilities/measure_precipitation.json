@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Total precipitation",
-    "de": "Total precipitation"
+    "de": "Gesamtniederschlag"
   },
   "title": {
     "en": "Total precipitation",
-    "de": "Total precipitation"
+    "de": "Gesamtniederschlag"
   },
   "uiComponent": "sensor",
   "getable": true,

@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Solar radiation",
-    "de": "Solar radiation"
+    "de": "Sonnenstrahlung"
   },
   "title": {
     "en": "Solar radiation",
-    "de": "Solar radiation"
+    "de": "Sonnenstrahlung"
   },
   "uiComponent": "sensor",
   "getable": true,

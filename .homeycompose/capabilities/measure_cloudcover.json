@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Total cloud cover",
-    "de": "Total cloud cover"
+    "de": "Totale Bewölkung"
   },
   "title": {
     "en": "Total cloud cover",
-    "de": "Total cloud cover"
+    "de": "Totale Bewölkung"
   },
   "uiComponent": "sensor",
   "getable": true,

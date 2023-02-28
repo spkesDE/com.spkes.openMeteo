@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Convective available potential energy",
-    "de": "Convective available potential energy"
+    "de": "Konvektiv verfügbare potentielle Energie"
   },
   "title": {
     "en": "Convective available potential energy",
-    "de": "Convective available potential energy"
+    "de": "Konvektiv verfügbare potentielle Energie"
   },
   "uiComponent": "sensor",
   "getable": true,

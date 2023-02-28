@@ -1,5 +1,15 @@
 {
   "pair": {
+    "disclaimer": {
+      "appreciate": "\"Wetter von Open-Meteo\" schätzt und bedankt sich bei ",
+      "freeService": " für das Kostenlose angebot für diese Community.",
+      "hourly": " kostenlos zur verfügung stellt wird. Diese Daten aktualisieren sich jede Stunde.",
+      "mindful": "Bitte wählen Sie nur die erforderlichen Wetterdatenpunkte aus, um eine Überlastung des Servers zu vermeiden und die Ressourcen effizient zu nutzen.",
+      "notLiable": "\"Wetter von Open-Meteo\" haftet nicht für Verluste, Schäden oder Unannehmlichkeiten, die durch die Verwendung dieser bereitgestellten Wetterdaten verursacht werden",
+      "ownRisk": "Sie nutzen die Daten auf eigenes Risiko und sind allein für alle Handlungen oder Entscheidungen verantwortlich, die auf den Daten basieren.",
+      "provided": "Bitte nehmen Sie zu Kenntnis das die Wetter daten von ",
+      "title": "Kenntnisnahme"
+    },
     "setup": {
       "failed": "Fehler beim Abrufen der Standortdaten. Bitte versuchen Sie es erneut",
       "loading": "Lädt",

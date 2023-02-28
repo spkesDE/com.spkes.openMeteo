@@ -2,11 +2,11 @@
   "type": "number",
   "label": {
     "en": "Sum of daily showers",
-    "de": "Sum of daily showers"
+    "de": "Summe der täglichen Schauer"
   },
   "title": {
     "en": "Sum of daily showers",
-    "de": "Sum of daily showers"
+    "de": "Summe der täglichen Schauer"
   },
   "uiComponent": "sensor",
   "getable": true,
