@@ -53,7 +53,7 @@ class WeatherDevice extends Homey.Device {
             return;
         }
         //If number capability set value.
-        await this.setCapabilityValue(config.capability, weatherArray[config.value][index])
+        await this.setCapabilityValue(config.capability, weatherArray[config.value][index]).catch(this.error)
     }
 
     public getConfig(query: string): { value: string; i18n: string; default: string; capability: string } | null {
