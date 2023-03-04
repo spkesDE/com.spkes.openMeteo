@@ -160,13 +160,14 @@
             });
 
             function autoCompleteHandler() {
+                const language = Homey.__("language") ?? "en";
                 const autoCompleteJS = new autoComplete({
                     selector: "#location",
                     placeHolder: placeHolder,
                     data: {
                         src: async (query) => {
                             try {
-                                const source = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&language=de`);
+                                const source = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&language=${language}`);
                                 const data = await source.json();
                                 return data.results ?? [];
                             } catch (error) {
