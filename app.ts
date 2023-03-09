@@ -22,7 +22,7 @@ export default class OpenMeteo extends Homey.App {
         this.log("Failed to call open-meteo.com. Current retry attempt: " + retryCount);
         if(retryCount == 1) return 1000;
         if(retryCount == 2) return 1000 * 5;
-        if(retryCount == 2) return 1000 * 10;
+        if(retryCount == 3) return 1000 * 10;
         return retryCount * 1000;
       },
       retryCondition: () => true});
