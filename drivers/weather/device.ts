@@ -69,15 +69,17 @@ class WeatherDevice extends Homey.Device {
         //Custom setCapabilityValue for sunrise and sunset to format date to hours:minutes
         if (config.value == "sunrise") {
             let d = new Date(weatherArray[config.value][index]);
-            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
+            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
             return;
         }
         if (config.value == "sunset") {
             let d = new Date(weatherArray[config.value][index]);
-            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2))
+            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
             return;
         }
         //If number capability set value.
+        if(!weatherArray[config.value][index] && process.env.DEBUG)
+            this.log(`Failed to set weather ${config.value} - ${weatherArray[config.value][index]}`);
         await this.setCapabilityValue(config.capability, weatherArray[config.value][index]).catch(this.error)
     }
 
