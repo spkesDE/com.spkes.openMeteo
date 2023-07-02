@@ -90,10 +90,13 @@ class WeatherDriver extends Homey.Driver {
                 else if (this.hourlyAirQualityValues.includes(d.value))
                     this.error(d.value + " has no capability")
             });
-
+            let nameExtension = "";
+            if(this.forecast > 0){
+                nameExtension = ` (+${this.forecast}d)`
+            }
             return [
                 {
-                    name: this.location?.name,
+                    name: this.location?.name + nameExtension,
                     // The data object is required and should be unique for the device.
                     // So a device's MAC address would be good, but an IP address would
                     // be bad since it can change over time.
