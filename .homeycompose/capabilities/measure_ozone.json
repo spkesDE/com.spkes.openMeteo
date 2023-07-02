@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Ozone",
+    "de": "Ozon"
+  },
+  "title": {
+    "en": "Ozone",
+    "de": "Ozon"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "µg/m³",
+    "de": "µg/m³"
+  },
+  "icon": "/assets/icons/measure_ozone.svg"
+}

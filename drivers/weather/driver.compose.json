@@ -51,6 +51,18 @@
       }
     },
     {
+      "id": "hourlyAirQualityValues",
+      "$template": "weatherVariables",
+      "options": {
+        "id": "hourlyAirQualityValues",
+        "title": {
+          "en": "Hourly Air Quality Variables",
+          "de": "Stündliche Luftqualität"
+        },
+        "json": "../../../assets/json/hourlyAirQualityVariables.json"
+      }
+    },
+    {
       "id": "list_my_devices",
       "template": "list_devices",
       "navigation": {

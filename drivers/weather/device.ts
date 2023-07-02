@@ -3,6 +3,7 @@ import Location from "../../lib/weather/interface/location";
 import OpenMeteo from "../../app";
 import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
 import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
+import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 
 class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
@@ -55,6 +56,14 @@ class WeatherDevice extends Homey.Device {
             let day = ("0" + date.getDate()).slice(-2) + "." + ("0" + date.getMonth()).slice(-2) + "." + date.getFullYear();
             await this.setCapabilityValue("date", `${hours} ${day}`);
         }
+
+        if (store.hourlyAirQualityValues) {
+            let airQuality = await this.getAirQuality(store.location,store.hourlyAirQualityValues, date.toISOString().split('T')[0]);
+            for (let v of store.hourlyAirQualityValues) {
+                await this.updateWeather(v, airQuality.hourly);
+            }
+        }
+
         this.log(`Updating weather for location: ${store.location.name}`)
     }
 
@@ -91,8 +100,15 @@ class WeatherDevice extends Homey.Device {
                 return;
             }
         })
-        if(result != null) return result;
+        if(result !== null) return result;
         DailyWeatherVariablesConfig.forEach((v) => {
+            if (v.value === query) {
+                result = v;
+                return;
+            }
+        })
+        if(result !== null) return result;
+        HourlyAirQualityVariablesConfig.forEach((v) => {
             if (v.value === query) {
                 result = v;
                 return;
@@ -101,11 +117,10 @@ class WeatherDevice extends Homey.Device {
         return result;
     }
 
-    public async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[], startDate: string): Promise<any> {
+    private async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[], startDate: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            let endpoint = "forecast";
             (this.homey.app as OpenMeteo).getApi()
-                .get<any>(`${endpoint}?latitude=${location.latitude}&longitude=${location.longitude}&timezone=${timeZone}&current_weather=true&hourly=${hourlyWeatherValues.join(",")}&daily=${dailyWeatherValues.join(",")}&start_date=${startDate}&end_date=${startDate}`)
+                .get<any>(`?latitude=${location.latitude}&longitude=${location.longitude}&timezone=${timeZone}&current_weather=true&hourly=${hourlyWeatherValues.join(",")}&daily=${dailyWeatherValues.join(",")}&start_date=${startDate}&end_date=${startDate}`)
                 .then((r) => {
                     if (r.status == 200) {
                         resolve(r.data);
@@ -115,6 +130,21 @@ class WeatherDevice extends Homey.Device {
                 }).catch((err) => reject(err.message));
         });
     }
+
+    private async getAirQuality(location: Location, hourlyAirQualityValues: string[], startDate: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            (this.homey.app as OpenMeteo).getAirQualityApi()
+                .get<any>(`?latitude=${location.latitude}&longitude=${location.longitude}&hourly=${hourlyAirQualityValues.join(",")}&start_date=${startDate}&end_date=${startDate}`)
+                .then((r) => {
+                    if (r.status == 200) {
+                        resolve(r.data);
+                    } else {
+                        reject(`Failed to get weather. Status ${r.status}`);
+                    }
+                }).catch((err) => reject(err.message));
+        });
+    }
+
 
     onDeleted() {
         this.homey.clearInterval(this.updateInterval);

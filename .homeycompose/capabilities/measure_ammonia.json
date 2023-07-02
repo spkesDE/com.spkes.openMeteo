@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Ammonia",
+    "de": "Ammoniak"
+  },
+  "title": {
+    "en": "Ammonia",
+    "de": "Ammoniak"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "µg/m³",
+    "de": "µg/m³"
+  },
+  "icon": "/assets/icons/measure_ammonia.svg"
+}

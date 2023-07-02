@@ -14,6 +14,13 @@
     "setup": {
       "failed": "Failed to get Location data. Please try again",
       "forecast": {
+        "10day": "in 10 days",
+        "11day": "in 11 days",
+        "12day": "in 12 days",
+        "13day": "in 13 days",
+        "14day": "in 14 days",
+        "15day": "in 15 days",
+        "16day": "in 16 days",
         "1day": "Tomorrow",
         "2day": "in 2 days",
         "3day": "in 3 days",
@@ -23,13 +30,6 @@
         "7day": "in 7 days",
         "8day": "in 8 days",
         "9day": "in 9 days",
-        "10day": "in 10 days",
-        "11day": "in 11 days",
-        "12day": "in 12 days",
-        "13day": "in 13 days",
-        "14day": "in 14 days",
-        "15day": "in 15 days",
-        "16day": "in 16 days",
         "label": "Get forecast",
         "today": "Current Day"
       },
@@ -84,6 +84,23 @@
         "windspeed_10m_max": "Maximum Wind Speed"
       },
       "hourly": {
+        "airQuality": {
+          "pm10": "PM10",
+          "pm2_5": "PM2.5",
+          "carbon_monoxide": "Carbon Monoxide",
+          "nitrogen_dioxide": "Nitrogen Dioxide",
+          "sulphur_dioxide": "Sulphur Dioxide",
+          "ozone": "Ozone",
+          "ammonia": "Ammonia (Only available for Europe)",
+          "aerosol_optical_depth": "Aerosol Optical Depth",
+          "dust": "Saharan Dust",
+          "alder_pollen": "Alder Pollen (Only available for Europe)",
+          "birch_pollen": "Birch Pollen (Only available for Europe)",
+          "grass_pollen": "Grass Pollen (Only available for Europe)",
+          "mugwort_pollen": "Mugwort Pollen (Only available for Europe)",
+          "olive_pollen": "Olive Pollen (Only available for Europe)",
+          "ragweed_pollen": "Ragweed Pollen (Only available for Europe)"
+        },
         "apparent_temperature": "Apparent Temperature",
         "cape": "Convective Available Potential Energy",
         "cloudcover": "Cloudcover",

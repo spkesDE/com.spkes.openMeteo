@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "CO",
+    "de": "CO"
+  },
+  "title": {
+    "en": "CO",
+    "de": "CO"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "μg/m³",
+    "de": "μg/m³"
+  },
+  "icon": "/assets/icons/measure_carbon_monoxide.svg"
+}

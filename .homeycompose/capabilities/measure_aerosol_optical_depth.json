@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Aerosol Optical Depth",
+    "de": "Aerosoloptische Tiefe"
+  },
+  "title": {
+    "en": "Aerosol Optical Depth",
+    "de": "Aerosoloptische Tiefe"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "",
+    "de": ""
+  },
+  "icon": "/assets/icons/measure_visibility.svg"
+}

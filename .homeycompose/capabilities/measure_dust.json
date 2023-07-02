@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Saharan Dust",
+    "de": "Saharastaub"
+  },
+  "title": {
+    "en": "Saharan Dust",
+    "de": "Saharastaub"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "μg/m³",
+    "de": "μg/m³"
+  },
+  "icon": "/assets/icons/measure_pollen.svg"
+}

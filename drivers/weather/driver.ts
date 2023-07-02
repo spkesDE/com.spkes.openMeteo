@@ -3,6 +3,7 @@ import * as crypto from "crypto";
 import Location from "../../lib/weather/interface/location";
 import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
 import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
+import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 
 class WeatherDriver extends Homey.Driver {
     private location?: Location;
@@ -12,6 +13,7 @@ class WeatherDriver extends Homey.Driver {
     private precipitationUnit?: string;
     private hourlyWeatherVariables: string[] = [];
     private dailyWeatherVariables: string[] = [];
+    private hourlyAirQualityValues: string[] = [];
     private forecast: number = 0;
 
     /**
@@ -61,6 +63,12 @@ class WeatherDriver extends Homey.Driver {
             return true;
         });
 
+        session.setHandler("hourlyAirQualityValues", async (data: string[]) => {
+            if (data == undefined) return false;
+            this.hourlyAirQualityValues = data;
+            return true;
+        });
+
         //Get devices
         session.setHandler("list_devices", async () => {
             let capabilities: string[] = ["date"];
@@ -74,6 +82,12 @@ class WeatherDriver extends Homey.Driver {
                 if (this.hourlyWeatherVariables.includes(d.value) && d.capability != "")
                     capabilities.push(d.capability);
                 else if (this.hourlyWeatherVariables.includes(d.value))
+                    this.error(d.value + " has no capability")
+            });
+            HourlyAirQualityVariablesConfig.forEach((d) => {
+                if (this.hourlyAirQualityValues.includes(d.value) && d.capability != "")
+                    capabilities.push(d.capability);
+                else if (this.hourlyAirQualityValues.includes(d.value))
                     this.error(d.value + " has no capability")
             });
 
@@ -94,6 +108,7 @@ class WeatherDriver extends Homey.Driver {
                         precipitationUnit: this.precipitationUnit,
                         dailyWeatherVariables: this.dailyWeatherVariables,
                         hourlyWeatherVariables: this.hourlyWeatherVariables,
+                        hourlyAirQualityValues: this.hourlyAirQualityValues,
                         forecast: this.forecast,
                     },
                     capabilities: capabilities

@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.spkes.openMeteo",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
@@ -144,6 +144,17 @@
           }
         },
         {
+          "id": "hourlyAirQualityValues",
+          "options": {
+            "id": "hourlyAirQualityValues",
+            "title": {
+              "en": "Hourly Air Quality Variables",
+              "de": "Stündliche Luftqualität"
+            },
+            "json": "../../../assets/json/hourlyAirQualityVariables.json"
+          }
+        },
+        {
           "id": "list_my_devices",
           "template": "list_devices",
           "navigation": {
@@ -169,6 +180,66 @@
       "getable": true,
       "setable": false,
       "icon": "/assets/icons/date.svg"
+    },
+    "measure_aerosol_optical_depth": {
+      "type": "number",
+      "label": {
+        "en": "Aerosol Optical Depth",
+        "de": "Aerosoloptische Tiefe"
+      },
+      "title": {
+        "en": "Aerosol Optical Depth",
+        "de": "Aerosoloptische Tiefe"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "",
+        "de": ""
+      },
+      "icon": "/assets/icons/measure_visibility.svg"
+    },
+    "measure_alder_pollen": {
+      "type": "number",
+      "label": {
+        "en": "Alder Pollen",
+        "de": "Erle Pollen"
+      },
+      "title": {
+        "en": "Alder Pollen",
+        "de": "Erle Pollen"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Grains/m³",
+        "de": "Körner/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
+    },
+    "measure_ammonia": {
+      "type": "number",
+      "label": {
+        "en": "Ammonia",
+        "de": "Ammoniak"
+      },
+      "title": {
+        "en": "Ammonia",
+        "de": "Ammoniak"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_ammonia.svg"
     },
     "measure_apparent_temperature": {
       "type": "number",
@@ -230,6 +301,26 @@
       },
       "icon": "/assets/icons/measure_apparent_temperature_min.svg"
     },
+    "measure_birch_pollen": {
+      "type": "number",
+      "label": {
+        "en": "Birch Pollen",
+        "de": "Birke Pollen"
+      },
+      "title": {
+        "en": "Birch Pollen",
+        "de": "Birke Pollen"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Grains/m³",
+        "de": "Körner/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
+    },
     "measure_cape": {
       "type": "number",
       "label": {
@@ -249,6 +340,26 @@
         "de": "J/kg"
       },
       "icon": "/assets/icons/measure_cape.svg"
+    },
+    "measure_carbon_monoxide": {
+      "type": "number",
+      "label": {
+        "en": "CO",
+        "de": "CO"
+      },
+      "title": {
+        "en": "CO",
+        "de": "CO"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "μg/m³",
+        "de": "μg/m³"
+      },
+      "icon": "/assets/icons/measure_carbon_monoxide.svg"
     },
     "measure_cloudcover": {
       "type": "number",
@@ -289,6 +400,26 @@
         "de": "°C"
       },
       "icon": "/assets/icons/measure_dewpoint.svg"
+    },
+    "measure_dust": {
+      "type": "number",
+      "label": {
+        "en": "Saharan Dust",
+        "de": "Saharastaub"
+      },
+      "title": {
+        "en": "Saharan Dust",
+        "de": "Saharastaub"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "μg/m³",
+        "de": "μg/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
     },
     "measure_et0_fao_evapotranspiration": {
       "type": "number",
@@ -370,6 +501,126 @@
         "de": "m"
       },
       "icon": "/assets/icons/measure_freezinglevel_height.svg"
+    },
+    "measure_grass_pollen": {
+      "type": "number",
+      "label": {
+        "en": "Grass Pollen",
+        "de": "Gras Pollen"
+      },
+      "title": {
+        "en": "Grass Pollen",
+        "de": "Gras Pollen"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Grains/m³",
+        "de": "Körner/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
+    },
+    "measure_mugwort_pollen": {
+      "type": "number",
+      "label": {
+        "en": "Mugwort Pollen",
+        "de": "Beifuß Pollen"
+      },
+      "title": {
+        "en": "Mugwort Pollen",
+        "de": "Beifuß Pollen"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Grains/m³",
+        "de": "Körner/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
+    },
+    "measure_nitrogen_dioxide": {
+      "type": "number",
+      "label": {
+        "en": "Nitrogen Dioxide",
+        "de": "Stickstoffdioxid"
+      },
+      "title": {
+        "en": "Nitrogen Dioxide",
+        "de": "Stickstoffdioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+    },
+    "measure_olive_pollen": {
+      "type": "number",
+      "label": {
+        "en": "Olive Pollen",
+        "de": "Oliven Pollen"
+      },
+      "title": {
+        "en": "Olive Pollen",
+        "de": "Oliven Pollen"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Grains/m³",
+        "de": "Körner/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
+    },
+    "measure_ozone": {
+      "type": "number",
+      "label": {
+        "en": "Ozone",
+        "de": "Ozon"
+      },
+      "title": {
+        "en": "Ozone",
+        "de": "Ozon"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_ozone.svg"
+    },
+    "measure_pm10": {
+      "type": "number",
+      "label": {
+        "en": "PM10",
+        "de": "PM10"
+      },
+      "title": {
+        "en": "PM10",
+        "de": "PM10"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_pm10.svg"
     },
     "measure_precipitation": {
       "type": "number",
@@ -491,6 +742,26 @@
       "setable": false,
       "uiComponent": "sensor",
       "icon": "/assets/icons/measure_pressure_msl.svg"
+    },
+    "measure_ragweed_pollen": {
+      "type": "number",
+      "label": {
+        "en": "Ragweed Pollen",
+        "de": "Ambrosia Pollen"
+      },
+      "title": {
+        "en": "Ragweed Pollen",
+        "de": "Ambrosia Pollen"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "Grains/m³",
+        "de": "Körner/m³"
+      },
+      "icon": "/assets/icons/measure_pollen.svg"
     },
     "measure_rain": {
       "type": "number",
@@ -691,6 +962,26 @@
         "de": "°C"
       },
       "icon": "/assets/icons/measure_soil_temperature.svg"
+    },
+    "measure_sulphur_dioxide": {
+      "type": "number",
+      "label": {
+        "en": "Sulphur Dioxide",
+        "de": "Schwefeldioxid"
+      },
+      "title": {
+        "en": "Sulphur Dioxide",
+        "de": "Schwefeldioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_sulphur_dioxide.svg"
     },
     "measure_temperature_max": {
       "type": "number",

@@ -1,0 +1,92 @@
+﻿[
+  {
+    "value": "pm10",
+    "i18n": "pair.weatherVariables.hourly.airQuality.pm10",
+    "default": true,
+    "capability": "measure_pm10"
+  },
+  {
+    "value": "pm2_5",
+    "i18n": "pair.weatherVariables.hourly.airQuality.pm2_5",
+    "default": true,
+    "capability": "measure_pm25"
+  },
+  {
+    "value": "pm10",
+    "i18n": "pair.weatherVariables.hourly.airQuality.carbon_monoxide",
+    "default": true,
+    "capability": "measure_carbon_monoxide"
+  },
+  {
+    "value": "nitrogen_dioxide",
+    "i18n": "pair.weatherVariables.hourly.airQuality.nitrogen_dioxide",
+    "default": true,
+    "capability": "measure_nitrogen_dioxide"
+  },
+  {
+    "value": "sulphur_dioxide",
+    "i18n": "pair.weatherVariables.hourly.airQuality.sulphur_dioxide",
+    "default": true,
+    "capability": "measure_sulphur_dioxide"
+  },
+  {
+    "value": "ozone",
+    "i18n": "pair.weatherVariables.hourly.airQuality.ozone",
+    "default": true,
+    "capability": "measure_ozone"
+  },
+  {
+    "value": "ammonia",
+    "i18n": "pair.weatherVariables.hourly.airQuality.ammonia",
+    "default": true,
+    "capability": "measure_ammonia"
+  },
+  {
+    "value": "aerosol_optical_depth",
+    "i18n": "pair.weatherVariables.hourly.airQuality.aerosol_optical_depth",
+    "default": true,
+    "capability": "measure_aerosol_optical_depth"
+  },
+  {
+    "value": "dust",
+    "i18n": "pair.weatherVariables.hourly.airQuality.dust",
+    "default": true,
+    "capability": "measure_dust"
+  },
+  {
+    "value": "alder_pollen",
+    "i18n": "pair.weatherVariables.hourly.airQuality.alder_pollen",
+    "default": true,
+    "capability": "measure_alder_pollen"
+  },
+  {
+    "value": "birch_pollen",
+    "i18n": "pair.weatherVariables.hourly.airQuality.birch_pollen",
+    "default": true,
+    "capability": "measure_birch_pollen"
+  },
+  {
+    "value": "grass_pollen",
+    "i18n": "pair.weatherVariables.hourly.airQuality.grass_pollen",
+    "default": true,
+    "capability": "measure_grass_pollen"
+  },
+  {
+    "value": "mugwort_pollen",
+    "i18n": "pair.weatherVariables.hourly.airQuality.mugwort_pollen",
+    "default": true,
+    "capability": "measure_mugwort_pollen"
+  },
+  {
+    "value": "olive_pollen",
+    "i18n": "pair.weatherVariables.hourly.airQuality.olive_pollen",
+    "default": true,
+    "capability": "measure_olive_pollen"
+  },
+  {
+    "value": "ragweed_pollen",
+    "i18n": "pair.weatherVariables.hourly.airQuality.ragweed_pollen",
+    "default": true,
+    "capability": "measure_ragweed_pollen"
+  }
+]

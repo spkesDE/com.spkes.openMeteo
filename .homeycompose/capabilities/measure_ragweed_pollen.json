@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Ragweed Pollen",
+    "de": "Ambrosia Pollen"
+  },
+  "title": {
+    "en": "Ragweed Pollen",
+    "de": "Ambrosia Pollen"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "Grains/m³",
+    "de": "Körner/m³"
+  },
+  "icon": "/assets/icons/measure_pollen.svg"
+}

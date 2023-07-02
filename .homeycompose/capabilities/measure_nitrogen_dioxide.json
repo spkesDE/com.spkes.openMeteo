@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Nitrogen Dioxide",
+    "de": "Stickstoffdioxid"
+  },
+  "title": {
+    "en": "Nitrogen Dioxide",
+    "de": "Stickstoffdioxid"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "µg/m³",
+    "de": "µg/m³"
+  },
+  "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+}
