@@ -1,0 +1,114 @@
+<link rel="stylesheet" type="text/css" href="../../../assets/css/autoComplete.css"/>
+<link rel="stylesheet" type="text/css" href="../../../assets/css/setup.css"/>
+
+<div class="hy-view __private__open_meteo-setup__view" data-id="weatherVariables" data-template-id="weatherVariables"
+     id="87645378645645-67869978456456">
+    <div class="__private__open_meteo-setup">
+        <form id="setup-form" class="__private__open_meteo-setup__form homey-form" action="/" method="post">
+            <div class="__private__open_meteo-setup__center">
+                <h1 id="setup-title" class="homey-title homey-text-align-center">Please enter your location</h1>
+                <div class="homey-form-group">
+                    <div id="checkbox-form">
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="__private__open_meteo-setup__information">
+                <a href="javascript:;"
+                   data-i18n="pair.setup.open-meteo"
+                   onclick="Homey.popup('https://open-meteo.com/')">
+                    Weather data by Open-Meteo.com</a>
+            </div>
+
+            <div class="__private__open_meteo-setup__footer">
+                <button tabindex="0" id="setup-next"
+                        data-i18n="pair.setup.next"
+                        class="homey-button-primary-shadow-full __private__open_meteo-setup__button"
+                        type="submit">
+                    Next
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (async function () {
+        let id = "unknown";
+        let options;
+        let capabilities;
+        // Hide default title bar
+        await Homey.getOptions(function (err, o) {
+            if (err) return Homey.error(err);
+            options = o;
+            if (o.id) id = o.id;
+        });
+        if (id === "unknown") Homey.alert("Failed to get Pair View ID!");
+        const $pair = document.querySelector(`[data-id="${id}"]`);
+        const $form = $pair.querySelector('#setup-form');
+        $form.querySelector("#setup-title").innerText = Homey.__(options.title);
+        await Homey.emit("getData", {view: options.id, data: null}).then(function (result) {
+            capabilities = result.data;
+            console.log(capabilities)
+        });
+        createForm(options.json, capabilities);
+        let working = false;
+
+        $form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (working) return;
+            working = true;
+            Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
+
+            const data = [...$form.querySelectorAll('input[type="checkbox"]:checked')].map(e => e.value);
+
+            Homey.emit(options.id, data,
+                function (error, valid) {
+                    if (error) {
+                        Homey.error(error);
+                    } else if (!valid) {
+                        Homey.error(Homey.__('pair.setup.failed'));
+                    } else if (valid) {
+                        Homey.nextView();
+                    }
+                    working = false;
+                    Homey.hideLoadingOverlay();
+                }
+            );
+            return false;
+        });
+
+        function createForm(jsonUrl, capabilities = undefined) {
+            const request = new XMLHttpRequest();
+            request.open("GET", jsonUrl, false);
+            request.send(null);
+            let json = JSON.parse(request.response);
+            for (let key in json) {
+                let label = document.createElement("label");
+                label.classList.add("homey-form-checkbox");
+                let input = document.createElement("input");
+                input.classList.add("homey-form-checkbox-input");
+                input.type = "checkbox";
+                input.name = json[key].value;
+                input.value = json[key].value;
+                if(capabilities !== undefined)
+                    input.checked =  capabilities.includes(json[key].capability)
+                else
+                    input.checked = json[key].default;
+                let spanCheckmark = document.createElement("span");
+                spanCheckmark.classList.add("homey-form-checkbox-checkmark");
+                let spanText = document.createElement("span");
+                spanText.classList.add("homey-form-checkbox-text");
+                spanText.innerHTML = Homey.__(json[key].i18n) ?? json[key].i18n;
+                label.appendChild(input);
+                label.appendChild(spanCheckmark);
+                label.appendChild(spanText);
+
+                $pair.querySelector("#checkbox-form").appendChild(label);
+            }
+        }
+    })();
+
+</script>
+</div>

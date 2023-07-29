@@ -25,7 +25,7 @@ export default class OpenMeteo extends Homey.App {
       }
     });
     axiosRetry(this.api , {
-      retries: 3,
+      retries: 4,
       retryDelay: (retryCount) => {
         this.log("Failed to call api.open-meteo.com. Current retry attempt: " + retryCount);
         if(retryCount == 1) return 1000;
@@ -35,7 +35,7 @@ export default class OpenMeteo extends Homey.App {
       },
       retryCondition: () => true});
     axiosRetry(this.airQualityApi , {
-      retries: 3,
+      retries: 4,
       retryDelay: (retryCount) => {
         this.log("Failed to call air-quality-api.open-meteo.com. Current retry attempt: " + retryCount);
         if(retryCount == 1) return 1000;

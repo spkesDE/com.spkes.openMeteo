@@ -5,7 +5,7 @@ import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables
 import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
 import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 
-class WeatherDevice extends Homey.Device {
+export default class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
     private randomNumber: number = 15;
 
@@ -36,7 +36,7 @@ class WeatherDevice extends Homey.Device {
         let weather = await this.getCurrentWeather(
             store.location,
             store.timezone,
-            store.hourlyWeatherVariables,
+            store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true ?? false),
             store.dailyWeatherVariables,
             date.toISOString().split('T')[0]
         );
@@ -86,13 +86,18 @@ class WeatherDevice extends Homey.Device {
             await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
             return;
         }
+        if (config.value == "weatherCondition") {
+            let wmoCode: number = weatherArray["weathercode"][index];
+            await this.setCapabilityValue(config.capability, this.homey.__(`wmo.${wmoCode}`) ?? `Unknown Weather (${wmoCode})`);
+            return;
+        }
         //If number capability set value.
         if(!weatherArray[config.value][index] && process.env.DEBUG)
             this.log(`Failed to set weather ${config.value} - ${weatherArray[config.value][index]}`);
-        await this.setCapabilityValue(config.capability, weatherArray[config.value][index]).catch(this.error)
+        await this.setCapabilityValue(config.capability, weatherArray[config.value][index] ?? 0).catch(this.error)
     }
 
-    public getConfig(query: string): { value: string; i18n: string; default: string; capability: string } | null {
+    public getConfig(query: string): { value: string; i18n: string; apiVar: boolean; default: boolean; capability: string } | null {
         let result = null;
         HourlyWeatherVariablesConfig.forEach((v) => {
             if (v.value === query) {

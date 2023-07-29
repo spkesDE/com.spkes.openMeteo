@@ -73,5 +73,54 @@
       "id": "add_my_devices",
       "template": "add_devices"
     }
+  ],
+  "repair": [
+    {
+      "id": "disclaimer",
+      "$template": "disclaimer",
+      "navigation": {
+        "next": "setup"
+      }
+    },
+    {
+      "id": "setup",
+      "$template": "setup"
+    },
+    {
+      "id": "hourlyWeatherVariables",
+      "$template": "weatherVariables",
+      "options": {
+        "id": "hourlyWeatherVariables",
+        "title": {
+          "en": "Hourly Weather Variables",
+          "de": "Stündliche Wetter Variablen"
+        },
+        "json": "../../../assets/json/hourlyWeatherVariables.json"
+      }
+    },
+    {
+      "id": "dailyWeatherVariables",
+      "$template": "weatherVariables",
+      "options": {
+        "id": "dailyWeatherVariables",
+        "title": {
+          "en": "Daily Weather Variables",
+          "de": "Tägliche Wetter Variablen"
+        },
+        "json": "../../../assets/json/dailyWeatherVariables.json"
+      }
+    },
+    {
+      "id": "hourlyAirQualityValues",
+      "$template": "weatherVariables",
+      "options": {
+        "id": "hourlyAirQualityValues",
+        "title": {
+          "en": "Hourly Air Quality Variables",
+          "de": "Stündliche Luftqualität"
+        },
+        "json": "../../../assets/json/hourlyAirQualityVariables.json"
+      }
+    }
   ]
 }
