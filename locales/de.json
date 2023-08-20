@@ -1,5 +1,7 @@
 {
   "language": "de",
+  "hourlyWeatherVariables": "Stündliche Wetter Variablen",
+  "hourlyAirQualityVariables": "Stündliche Luftqualität",
   "wmo": {
     "0": "Klarer Himmel",
     "1": "Wolken lösen sich auf/weniger entwickelt",

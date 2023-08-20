@@ -25,7 +25,11 @@ class WeatherDriver extends Homey.Driver {
      */
     async onInit() {
         this.log('WeatherDriver has been initialized');
+        this._createChartFlow();
 
+    }
+
+    private _createChartFlow() {
         this.homey.flow
             .getActionCard("create-chart")
             .registerArgumentAutocompleteListener('weatherVariable', (query, args) => {
@@ -35,7 +39,19 @@ class WeatherDriver extends Homey.Driver {
                     let config = device.getConfig(s);
                     results.push({
                         name: this.homey.__(config?.i18n ?? s),
+                        description: this.homey.__("hourlyWeatherVariables"),
                         id: s,
+                        type: "weather",
+                        config: config
+                    });
+                });
+                device.getStore().hourlyAirQualityValues.forEach((s: string) => {
+                    let config = device.getConfig(s);
+                    results.push({
+                        name: this.homey.__(config?.i18n ?? s),
+                        description: this.homey.__("hourlyAirQualityVariables"),
+                        id: s,
+                        type: "airQuality",
                         config: config
                     });
                 });
@@ -45,22 +61,35 @@ class WeatherDriver extends Homey.Driver {
             })
             .registerRunListener(async (args: any) => {
                 let device = args.device as WeatherDevice;
-                let lable = [];
-                let data = device.latestWeatherReport.hourly[args.weatherVariable.id];
+                let labels = [];
+                let data = [];
+                let unit = ""
+                if(args.weatherVariable.type == "weather") {
+                    data = device.latestWeatherReport.hourly[args.weatherVariable.id];
+                    unit = device.latestWeatherReport.hourly_units[args.weatherVariable.id]
+                }
+                if(args.weatherVariable.type == "airQuality") {
+                    data = device.latestAirQualityReport.hourly[args.weatherVariable.id];
+                    unit = device.latestAirQualityReport.hourly_units[args.weatherVariable.id]
+                }
                 for (let i = 0; i < data.length; i++) {
-                    lable.push(i + "");
+                    labels.push(i + "");
                 }
                 let myChart = new QuickChart();
                 myChart.setConfig({
                     type: args.type ?? "line",
                     data: {
-                        labels: lable,
+                        labels: labels,
                         datasets: [
                             {
                                 label: args.weatherVariable.name,
                                 data: data,
-                                borderColor: args.lineColor,
-                                backgroundColor: Utils.hexToRGB(args.lineColor, .5),
+                                borderColor: QuickChart.getGradientFillHelper('vertical', [
+                                    args.lineColor, Utils.hexToRGB(args.lineColor, .5)
+                                ]),
+                                backgroundColor: QuickChart.getGradientFillHelper('vertical', [
+                                    Utils.hexToRGB(args.lineColor, .4), Utils.hexToRGB(args.lineColor, .1)
+                                ]),
                                 ...Utils.datasetVariables
                             }
                         ],
@@ -70,7 +99,7 @@ class WeatherDriver extends Homey.Driver {
                             ...Utils.scalesXVariables,
                             yAxes: [{
                                 scaleLabel: {
-                                    labelString: `${args.weatherVariable.name}`,
+                                    labelString: `${args.weatherVariable.name} (${unit})`,
                                     display: true,
                                 },
                                 ...Utils.scalesYVariables
@@ -90,9 +119,7 @@ class WeatherDriver extends Homey.Driver {
                     chart: image,
                 };
             });
-
     }
-
 
     /**
      * This method is called when a repair session starts.

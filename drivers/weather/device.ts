@@ -9,6 +9,7 @@ export default class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
     private randomNumber: number = 15;
     public latestWeatherReport: any = [];
+    public latestAirQualityReport: any = [];
 
     async onInit() {
         this.randomNumber = Math.floor(Math.random() * (15 - 5 + 1) + 5);
@@ -62,6 +63,7 @@ export default class WeatherDevice extends Homey.Device {
 
         if (store.hourlyAirQualityValues) {
             let airQuality = await this.getAirQuality(store.location,store.hourlyAirQualityValues, date.toISOString().split('T')[0]);
+            this.latestAirQualityReport = airQuality;
             for (let v of store.hourlyAirQualityValues) {
                 await this.updateWeather(v, airQuality.hourly);
             }

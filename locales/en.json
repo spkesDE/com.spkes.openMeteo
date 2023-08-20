@@ -1,5 +1,7 @@
 {
   "language": "en",
+  "hourlyWeatherVariables": "Hourly Weather Variables",
+  "hourlyAirQualityVariables": "Hourly Air Quality Variables",
   "pair": {
     "disclaimer": {
       "appreciate": "\"Weather by Open-Meteo\" appreciate and thanking ",
