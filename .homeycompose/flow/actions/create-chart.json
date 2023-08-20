@@ -61,7 +61,7 @@
       "required": false,
       "title": {
         "en": "Background Color",
-        "dn": "Hintergrundfarbe
+        "dn": "Hintergrundfarbe"
       },
       "values": [
         {
