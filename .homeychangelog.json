@@ -28,5 +28,8 @@
   },
   "1.4.1": {
     "en": "Added Air Quality to the Chart Flow"
+  },
+  "1.4.2": {
+    "en": "Creating Chart Images using Hourly Weather and Air Quality Variables. Fixed Typo's"
   }
 }

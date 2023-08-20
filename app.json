@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.spkes.openMeteo",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
@@ -1245,6 +1245,22 @@
       },
       "icon": "/assets/icons/measure_visibility.svg"
     },
+    "measure_weathercode": {
+      "type": "number",
+      "label": {
+        "en": "Current Weather Code (WMO)",
+        "de": "Aktueller Wettercode (WMO)"
+      },
+      "title": {
+        "en": "Current Weather Code (WMO)",
+        "de": "Aktueller Wettercode (WMO)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_weathercode.svg"
+    },
     "measure_wind_direction_dominant": {
       "type": "number",
       "label": {
@@ -1304,22 +1320,6 @@
         "de": "km/h"
       },
       "icon": "/assets/icons/measure_windspeed.svg"
-    },
-    "mesaure_weathercode": {
-      "type": "number",
-      "label": {
-        "en": "Current Weather Code (WMO)",
-        "de": "Aktueller Wettercode (WMO)"
-      },
-      "title": {
-        "en": "Current Weather Code (WMO)",
-        "de": "Aktueller Wettercode (WMO)"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "icon": "/assets/icons/measure_weathercode.svg"
     },
     "sunrise": {
       "type": "string",
