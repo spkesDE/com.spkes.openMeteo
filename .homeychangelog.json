@@ -25,5 +25,8 @@
   },
   "1.4.0": {
     "en": "Added Charts Flow"
+  },
+  "1.4.1": {
+    "en": "Added Air Quality to the Chart Flow"
   }
 }
