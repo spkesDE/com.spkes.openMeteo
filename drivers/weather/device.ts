@@ -14,6 +14,11 @@ export default class WeatherDevice extends Homey.Device {
     async onInit() {
         this.randomNumber = Math.floor(Math.random() * (15 - 5 + 1) + 5);
 
+        if(this.hasCapability("mesaure_weathercode")){
+            await this.removeCapability("mesaure_weathercode")
+            await this.addCapability("measure_weathercode")
+        }
+
         await this.update(true);
         this.updateInterval = this.homey.setInterval(() => this.update().catch(this.error), 1000 * 60);
 

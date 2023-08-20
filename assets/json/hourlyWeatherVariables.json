@@ -81,7 +81,7 @@
     "i18n": "pair.weatherVariables.hourly.weathercode",
     "apiVar": true,
     "default": false,
-    "capability": "mesaure_weathercode"
+    "capability": "measure_weathercode"
   },
   {
     "value": "weatherCondition",
