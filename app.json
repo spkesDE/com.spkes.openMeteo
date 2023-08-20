@@ -94,6 +94,103 @@
   "source": "https://github.com/spkesDE/com.spkes.openMeteo",
   "support": "https://github.com/spkesDE",
   "homeyCommunityTopicId": 76977,
+  "flow": {
+    "actions": [
+      {
+        "title": {
+          "en": "Create chart for Hourly Weather Variable"
+        },
+        "titleFormatted": {
+          "en": "Create chart for Hourly Weather Variable [[weatherVariable]] ([[type]] [[lineColor]] [[backgroundColor]])"
+        },
+        "hint": {
+          "en": "Creates a chart of the weather"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          },
+          {
+            "type": "autocomplete",
+            "required": false,
+            "name": "weatherVariable",
+            "placeholder": {
+              "en": "Weather Variable"
+            }
+          },
+          {
+            "name": "type",
+            "type": "dropdown",
+            "title": {
+              "en": "Type"
+            },
+            "values": [
+              {
+                "id": "line",
+                "title": {
+                  "en": "Line Type"
+                }
+              },
+              {
+                "id": "bar",
+                "title": {
+                  "en": "Bar Type"
+                }
+              }
+            ]
+          },
+          {
+            "type": "color",
+            "name": "lineColor",
+            "required": false,
+            "title": {
+              "en": "Color"
+            }
+          },
+          {
+            "name": "backgroundColor",
+            "type": "dropdown",
+            "required": false,
+            "title": {
+              "en": "Background Color"
+            },
+            "values": [
+              {
+                "id": "#ffffff",
+                "title": {
+                  "en": "Light Mode"
+                }
+              },
+              {
+                "id": "#222329",
+                "title": {
+                  "en": "Dark Mode"
+                }
+              },
+              {
+                "id": "transparent",
+                "title": {
+                  "en": "Transparent Mode"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "chart",
+            "type": "image",
+            "title": {
+              "en": "Chart"
+            }
+          }
+        ],
+        "id": "create-chart"
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {

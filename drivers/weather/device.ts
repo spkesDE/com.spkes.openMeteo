@@ -8,6 +8,7 @@ import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityV
 export default class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
     private randomNumber: number = 15;
+    public latestWeatherReport: any = [];
 
     async onInit() {
         this.randomNumber = Math.floor(Math.random() * (15 - 5 + 1) + 5);
@@ -40,6 +41,8 @@ export default class WeatherDevice extends Homey.Device {
             store.dailyWeatherVariables,
             date.toISOString().split('T')[0]
         );
+
+        this.latestWeatherReport = weather;
 
         //Setting the weather variables
         for (let v of store.dailyWeatherVariables) {

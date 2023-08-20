@@ -5,6 +5,9 @@ import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables
 import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
 import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 import WeatherDevice from "./device";
+import QuickChart from "quickchart-js";
+import path from "path";
+import Utils from "../../lib/utils";
 
 class WeatherDriver extends Homey.Driver {
     private location?: Location;
@@ -22,6 +25,72 @@ class WeatherDriver extends Homey.Driver {
      */
     async onInit() {
         this.log('WeatherDriver has been initialized');
+
+        this.homey.flow
+            .getActionCard("create-chart")
+            .registerArgumentAutocompleteListener('weatherVariable', (query, args) => {
+                let device = args.device as WeatherDevice;
+                let results: any[] = [];
+                device.getStore().hourlyWeatherVariables.forEach((s: string) => {
+                    let config = device.getConfig(s);
+                    results.push({
+                        name: this.homey.__(config?.i18n ?? s),
+                        id: s,
+                        config: config
+                    });
+                });
+                return results.filter((result: any) => {
+                    return result.name.toLowerCase().includes(query.toLowerCase());
+                });
+            })
+            .registerRunListener(async (args: any) => {
+                let device = args.device as WeatherDevice;
+                let lable = [];
+                let data = device.latestWeatherReport.hourly[args.weatherVariable.id];
+                for (let i = 0; i < data.length; i++) {
+                    lable.push(i + "");
+                }
+                let myChart = new QuickChart();
+                myChart.setConfig({
+                    type: args.type ?? "line",
+                    data: {
+                        labels: lable,
+                        datasets: [
+                            {
+                                label: args.weatherVariable.name,
+                                data: data,
+                                borderColor: args.lineColor,
+                                backgroundColor: Utils.hexToRGB(args.lineColor, .5),
+                                ...Utils.datasetVariables
+                            }
+                        ],
+                    },
+                    options: {
+                        scales: {
+                            ...Utils.scalesXVariables,
+                            yAxes: [{
+                                scaleLabel: {
+                                    labelString: `${args.weatherVariable.name}`,
+                                    display: true,
+                                },
+                                ...Utils.scalesYVariables
+                            }]
+                        },
+                        ...Utils.optionVariables,
+                    }
+                })
+                    .setWidth(500)
+                    .setHeight(300)
+                    .setBackgroundColor(args.backgroundColor)
+                    .setDevicePixelRatio(3.0);
+                await myChart.toFile(path.join("/userdata/", "chart.png"));
+                let image = await this.homey.images.createImage();
+                image.setPath(path.join("/userdata/", "chart.png"));
+                return {
+                    chart: image,
+                };
+            });
+
     }
 
 
