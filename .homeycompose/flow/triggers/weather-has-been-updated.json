@@ -1,0 +1,13 @@
+{
+  "title": {
+    "en": "Weather has been updated",
+    "de": "Wetter wurde aktualisiert"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ]
+}
