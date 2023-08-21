@@ -95,6 +95,88 @@
   "support": "https://github.com/spkesDE",
   "homeyCommunityTopicId": 76977,
   "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "Weather has been updated",
+          "de": "Wetter wurde aktualisiert"
+        },
+        "titleFormatted": {
+          "en": "Weather has been updated",
+          "de": "Wetter wurde aktualisiert"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "id": "weather-has-been-updated"
+      },
+      {
+        "title": {
+          "en": "Weather Value [[weatherVariable]] has been updated",
+          "de": "Wetterwert [[weatherVariable]] wurde aktualisiert"
+        },
+        "titleFormatted": {
+          "en": "Weather Value [[weatherVariable]] has been updated",
+          "de": "Wetterwert [[weatherVariable]] wurde aktualisiert."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          },
+          {
+            "type": "autocomplete",
+            "required": false,
+            "name": "weatherVariable",
+            "placeholder": {
+              "en": "Weather Variable",
+              "de": "Wetter Werte"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "New Value",
+              "de": "Neuer Wert"
+            },
+            "example": {
+              "en": "22°c"
+            }
+          },
+          {
+            "name": "oldValue",
+            "type": "number",
+            "title": {
+              "en": "Old Value",
+              "de": "Alter Wert"
+            },
+            "example": {
+              "en": "22°c"
+            }
+          },
+          {
+            "name": "variable",
+            "type": "string",
+            "title": {
+              "en": "Weather Variable",
+              "de": "Wetter Variable"
+            },
+            "example": {
+              "en": "temperature_2m"
+            }
+          }
+        ],
+        "id": "weather-variable-updated"
+      }
+    ],
     "actions": [
       {
         "title": {

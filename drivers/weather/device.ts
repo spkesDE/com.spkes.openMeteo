@@ -12,7 +12,7 @@ export default class WeatherDevice extends Homey.Device {
     public latestAirQualityReport: any = [];
 
     async onInit() {
-        this.randomNumber = Math.floor(Math.random() * (15 - 5 + 1) + 5);
+        this.randomNumber = Math.floor(Math.random() * (15 - 2 + 1) + 2);
 
         if(this.hasCapability("mesaure_weathercode")){
             await this.removeCapability("mesaure_weathercode")
@@ -28,7 +28,7 @@ export default class WeatherDevice extends Homey.Device {
     public async update(ignore: boolean = false) {
         //Interval runs at 1 minute. But we want weather pooling to be not every minute and
         //still have weather pooling at the start of the hour. So we have to generate a random number to even out the pooling
-        //so the API Servers are not overloaded and check that random number (5-15) to the current minutes of the hour.
+        //so the API Servers are not overloaded and check that random number (2-15) to the current minutes of the hour.
         if (new Date().getMinutes() !== this.randomNumber && !ignore) return;
         let store = this.getStore();
 

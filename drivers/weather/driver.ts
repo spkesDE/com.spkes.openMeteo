@@ -26,7 +26,6 @@ class WeatherDriver extends Homey.Driver {
     async onInit() {
         this.log('WeatherDriver has been initialized');
         this._createChartFlow();
-
     }
 
     private _createChartFlow() {
@@ -293,7 +292,6 @@ class WeatherDriver extends Homey.Driver {
         });
         return capabilities;
     }
-
 }
 
 module.exports = WeatherDriver;

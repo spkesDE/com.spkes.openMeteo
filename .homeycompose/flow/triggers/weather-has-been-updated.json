@@ -3,6 +3,10 @@
     "en": "Weather has been updated",
     "de": "Wetter wurde aktualisiert"
   },
+  "titleFormatted": {
+    "en": "Weather has been updated",
+    "de": "Wetter wurde aktualisiert"
+  },
   "args": [
     {
       "type": "device",
