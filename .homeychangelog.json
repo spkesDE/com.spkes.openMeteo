@@ -31,5 +31,8 @@
   },
   "1.4.2": {
     "en": "Creating Chart Images using Hourly Weather and Air Quality Variables. Fixed Typo's"
+  },
+  "1.4.3": {
+    "en": "Added Weather has been Updated WHEN Flow card. Bug fixes. "
   }
 }
