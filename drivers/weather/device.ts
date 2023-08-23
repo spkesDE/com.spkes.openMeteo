@@ -74,8 +74,7 @@ export default class WeatherDevice extends Homey.Device {
             }
         }
 
-        await this.homey.flow.getTriggerCard("weather-has-been-updated").trigger();
-
+        await this.homey.flow.getDeviceTriggerCard("weather-has-been-updated").trigger(this);
         this.log(`Updating weather for location: ${store.location.name}`)
     }
 
