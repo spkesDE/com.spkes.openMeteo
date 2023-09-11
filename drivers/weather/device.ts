@@ -48,6 +48,7 @@ export default class WeatherDevice extends Homey.Device {
             date.toISOString().split('T')[0]
         );
 
+
         this.latestWeatherReport = weather;
 
         //Setting the weather variables
@@ -62,7 +63,7 @@ export default class WeatherDevice extends Homey.Device {
         //Setting Date capability to current day/time
         if(this.hasCapability("date")) {
             let hours = ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
-            let day = ("0" + date.getDate()).slice(-2) + "." + ("0" + date.getMonth()).slice(-2) + "." + date.getFullYear();
+            let day = ("0" + date.getDate()).slice(-2) + "." + ("0" + (date.getMonth()+1)).slice(-2) + "." + date.getFullYear();
             await this.setCapabilityValue("date", `${hours} ${day}`);
         }
 

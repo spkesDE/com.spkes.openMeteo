@@ -75,6 +75,7 @@ class WeatherDriver extends Homey.Driver {
                     labels.push(i + "");
                 }
                 let myChart = new QuickChart();
+                console.log(data, labels)
                 myChart.setConfig({
                     type: args.type ?? "line",
                     data: {
