@@ -40,5 +40,8 @@
   },
   "1.4.5": {
     "en": "Fixed Date"
+  },
+  "1.4.6": {
+    "en": "Current Weather updates now every 15-min"
   }
 }
