@@ -12,14 +12,12 @@ export default class OpenMeteo extends Homey.App {
     let cloudId = await this.homey.cloud.getHomeyId();
     this.api = axios.create({
       baseURL: 'https://api.open-meteo.com/v1/forecast',
-      timeout: 5000,
       headers: {
         "User-Agent": `HomeyPro/${this.manifest.version} - ${cloudId}`
       }
     });
     this.airQualityApi = axios.create({
       baseURL: 'https://air-quality-api.open-meteo.com/v1/air-quality',
-      timeout: 5000,
       headers: {
         "User-Agent": `HomeyPro/${this.manifest.version} - ${cloudId}`
       }
