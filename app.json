@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.spkes.openMeteo",
-  "version": "1.4.9",
+  "version": "1.5.0",
   "compatibility": ">=8.1.0",
   "sdk": 3,
   "platforms": [
@@ -932,26 +932,6 @@
         "de": "Körner/m³"
       },
       "icon": "/assets/icons/measure_pollen.svg"
-    },
-    "measure_rain": {
-      "type": "number",
-      "label": {
-        "en": "Rain of the current hour",
-        "de": "Regen der aktuellen Stunde"
-      },
-      "title": {
-        "en": "Rain of the current hour",
-        "de": "Regen der aktuellen Stunde"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "mm",
-        "de": "mm"
-      },
-      "icon": "/assets/icons/measure_rain.svg"
     },
     "measure_rain_sum": {
       "type": "number",
