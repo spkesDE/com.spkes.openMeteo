@@ -99,7 +99,8 @@ export default class WeatherDevice extends Homey.Device {
             return;
         }
         if (config.value == "weatherCondition") {
-            let wmoCode: number = weatherArray["weathercode"][index];
+            this.log("WeatherCondition: ", weatherArray["weathercode"]);
+            let wmoCode: number = weatherArray["weathercode"][index] ?? -1;
             await this.setCapabilityValue(config.capability, this.homey.__(`wmo.${wmoCode}`) ?? `Unknown Weather (${wmoCode})`);
             return;
         }

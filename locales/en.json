@@ -134,6 +134,7 @@
     }
   },
   "wmo": {
+    "-1": "Unknown",
     "0": "Clear",
     "1": "Clouds dissolve/less dev.",
     "10": "Mist",

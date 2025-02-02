@@ -135,6 +135,7 @@
     }
   },
   "wmo": {
+    "-1": "Unbekannt",
     "0": "Klarer Himmel",
     "1": "Wolken lösen sich auf/weniger entwickelt",
     "10": "Nebel",
