@@ -58,5 +58,8 @@
   },
   "1.5.1": {
     "en": "Bug fixes"
+  },
+  "1.5.2": {
+    "en": "Upgrade packages to latest versions and fix security issues"
   }
 }
