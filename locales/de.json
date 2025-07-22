@@ -36,6 +36,10 @@
         "label": "Wetter Prognose von",
         "today": "Heute"
       },
+      "hourlyForecast": {
+        "current": "Akutelle Zeit (+0h)",
+        "label": "Get hourly forecast"
+      },
       "loading": "Lädt",
       "location": {
         "label": "Standort",

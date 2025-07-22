@@ -36,6 +36,10 @@
         "label": "Get forecast",
         "today": "Current Day"
       },
+      "hourlyForecast": {
+        "current": "Current (+0h)",
+        "label": "Get hourly forecast"
+      },
       "loading": "Loading",
       "location": {
         "label": "Location",
