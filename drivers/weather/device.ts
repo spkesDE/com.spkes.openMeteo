@@ -43,7 +43,7 @@ export default class WeatherDevice extends Homey.Device {
         let weather = await this.getCurrentWeather(
             store.location,
             store.timezone,
-            store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true ?? false),
+            store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true),
             store.dailyWeatherVariables,
             date.toISOString().split('T')[0]
         );
