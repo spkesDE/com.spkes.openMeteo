@@ -60,16 +60,21 @@ class WeatherDriver extends Homey.Driver {
             })
             .registerRunListener(async (args: any) => {
                 let device = args.device as WeatherDevice;
-                let labels = [];
-                let data = [];
+                let labels: string[] = [];
+                let data: Array<string | number> = [];
                 let unit = ""
                 if(args.weatherVariable.type == "weather") {
-                    data = device.latestWeatherReport.hourly[args.weatherVariable.id];
-                    unit = device.latestWeatherReport.hourly_units[args.weatherVariable.id]
+                    data = (device.latestWeatherReport?.hourly[args.weatherVariable.id] ?? [])
+                        .filter((value): value is string | number => value !== null && value !== undefined);
+                    unit = device.latestWeatherReport?.hourly_units[args.weatherVariable.id] ?? "";
                 }
                 if(args.weatherVariable.type == "airQuality") {
-                    data = device.latestAirQualityReport.hourly[args.weatherVariable.id];
-                    unit = device.latestAirQualityReport.hourly_units[args.weatherVariable.id]
+                    data = (device.latestAirQualityReport?.hourly[args.weatherVariable.id] ?? [])
+                        .filter((value): value is string | number => value !== null && value !== undefined);
+                    unit = device.latestAirQualityReport?.hourly_units[args.weatherVariable.id] ?? "";
+                }
+                if (data.length === 0) {
+                    throw new Error(`No chart data available for ${args.weatherVariable.id}`);
                 }
                 for (let i = 0; i < data.length; i++) {
                     labels.push(i + "");
