@@ -1,0 +1,17 @@
+{
+  "title": {
+    "en": "Rain expected started",
+    "de": "Regenwahrscheinlichkeit hat begonnen"
+  },
+  "titleFormatted": {
+    "en": "Rain expected started",
+    "de": "Regenwahrscheinlichkeit hat begonnen"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ]
+}

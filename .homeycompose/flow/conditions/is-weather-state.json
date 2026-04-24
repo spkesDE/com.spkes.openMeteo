@@ -1,0 +1,62 @@
+{
+  "title": {
+    "en": "Weather state is [[state]]",
+    "de": "Wetterzustand ist [[state]]"
+  },
+  "titleFormatted": {
+    "en": "Weather state is [[state]]",
+    "de": "Wetterzustand ist [[state]]"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    },
+    {
+      "name": "state",
+      "type": "dropdown",
+      "title": {
+        "en": "State",
+        "de": "Zustand"
+      },
+      "values": [
+        {
+          "id": "rain_likely",
+          "title": {
+            "en": "Rain likely",
+            "de": "Regen wahrscheinlich"
+          }
+        },
+        {
+          "id": "freezing",
+          "title": {
+            "en": "Freezing",
+            "de": "Gefrierend"
+          }
+        },
+        {
+          "id": "windy",
+          "title": {
+            "en": "Windy",
+            "de": "Windig"
+          }
+        },
+        {
+          "id": "hot",
+          "title": {
+            "en": "Hot",
+            "de": "Heiss"
+          }
+        },
+        {
+          "id": "good_air_quality",
+          "title": {
+            "en": "Good air quality",
+            "de": "Gute Luftqualitaet"
+          }
+        }
+      ]
+    }
+  ]
+}

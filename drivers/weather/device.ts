@@ -15,6 +15,19 @@ interface DeviceStore {
     hourlyAirQualityValues?: string[];
 }
 
+export interface WeatherFlowSnapshot {
+    hasWeatherData: boolean;
+    conditionCode: number;
+    conditionLabel: string;
+    rainLikely: boolean;
+    freezing: boolean;
+    windy: boolean;
+    hot: boolean;
+    goodAirQuality: boolean;
+    severeExpected: boolean;
+    severeReasons: string[];
+}
+
 export default class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
     private randomNumber: number = 15;
@@ -54,6 +67,7 @@ export default class WeatherDevice extends Homey.Device {
 
         try {
             let store = this.getNormalizedStore();
+            let previousSnapshot = this.getFlowSnapshot();
             if (!store.location || !store.timezone) {
                 this.error(`Skipping weather update for ${this.getName()}: missing location or timezone in device store`);
                 return;
@@ -98,7 +112,10 @@ export default class WeatherDevice extends Homey.Device {
                 this.latestAirQualityReport = undefined;
             }
 
+            await this.updateDerivedAlarmCapabilities();
+
             if (!this.isUninitializing) {
+                await this.triggerFlowStateChanges(previousSnapshot, this.getFlowSnapshot());
                 await this.homey.flow.getDeviceTriggerCard("weather-has-been-updated").trigger(this);
             }
             this.log(`Updating weather for location: ${store.location.name}`)
@@ -117,7 +134,22 @@ export default class WeatherDevice extends Homey.Device {
             this.error(`No config found for weather value "${weatherValue}" on ${this.getName()}`);
             return;
         }
-        if (!this.hasCapability(config.capability)) return;
+        let capabilityId = this.resolveCapabilityId(config.capability);
+        if (!capabilityId) return;
+
+        if (config.value == "weatherCondition") {
+            let weatherCodes = weatherArray?.["weathercode"];
+            if (!Array.isArray(weatherCodes)) {
+                this.error(`Weather field "weathercode" is missing in API response for ${this.getName()} (requested by "${weatherValue}")`);
+                return;
+            }
+
+            let safeIndex = Math.max(0, Math.min(index, weatherCodes.length - 1));
+            let rawWmoCode = weatherCodes[safeIndex];
+            let wmoCode = typeof rawWmoCode === "number" ? rawWmoCode : -1;
+            await this.setCapabilityValue(capabilityId, this.homey.__(`wmo.${wmoCode}`) ?? `Unknown Weather (${wmoCode})`);
+            return;
+        }
 
         let values = weatherArray?.[config.value];
         if (!Array.isArray(values)) {
@@ -138,25 +170,18 @@ export default class WeatherDevice extends Homey.Device {
             if (typeof value !== "string" && typeof value !== "number") return;
             let d = new Date(value);
             if (Number.isNaN(d.getTime())) return;
-            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
+            await this.setCapabilityValue(capabilityId, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
             return;
         }
         if (config.value == "sunset") {
             if (typeof value !== "string" && typeof value !== "number") return;
             let d = new Date(value);
             if (Number.isNaN(d.getTime())) return;
-            await this.setCapabilityValue(config.capability, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
-            return;
-        }
-        if (config.value == "weatherCondition") {
-            let weatherCodes = weatherArray?.["weathercode"];
-            let rawWmoCode = Array.isArray(weatherCodes) ? weatherCodes[safeIndex] : undefined;
-            let wmoCode = typeof rawWmoCode === "number" ? rawWmoCode : -1;
-            await this.setCapabilityValue(config.capability, this.homey.__(`wmo.${wmoCode}`) ?? `Unknown Weather (${wmoCode})`);
+            await this.setCapabilityValue(capabilityId, ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2));
             return;
         }
         //If number capability set value.
-        await this.setCapabilityValue(config.capability, value ?? 0).catch((err) => this.error(err))
+        await this.setCapabilityValue(capabilityId, value ?? 0).catch((err) => this.error(err))
     }
 
     public getConfig(query: string): { value: string; i18n: string; apiVar: boolean; default: boolean; capability: string } | null {
@@ -182,6 +207,79 @@ export default class WeatherDevice extends Homey.Device {
             }
         })
         return result;
+    }
+
+    public getFlowSnapshot(): WeatherFlowSnapshot {
+        let weather = this.latestWeatherReport;
+        let airQuality = this.latestAirQualityReport;
+        let hourly = weather?.hourly;
+        let daily = weather?.daily;
+        let airHourly = airQuality?.hourly;
+
+        let currentHour = this.getCurrentHourIndex(hourly?.time, this.getNormalizedStore().timezone);
+        let temperature = this.getNumericSeriesValue(hourly, "temperature_2m", currentHour);
+        let temperatureMin = this.getNumericSeriesValue(daily, "temperature_2m_min", 0);
+        let temperatureMax = this.getNumericSeriesValue(daily, "temperature_2m_max", 0);
+        let precipitationProbabilityHourly = this.getNumericSeriesValue(hourly, "precipitation_probability", currentHour);
+        let precipitationProbabilityDaily = this.getNumericSeriesValue(daily, "precipitation_probability_max", 0);
+        let precipitationProbability = precipitationProbabilityHourly ?? precipitationProbabilityDaily ?? 0;
+        let precipitationAmount = this.getNumericSeriesValue(hourly, "precipitation", currentHour) ?? 0;
+        let rainAmount = this.getNumericSeriesValue(hourly, "rain", currentHour) ?? 0;
+        let showersAmount = this.getNumericSeriesValue(hourly, "showers", currentHour) ?? 0;
+        let windSpeed = this.getNumericSeriesValue(hourly, "windspeed_10m", currentHour)
+            ?? this.getNumericSeriesValue(daily, "windspeed_10m_max", 0)
+            ?? 0;
+        let windGusts = this.getNumericSeriesValue(hourly, "windgusts_10m", currentHour)
+            ?? this.getNumericSeriesValue(daily, "windgusts_10m_max", 0)
+            ?? 0;
+        let uvIndexMax = this.getNumericSeriesValue(daily, "uv_index_max", 0) ?? 0;
+        let pm25 = this.getNumericSeriesValue(airHourly, "pm2_5", currentHour);
+        let weatherCode = this.getNumericSeriesValue(hourly, "weathercode", currentHour)
+            ?? weather?.current_weather?.weathercode
+            ?? -1;
+        let conditionLabel = this.homey.__(`wmo.${weatherCode}`) ?? `Unknown Weather (${weatherCode})`;
+        let severeReasons: string[] = [];
+
+        if (precipitationProbability >= 85) severeReasons.push("rain");
+        if (windSpeed >= 60 || windGusts >= 80) severeReasons.push("wind");
+        if ((temperatureMin ?? temperature ?? 0) <= -5) severeReasons.push("freeze");
+        if (uvIndexMax >= 8) severeReasons.push("uv");
+        if ((pm25 ?? 0) >= 55) severeReasons.push("air_quality");
+
+        return {
+            hasWeatherData: !!weather,
+            conditionCode: weatherCode,
+            conditionLabel,
+            rainLikely: precipitationProbability >= 60 || precipitationAmount > 0 || rainAmount > 0 || showersAmount > 0,
+            freezing: (temperature ?? temperatureMin ?? 1) <= 0 || (temperatureMin ?? 1) <= 0,
+            windy: windSpeed >= 35 || windGusts >= 50,
+            hot: (temperature ?? temperatureMax ?? 0) >= 28 || (temperatureMax ?? 0) >= 28,
+            goodAirQuality: pm25 !== undefined ? pm25 <= 15 : false,
+            severeExpected: severeReasons.length > 0,
+            severeReasons,
+        };
+    }
+
+    public matchesWeatherState(state: string) {
+        let snapshot = this.getFlowSnapshot();
+        switch (state) {
+            case "rain_likely":
+                return snapshot.rainLikely;
+            case "freezing":
+                return snapshot.freezing;
+            case "windy":
+                return snapshot.windy;
+            case "hot":
+                return snapshot.hot;
+            case "good_air_quality":
+                return snapshot.goodAirQuality;
+            default:
+                return false;
+        }
+    }
+
+    public getForecastValue(variable: string) {
+        return this.latestWeatherReport?.daily?.[variable]?.[0];
     }
 
     private async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[], startDate: string): Promise<Forecast> {
@@ -241,6 +339,54 @@ export default class WeatherDevice extends Homey.Device {
         this.homey.clearInterval(this.updateInterval);
     }
 
+    private async updateDerivedAlarmCapabilities() {
+        let snapshot = this.getFlowSnapshot();
+        await this.setBooleanCapabilityIfPresent("alarm_rain", snapshot.rainLikely);
+        await this.setBooleanCapabilityIfPresent("alarm_freeze_risk", snapshot.freezing);
+    }
+
+    private async triggerFlowStateChanges(previous: WeatherFlowSnapshot, current: WeatherFlowSnapshot) {
+        if (!previous.hasWeatherData || !current.hasWeatherData) return;
+
+        if (previous.conditionCode !== current.conditionCode) {
+            await this.homey.flow.getDeviceTriggerCard("weather-condition-changed").trigger(this, {
+                previous_condition: previous.conditionLabel,
+                current_condition: current.conditionLabel,
+                previous_code: previous.conditionCode,
+                current_code: current.conditionCode,
+            });
+        }
+
+        await this.triggerThresholdChange("rain_likely", previous.rainLikely, current.rainLikely);
+        await this.triggerThresholdChange("freezing", previous.freezing, current.freezing);
+        await this.triggerThresholdChange("windy", previous.windy, current.windy);
+        await this.triggerThresholdChange("hot", previous.hot, current.hot);
+        await this.triggerThresholdChange("good_air_quality", previous.goodAirQuality, current.goodAirQuality);
+
+        if (!previous.rainLikely && current.rainLikely) {
+            await this.homey.flow.getDeviceTriggerCard("rain-started").trigger(this);
+        }
+
+        if (previous.rainLikely && !current.rainLikely) {
+            await this.homey.flow.getDeviceTriggerCard("rain-stopped").trigger(this);
+        }
+
+        if (!previous.severeExpected && current.severeExpected) {
+            await this.homey.flow.getDeviceTriggerCard("severe-weather-expected").trigger(this, {
+                reasons: current.severeReasons.join(", "),
+            });
+        }
+    }
+
+    private async triggerThresholdChange(threshold: string, previous: boolean, current: boolean) {
+        if (previous === current) return;
+
+        await this.homey.flow.getDeviceTriggerCard("weather-threshold-crossed").trigger(this, {
+            threshold,
+            active: current ? "true" : "false",
+        });
+    }
+
     private getNormalizedStore(): {
         location?: Location;
         timezone?: string;
@@ -269,6 +415,39 @@ export default class WeatherDevice extends Homey.Device {
     private normalizeStringArray(values: string[] | undefined) {
         if (!Array.isArray(values)) return [];
         return [...new Set(values.filter((value): value is string => typeof value === "string" && value.length > 0))];
+    }
+
+    private getCurrentHourIndex(times?: Array<string | number | null>, timeZone?: string) {
+        if (!Array.isArray(times) || times.length === 0) return 0;
+        let currentHourIso = new Date(new Date().toLocaleString("en-US", {timeZone: timeZone ?? "UTC"})).toISOString().slice(0, 13);
+        let matchIndex = times.findIndex((time) => typeof time === "string" && time.startsWith(currentHourIso));
+        return matchIndex >= 0 ? matchIndex : 0;
+    }
+
+    private getNumericSeriesValue(data: OpenMeteoVariableMap | undefined, key: string, index: number) {
+        let value = data?.[key]?.[index];
+        return typeof value === "number" ? value : undefined;
+    }
+
+    private async setBooleanCapabilityIfPresent(capability: string, value: boolean) {
+        if (!this.hasCapability(capability)) return;
+        await this.setCapabilityValue(capability, value).catch((err) => this.error(err));
+    }
+
+    private resolveCapabilityId(capability: string) {
+        if (this.hasCapability(capability)) return capability;
+
+        let legacyCapabilities: Record<string, string> = {
+            measure_o3: "measure_ozone",
+            measure_so2: "measure_sulphur_dioxide",
+        };
+
+        let legacyCapability = legacyCapabilities[capability];
+        if (legacyCapability && this.hasCapability(legacyCapability)) {
+            return legacyCapability;
+        }
+
+        return null;
     }
 
     private getTargetDateInTimezone(timeZone: string, forecast: number) {

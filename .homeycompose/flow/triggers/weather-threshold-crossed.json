@@ -1,0 +1,35 @@
+{
+  "title": {
+    "en": "Weather threshold crossed",
+    "de": "Wetter-Schwelle geaendert"
+  },
+  "titleFormatted": {
+    "en": "Weather threshold crossed",
+    "de": "Wetter-Schwelle geaendert"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "threshold",
+      "type": "string",
+      "title": {
+        "en": "Threshold",
+        "de": "Schwelle"
+      }
+    },
+    {
+      "name": "active",
+      "type": "string",
+      "title": {
+        "en": "Active",
+        "de": "Aktiv"
+      }
+    }
+  ]
+}

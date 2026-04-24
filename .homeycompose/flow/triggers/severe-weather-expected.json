@@ -1,0 +1,27 @@
+{
+  "title": {
+    "en": "Severe weather expected",
+    "de": "Kritisches Wetter erwartet"
+  },
+  "titleFormatted": {
+    "en": "Severe weather expected",
+    "de": "Kritisches Wetter erwartet"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "reasons",
+      "type": "string",
+      "title": {
+        "en": "Reasons",
+        "de": "Gruende"
+      }
+    }
+  ]
+}

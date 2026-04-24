@@ -1,0 +1,17 @@
+{
+  "title": {
+    "en": "Rain expected stopped",
+    "de": "Regenwahrscheinlichkeit hat aufgehört"
+  },
+  "titleFormatted": {
+    "en": "Rain expected stopped",
+    "de": "Regenwahrscheinlichkeit hat aufgehört"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ]
+}
