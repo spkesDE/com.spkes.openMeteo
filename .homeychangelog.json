@@ -70,5 +70,8 @@
   },
   "1.5.5": {
     "en": "Bug fixes. Made app more stable."
+  },
+  "2.0.1": {
+    "en": "Added major Flow card improvements, migrated newer Homey capability standards for new/repaired devices, and improved runtime stability, recovery, and weather state handling."
   }
 }
