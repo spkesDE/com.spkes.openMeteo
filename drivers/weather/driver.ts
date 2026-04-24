@@ -9,17 +9,46 @@ import QuickChart from "quickchart-js";
 import path from "path";
 import Utils from "../../lib/utils";
 
-class WeatherDriver extends Homey.Driver {
-    private location?: Location;
-    private tempUnit?: string;
-    private windSpeedUnit?: string;
-    private timezone?: string;
-    private precipitationUnit?: string;
-    private hourlyWeatherVariables: string[] = [];
-    private dailyWeatherVariables: string[] = [];
-    private hourlyAirQualityValues: string[] = [];
-    private forecast: number = 0;
+interface SessionState {
+    location?: Location;
+    tempUnit?: string;
+    windSpeedUnit?: string;
+    timezone?: string;
+    precipitationUnit?: string;
+    hourlyWeatherVariables: string[];
+    dailyWeatherVariables: string[];
+    hourlyAirQualityValues: string[];
+    forecast: number;
+}
 
+interface SessionViewRequest {
+    view: "setup" | "dailyWeatherVariables" | "hourlyWeatherVariables" | "hourlyAirQualityValues";
+}
+
+interface SetupPayload {
+    location: Location;
+    tempUnit: string;
+    windSpeedUnit: string;
+    timezone: string;
+    precipitationUnit: string;
+    forecast: number;
+}
+
+interface ChartVariableArgument {
+    id: string;
+    name: string;
+    type: "weather" | "airQuality";
+}
+
+interface CreateChartFlowArgs {
+    device: WeatherDevice;
+    weatherVariable: ChartVariableArgument;
+    type?: string;
+    lineColor: string;
+    backgroundColor: string;
+}
+
+class WeatherDriver extends Homey.Driver {
     /**
      * onInit is called when the driver is initialized.
      */
@@ -34,7 +63,8 @@ class WeatherDriver extends Homey.Driver {
             .registerArgumentAutocompleteListener('weatherVariable', (query, args) => {
                 let device = args.device as WeatherDevice;
                 let results: any[] = [];
-                device.getStore().hourlyWeatherVariables.forEach((s: string) => {
+                let store = this.createSessionState(device.getStore());
+                store.hourlyWeatherVariables.forEach((s: string) => {
                     let config = device.getConfig(s);
                     results.push({
                         name: this.homey.__(config?.i18n ?? s),
@@ -44,7 +74,7 @@ class WeatherDriver extends Homey.Driver {
                         config: config
                     });
                 });
-                device.getStore().hourlyAirQualityValues.forEach((s: string) => {
+                store.hourlyAirQualityValues.forEach((s: string) => {
                     let config = device.getConfig(s);
                     results.push({
                         name: this.homey.__(config?.i18n ?? s),
@@ -58,24 +88,28 @@ class WeatherDriver extends Homey.Driver {
                     return result.name.toLowerCase().includes(query.toLowerCase());
                 });
             })
-            .registerRunListener(async (args: any) => {
-                let device = args.device as WeatherDevice;
-                let labels = [];
-                let data = [];
+            .registerRunListener(async (args: CreateChartFlowArgs) => {
+                let device = args.device;
+                let labels: string[] = [];
+                let data: Array<string | number> = [];
                 let unit = ""
                 if(args.weatherVariable.type == "weather") {
-                    data = device.latestWeatherReport.hourly[args.weatherVariable.id];
-                    unit = device.latestWeatherReport.hourly_units[args.weatherVariable.id]
+                    data = (device.latestWeatherReport?.hourly[args.weatherVariable.id] ?? [])
+                        .filter((value): value is string | number => value !== null && value !== undefined);
+                    unit = device.latestWeatherReport?.hourly_units[args.weatherVariable.id] ?? "";
                 }
                 if(args.weatherVariable.type == "airQuality") {
-                    data = device.latestAirQualityReport.hourly[args.weatherVariable.id];
-                    unit = device.latestAirQualityReport.hourly_units[args.weatherVariable.id]
+                    data = (device.latestAirQualityReport?.hourly[args.weatherVariable.id] ?? [])
+                        .filter((value): value is string | number => value !== null && value !== undefined);
+                    unit = device.latestAirQualityReport?.hourly_units[args.weatherVariable.id] ?? "";
+                }
+                if (data.length === 0) {
+                    throw new Error(`No chart data available for ${args.weatherVariable.id}`);
                 }
                 for (let i = 0; i < data.length; i++) {
                     labels.push(i + "");
                 }
                 let myChart = new QuickChart();
-                console.log(data, labels)
                 myChart.setConfig({
                     type: args.type ?? "line",
                     data: {
@@ -112,9 +146,10 @@ class WeatherDriver extends Homey.Driver {
                     .setHeight(300)
                     .setBackgroundColor(args.backgroundColor)
                     .setDevicePixelRatio(3.0);
-                await myChart.toFile(path.join("/userdata/", "chart.png"));
+                let chartPath = path.join("/userdata/", `chart-${crypto.randomUUID()}.png`);
+                await myChart.toFile(chartPath);
                 let image = await this.homey.images.createImage();
-                image.setPath(path.join("/userdata/", "chart.png"));
+                image.setPath(chartPath);
                 return {
                     chart: image,
                 };
@@ -127,9 +162,8 @@ class WeatherDriver extends Homey.Driver {
      * Params: device - the device that is currently being repaired
      */
     async onRepair(session: any, device: WeatherDevice) {
-        session.setHandler("getData", async (data: {
-            view: string,
-        }) => {
+        let state = this.createSessionState(device.getStore());
+        session.setHandler("getData", async (data: SessionViewRequest) => {
             let store = device.getStore();
             if (data.view === "setup") {
                 return {
@@ -148,46 +182,38 @@ class WeatherDriver extends Homey.Driver {
 
         });
 
-        session.setHandler("setup", async (data: {
-            location: Location
-            tempUnit: string
-            windSpeedUnit: string
-            timezone: string
-            precipitationUnit: string
-            forecast: number
-        }) => {
+        session.setHandler("setup", async (data: SetupPayload) => {
             await device.setStoreValue("location", data.location);
             await device.setStoreValue("timezone", data.timezone == "auto" ? data.location.timezone : data.timezone);
             await device.setStoreValue("forecast", data.forecast);
+            state.tempUnit = data.tempUnit;
+            state.windSpeedUnit = data.windSpeedUnit;
+            state.precipitationUnit = data.precipitationUnit;
+            state.location = data.location;
+            state.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
+            state.forecast = data.forecast;
             return true;
         });
         session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
-            this.hourlyWeatherVariables = data;
+            state.hourlyWeatherVariables = data;
             return true;
         });
 
         session.setHandler("dailyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
-            this.dailyWeatherVariables = data;
+            state.dailyWeatherVariables = data;
             return true;
         });
 
         session.setHandler("hourlyAirQualityValues", async (data: string[]) => {
             if (data == undefined) return false;
-            this.hourlyAirQualityValues = data;
-            let capabilities = this.variablesToCapabilities();
-            for (let capability of capabilities) {
-                if (device.hasCapability(capability)) continue;
-                await device.addCapability(capability);
-            }
-            for (let deviceCapability of device.getCapabilities()) {
-                if (capabilities.includes(deviceCapability)) continue;
-                await device.removeCapability(deviceCapability);
-            }
-            await device.setStoreValue("dailyWeatherVariables", this.dailyWeatherVariables);
-            await device.setStoreValue("hourlyWeatherVariables", this.hourlyWeatherVariables);
-            await device.setStoreValue("hourlyAirQualityValues", this.hourlyAirQualityValues);
+            state.hourlyAirQualityValues = data;
+            let capabilities = this.variablesToCapabilities(state);
+            await this.syncCapabilities(device, capabilities);
+            await device.setStoreValue("dailyWeatherVariables", state.dailyWeatherVariables);
+            await device.setStoreValue("hourlyWeatherVariables", state.hourlyWeatherVariables);
+            await device.setStoreValue("hourlyAirQualityValues", state.hourlyAirQualityValues);
             await device.update(true)
             return true;
         });
@@ -198,56 +224,55 @@ class WeatherDriver extends Homey.Driver {
      * Params: session – Bi-directional socket for communication with the front-end
      */
     async onPair(session: any) {
+        let state = this.createSessionState();
 
         session.setHandler('showView', async (data: any) => {
         });
 
         //Handle Setup
-        session.setHandler("setup", async (data: {
-            location: Location
-            tempUnit: string
-            windSpeedUnit: string
-            timezone: string
-            precipitationUnit: string
-            forecast: number
-        }) => {
+        session.setHandler("setup", async (data: SetupPayload) => {
             if (data == undefined) return false;
-            this.location = data.location;
-            this.tempUnit = data.tempUnit;
-            this.windSpeedUnit = data.windSpeedUnit;
-            this.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
-            this.precipitationUnit = data.precipitationUnit;
-            this.forecast = data.forecast;
+            state.location = data.location;
+            state.tempUnit = data.tempUnit;
+            state.windSpeedUnit = data.windSpeedUnit;
+            state.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
+            state.precipitationUnit = data.precipitationUnit;
+            state.forecast = data.forecast;
             return true;
         });
 
         session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
-            this.hourlyWeatherVariables = data;
+            state.hourlyWeatherVariables = data;
             return true;
         });
 
         session.setHandler("dailyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
-            this.dailyWeatherVariables = data;
+            state.dailyWeatherVariables = data;
             return true;
         });
 
         session.setHandler("hourlyAirQualityValues", async (data: string[]) => {
             if (data == undefined) return false;
-            this.hourlyAirQualityValues = data;
+            state.hourlyAirQualityValues = data;
             return true;
         });
 
         //Get devices
         session.setHandler("list_devices", async () => {
+            if (!state.location || !state.timezone) {
+                this.error("Cannot create weather device during pair: missing location or timezone");
+                return [];
+            }
+
             let nameExtension = "";
-            if(this.forecast > 0){
-                nameExtension = ` (+${this.forecast}d)`
+            if(state.forecast > 0){
+                nameExtension = ` (+${state.forecast}d)`
             }
             return [
                 {
-                    name: this.location?.name + nameExtension,
+                    name: state.location.name + nameExtension,
                     // The data object is required and should be unique for the device.
                     // So a device's MAC address would be good, but an IP address would
                     // be bad since it can change over time.
@@ -255,43 +280,98 @@ class WeatherDriver extends Homey.Driver {
                         id: crypto.randomUUID()
                     },
                     store: {
-                        location: this.location,
-                        tempUnit: this.tempUnit,
-                        windSpeedUnit: this.windSpeedUnit,
-                        timezone: this.timezone,
-                        precipitationUnit: this.precipitationUnit,
-                        dailyWeatherVariables: this.dailyWeatherVariables,
-                        hourlyWeatherVariables: this.hourlyWeatherVariables,
-                        hourlyAirQualityValues: this.hourlyAirQualityValues,
-                        forecast: this.forecast,
+                        location: state.location,
+                        tempUnit: state.tempUnit,
+                        windSpeedUnit: state.windSpeedUnit,
+                        timezone: state.timezone,
+                        precipitationUnit: state.precipitationUnit,
+                        dailyWeatherVariables: state.dailyWeatherVariables,
+                        hourlyWeatherVariables: state.hourlyWeatherVariables,
+                        hourlyAirQualityValues: state.hourlyAirQualityValues,
+                        forecast: state.forecast,
                     },
-                    capabilities: this.variablesToCapabilities()
+                    capabilities: this.variablesToCapabilities(state)
                 },
             ];
         });
     }
 
-    private variablesToCapabilities() {
+    private variablesToCapabilities(state: SessionState) {
         let capabilities: string[] = ["date"];
         DailyWeatherVariablesConfig.forEach((d) => {
-            if (this.dailyWeatherVariables.includes(d.value) && d.capability != "")
+            if (state.dailyWeatherVariables.includes(d.value) && d.capability != "")
                 capabilities.push(d.capability);
-            else if (this.dailyWeatherVariables.includes(d.value))
+            else if (state.dailyWeatherVariables.includes(d.value))
                 this.error(d.value + " has no capability")
         });
         HourlyWeatherVariablesConfig.forEach((d) => {
-            if (this.hourlyWeatherVariables.includes(d.value) && d.capability != "")
+            if (state.hourlyWeatherVariables.includes(d.value) && d.capability != "")
                 capabilities.push(d.capability);
-            else if (this.hourlyWeatherVariables.includes(d.value))
+            else if (state.hourlyWeatherVariables.includes(d.value))
                 this.error(d.value + " has no capability")
         });
         HourlyAirQualityVariablesConfig.forEach((d) => {
-            if (this.hourlyAirQualityValues.includes(d.value) && d.capability != "")
+            if (state.hourlyAirQualityValues.includes(d.value) && d.capability != "")
                 capabilities.push(d.capability);
-            else if (this.hourlyAirQualityValues.includes(d.value))
+            else if (state.hourlyAirQualityValues.includes(d.value))
                 this.error(d.value + " has no capability")
         });
         return capabilities;
+    }
+
+    private createSessionState(store?: {
+        location?: Location;
+        tempUnit?: string;
+        windSpeedUnit?: string;
+        timezone?: string;
+        precipitationUnit?: string;
+        hourlyWeatherVariables?: string[];
+        dailyWeatherVariables?: string[];
+        hourlyAirQualityValues?: string[];
+        forecast?: number | string;
+    }): SessionState {
+        return {
+            location: store?.location,
+            tempUnit: store?.tempUnit,
+            windSpeedUnit: store?.windSpeedUnit,
+            timezone: store?.timezone,
+            precipitationUnit: store?.precipitationUnit,
+            hourlyWeatherVariables: this.normalizeStringArray(store?.hourlyWeatherVariables),
+            dailyWeatherVariables: this.normalizeStringArray(store?.dailyWeatherVariables),
+            hourlyAirQualityValues: this.normalizeStringArray(store?.hourlyAirQualityValues),
+            forecast: this.normalizeForecast(store?.forecast),
+        };
+    }
+
+    private async syncCapabilities(device: WeatherDevice, capabilities: string[]) {
+        for (let capability of capabilities) {
+            if (device.hasCapability(capability)) continue;
+            try {
+                await device.addCapability(capability);
+            } catch (err: any) {
+                this.error(`Failed to add capability "${capability}" to ${device.getName()}: ${err?.message ?? err}`);
+            }
+        }
+
+        for (let deviceCapability of device.getCapabilities()) {
+            if (capabilities.includes(deviceCapability)) continue;
+            try {
+                await device.removeCapability(deviceCapability);
+            } catch (err: any) {
+                this.error(`Failed to remove capability "${deviceCapability}" from ${device.getName()}: ${err?.message ?? err}`);
+            }
+        }
+    }
+
+    private normalizeForecast(forecast: number | string | undefined) {
+        let parsed = Number(forecast ?? 0);
+        if (!Number.isFinite(parsed)) return 0;
+        return Math.max(0, Math.floor(parsed));
+    }
+
+    private normalizeStringArray(values: string[] | undefined) {
+        if (!Array.isArray(values)) return [];
+        return [...new Set(values.filter((value): value is string => typeof value === "string" && value.length > 0))];
     }
 }
 
