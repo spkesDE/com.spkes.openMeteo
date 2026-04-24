@@ -1,11 +1,11 @@
 {
   "title": {
-    "en": "Create chart for Hourly Weather Variable",
-    "de": "Erstelle ein Graph für die Stündlichen Wetter Werte"
+    "en": "Create chart for Weather Variable",
+    "de": "Erstelle ein Diagramm fuer Wetterwerte"
   },
   "titleFormatted": {
-    "en": "Create chart for Hourly Weather Variable [[weatherVariable]] ([[type]] [[lineColor]] [[backgroundColor]])",
-    "de": "Erstelle ein Graph für die Stündlichen Wetter Werte [[weatherVariable]] ([[type]] [[lineColor]] [[backgroundColor]])"
+    "en": "Create chart for [[weatherVariable]] over [[period]] ([[type]] [[lineColor]] [[backgroundColor]])",
+    "de": "Erstelle ein Diagramm fuer [[weatherVariable]] ueber [[period]] ([[type]] [[lineColor]] [[backgroundColor]])"
   },
   "args": [
     {
@@ -19,8 +19,60 @@
       "name": "weatherVariable",
       "placeholder": {
         "en": "Weather Variable",
-        "de": "Wetter Werte"
+        "de": "Wetterwert"
       }
+    },
+    {
+      "name": "period",
+      "type": "dropdown",
+      "title": {
+        "en": "Period",
+        "de": "Zeitraum"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "24h",
+          "title": {
+            "en": "24 hours",
+            "de": "24 Stunden"
+          }
+        },
+        {
+          "id": "48h",
+          "title": {
+            "en": "48 hours",
+            "de": "48 Stunden"
+          }
+        },
+        {
+          "id": "7d",
+          "title": {
+            "en": "7 days",
+            "de": "7 Tage"
+          }
+        },
+        {
+          "id": "14d",
+          "title": {
+            "en": "14 days",
+            "de": "14 Tage"
+          }
+        },
+        {
+          "id": "16d",
+          "title": {
+            "en": "16 days",
+            "de": "16 Tage"
+          }
+        }
+      ]
     },
     {
       "name": "type",
@@ -34,14 +86,14 @@
           "id": "line",
           "title": {
             "en": "Line Chart",
-            "de": "Linen-graph"
+            "de": "Liniendiagramm"
           }
         },
         {
           "id": "bar",
           "title": {
             "en": "Bar Chart",
-            "de": "Bar-graph"
+            "de": "Balkendiagramm"
           }
         }
       ]
@@ -61,7 +113,7 @@
       "required": false,
       "title": {
         "en": "Background Color",
-        "dn": "Hintergrundfarbe"
+        "de": "Hintergrundfarbe"
       },
       "values": [
         {
@@ -94,7 +146,7 @@
       "type": "image",
       "title": {
         "en": "Chart",
-        "de": "Graph"
+        "de": "Diagramm"
       }
     }
   ]

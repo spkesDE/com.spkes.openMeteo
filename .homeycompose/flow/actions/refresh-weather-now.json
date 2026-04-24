@@ -1,0 +1,17 @@
+{
+  "title": {
+    "en": "Refresh weather now",
+    "de": "Wetter jetzt aktualisieren"
+  },
+  "titleFormatted": {
+    "en": "Refresh weather now",
+    "de": "Wetter jetzt aktualisieren"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ]
+}

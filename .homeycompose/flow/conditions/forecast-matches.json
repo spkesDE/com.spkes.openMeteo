@@ -1,0 +1,79 @@
+{
+  "title": {
+    "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
+    "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+  },
+  "titleFormatted": {
+    "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
+    "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    },
+    {
+      "type": "autocomplete",
+      "required": true,
+      "name": "weatherVariable",
+      "placeholder": {
+        "en": "Daily forecast value",
+        "de": "Taeglicher Vorhersagewert"
+      }
+    },
+    {
+      "name": "operator",
+      "type": "dropdown",
+      "title": {
+        "en": "Operator",
+        "de": "Operator"
+      },
+      "values": [
+        {
+          "id": "gt",
+          "title": {
+            "en": "greater than",
+            "de": "groesser als"
+          }
+        },
+        {
+          "id": "gte",
+          "title": {
+            "en": "greater or equal",
+            "de": "groesser oder gleich"
+          }
+        },
+        {
+          "id": "lt",
+          "title": {
+            "en": "less than",
+            "de": "kleiner als"
+          }
+        },
+        {
+          "id": "lte",
+          "title": {
+            "en": "less or equal",
+            "de": "kleiner oder gleich"
+          }
+        },
+        {
+          "id": "eq",
+          "title": {
+            "en": "equal",
+            "de": "gleich"
+          }
+        }
+      ]
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "title": {
+        "en": "Value",
+        "de": "Wert"
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "title": {
+    "en": "Weather condition changed",
+    "de": "Wetterzustand hat sich geaendert"
+  },
+  "titleFormatted": {
+    "en": "Weather condition changed",
+    "de": "Wetterzustand hat sich geaendert"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    }
+  ],
+  "tokens": [
+    {
+      "name": "previous_condition",
+      "type": "string",
+      "title": {
+        "en": "Previous condition",
+        "de": "Vorheriger Zustand"
+      }
+    },
+    {
+      "name": "current_condition",
+      "type": "string",
+      "title": {
+        "en": "Current condition",
+        "de": "Aktueller Zustand"
+      }
+    },
+    {
+      "name": "previous_code",
+      "type": "number",
+      "title": {
+        "en": "Previous code",
+        "de": "Vorheriger Code"
+      }
+    },
+    {
+      "name": "current_code",
+      "type": "number",
+      "title": {
+        "en": "Current code",
+        "de": "Aktueller Code"
+      }
+    }
+  ]
+}
