@@ -63,7 +63,8 @@ class WeatherDriver extends Homey.Driver {
             .registerArgumentAutocompleteListener('weatherVariable', (query, args) => {
                 let device = args.device as WeatherDevice;
                 let results: any[] = [];
-                device.getStore().hourlyWeatherVariables.forEach((s: string) => {
+                let store = this.createSessionState(device.getStore());
+                store.hourlyWeatherVariables.forEach((s: string) => {
                     let config = device.getConfig(s);
                     results.push({
                         name: this.homey.__(config?.i18n ?? s),
@@ -73,7 +74,7 @@ class WeatherDriver extends Homey.Driver {
                         config: config
                     });
                 });
-                device.getStore().hourlyAirQualityValues.forEach((s: string) => {
+                store.hourlyAirQualityValues.forEach((s: string) => {
                     let config = device.getConfig(s);
                     results.push({
                         name: this.homey.__(config?.i18n ?? s),
@@ -260,13 +261,18 @@ class WeatherDriver extends Homey.Driver {
 
         //Get devices
         session.setHandler("list_devices", async () => {
+            if (!state.location || !state.timezone) {
+                this.error("Cannot create weather device during pair: missing location or timezone");
+                return [];
+            }
+
             let nameExtension = "";
             if(state.forecast > 0){
                 nameExtension = ` (+${state.forecast}d)`
             }
             return [
                 {
-                    name: state.location?.name + nameExtension,
+                    name: state.location.name + nameExtension,
                     // The data object is required and should be unique for the device.
                     // So a device's MAC address would be good, but an IP address would
                     // be bad since it can change over time.
@@ -330,10 +336,10 @@ class WeatherDriver extends Homey.Driver {
             windSpeedUnit: store?.windSpeedUnit,
             timezone: store?.timezone,
             precipitationUnit: store?.precipitationUnit,
-            hourlyWeatherVariables: store?.hourlyWeatherVariables ?? [],
-            dailyWeatherVariables: store?.dailyWeatherVariables ?? [],
-            hourlyAirQualityValues: store?.hourlyAirQualityValues ?? [],
-            forecast: Number(store?.forecast ?? 0),
+            hourlyWeatherVariables: this.normalizeStringArray(store?.hourlyWeatherVariables),
+            dailyWeatherVariables: this.normalizeStringArray(store?.dailyWeatherVariables),
+            hourlyAirQualityValues: this.normalizeStringArray(store?.hourlyAirQualityValues),
+            forecast: this.normalizeForecast(store?.forecast),
         };
     }
 
@@ -355,6 +361,17 @@ class WeatherDriver extends Homey.Driver {
                 this.error(`Failed to remove capability "${deviceCapability}" from ${device.getName()}: ${err?.message ?? err}`);
             }
         }
+    }
+
+    private normalizeForecast(forecast: number | string | undefined) {
+        let parsed = Number(forecast ?? 0);
+        if (!Number.isFinite(parsed)) return 0;
+        return Math.max(0, Math.floor(parsed));
+    }
+
+    private normalizeStringArray(values: string[] | undefined) {
+        if (!Array.isArray(values)) return [];
+        return [...new Set(values.filter((value): value is string => typeof value === "string" && value.length > 0))];
     }
 }
 

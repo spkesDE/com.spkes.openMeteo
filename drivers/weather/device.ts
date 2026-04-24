@@ -6,6 +6,15 @@ import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables
 import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
 import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 
+interface DeviceStore {
+    location?: Location;
+    timezone?: string;
+    forecast?: number | string;
+    dailyWeatherVariables?: string[];
+    hourlyWeatherVariables?: string[];
+    hourlyAirQualityValues?: string[];
+}
+
 export default class WeatherDevice extends Homey.Device {
     private updateInterval!: NodeJS.Timeout;
     private randomNumber: number = 15;
@@ -22,7 +31,11 @@ export default class WeatherDevice extends Homey.Device {
             await this.addCapability("measure_weathercode")
         }
 
-        await this.update(true);
+        try {
+            await this.update(true);
+        } catch (err: any) {
+            this.error(`Initial weather update failed for ${this.getName()}: ${err?.message ?? err}`);
+        }
         this.updateInterval = this.homey.setInterval(() => {
             this.update().catch((err) => this.error(err));
         }, 1000 * 60);
@@ -40,27 +53,31 @@ export default class WeatherDevice extends Homey.Device {
         this.isUpdating = true;
 
         try {
-            let store = this.getStore();
-            let forecast = Number(store.forecast ?? 0);
-            let date = this.getTargetDateInTimezone(store.timezone, forecast);
+            let store = this.getNormalizedStore();
+            if (!store.location || !store.timezone) {
+                this.error(`Skipping weather update for ${this.getName()}: missing location or timezone in device store`);
+                return;
+            }
+
+            let date = this.getTargetDateInTimezone(store.timezone, store.forecast);
             let currentHourInTimezone = this.getNowInTimezone(store.timezone).getHours();
 
             //Getting the weather data from open-meteo
             let weather = await this.getCurrentWeather(
                 store.location,
                 store.timezone,
-                (store.hourlyWeatherVariables ?? []).filter((e: string) => this.getConfig(e)?.apiVar === true),
-                store.dailyWeatherVariables ?? [],
+                store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true),
+                store.dailyWeatherVariables,
                 date.toISOString().split('T')[0]
             );
 
             this.latestWeatherReport = weather;
 
             //Setting the weather variables
-            for (let v of store.dailyWeatherVariables ?? []) {
+            for (let v of store.dailyWeatherVariables) {
                 await this.updateWeather(v, weather.daily);
             }
-            for (let v of store.hourlyWeatherVariables ?? []) {
+            for (let v of store.hourlyWeatherVariables) {
                 await this.updateWeather(v, weather.hourly, currentHourInTimezone);
             }
 
@@ -71,12 +88,14 @@ export default class WeatherDevice extends Homey.Device {
                 await this.setCapabilityValue("date", `${hours} ${day}`);
             }
 
-            if (Array.isArray(store.hourlyAirQualityValues) && store.hourlyAirQualityValues.length > 0) {
+            if (store.hourlyAirQualityValues.length > 0) {
                 let airQuality = await this.getAirQuality(store.location, store.hourlyAirQualityValues, date.toISOString().split('T')[0]);
                 this.latestAirQualityReport = airQuality;
                 for (let v of store.hourlyAirQualityValues) {
                     await this.updateWeather(v, airQuality.hourly);
                 }
+            } else {
+                this.latestAirQualityReport = undefined;
             }
 
             if (!this.isUninitializing) {
@@ -84,8 +103,8 @@ export default class WeatherDevice extends Homey.Device {
             }
             this.log(`Updating weather for location: ${store.location.name}`)
         } catch (err: any) {
-            let store = this.getStore();
-            this.error(`Failed to update weather for ${this.getName()} (${store.location?.name ?? "unknown location"}, forecast +${store.forecast ?? 0}d): ${err?.message ?? err}`);
+            let store = this.getNormalizedStore();
+            this.error(`Failed to update weather for ${this.getName()} (${store.location?.name ?? "unknown location"}, forecast +${store.forecast}d): ${err?.message ?? err}`);
         } finally {
             this.isUpdating = false;
         }
@@ -213,12 +232,43 @@ export default class WeatherDevice extends Homey.Device {
     onDeleted() {
         this.isUninitializing = true;
         this.clearUpdateInterval();
-        this.log("WeatherDevice with location: " + this.getStore().location.name + " deleted. Cleared interval.");
+        let locationName = this.getNormalizedStore().location?.name ?? this.getName();
+        this.log("WeatherDevice with location: " + locationName + " deleted. Cleared interval.");
     }
 
     private clearUpdateInterval() {
         if (!this.updateInterval) return;
         this.homey.clearInterval(this.updateInterval);
+    }
+
+    private getNormalizedStore(): {
+        location?: Location;
+        timezone?: string;
+        forecast: number;
+        dailyWeatherVariables: string[];
+        hourlyWeatherVariables: string[];
+        hourlyAirQualityValues: string[];
+    } {
+        let store = this.getStore() as DeviceStore;
+        return {
+            location: store.location,
+            timezone: store.timezone,
+            forecast: this.normalizeForecast(store.forecast),
+            dailyWeatherVariables: this.normalizeStringArray(store.dailyWeatherVariables),
+            hourlyWeatherVariables: this.normalizeStringArray(store.hourlyWeatherVariables),
+            hourlyAirQualityValues: this.normalizeStringArray(store.hourlyAirQualityValues),
+        };
+    }
+
+    private normalizeForecast(forecast: number | string | undefined) {
+        let parsed = Number(forecast ?? 0);
+        if (!Number.isFinite(parsed)) return 0;
+        return Math.max(0, Math.floor(parsed));
+    }
+
+    private normalizeStringArray(values: string[] | undefined) {
+        if (!Array.isArray(values)) return [];
+        return [...new Set(values.filter((value): value is string => typeof value === "string" && value.length > 0))];
     }
 
     private getTargetDateInTimezone(timeZone: string, forecast: number) {
