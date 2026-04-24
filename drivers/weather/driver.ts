@@ -21,6 +21,33 @@ interface SessionState {
     forecast: number;
 }
 
+interface SessionViewRequest {
+    view: "setup" | "dailyWeatherVariables" | "hourlyWeatherVariables" | "hourlyAirQualityValues";
+}
+
+interface SetupPayload {
+    location: Location;
+    tempUnit: string;
+    windSpeedUnit: string;
+    timezone: string;
+    precipitationUnit: string;
+    forecast: number;
+}
+
+interface ChartVariableArgument {
+    id: string;
+    name: string;
+    type: "weather" | "airQuality";
+}
+
+interface CreateChartFlowArgs {
+    device: WeatherDevice;
+    weatherVariable: ChartVariableArgument;
+    type?: string;
+    lineColor: string;
+    backgroundColor: string;
+}
+
 class WeatherDriver extends Homey.Driver {
     /**
      * onInit is called when the driver is initialized.
@@ -60,8 +87,8 @@ class WeatherDriver extends Homey.Driver {
                     return result.name.toLowerCase().includes(query.toLowerCase());
                 });
             })
-            .registerRunListener(async (args: any) => {
-                let device = args.device as WeatherDevice;
+            .registerRunListener(async (args: CreateChartFlowArgs) => {
+                let device = args.device;
                 let labels: string[] = [];
                 let data: Array<string | number> = [];
                 let unit = ""
@@ -135,9 +162,7 @@ class WeatherDriver extends Homey.Driver {
      */
     async onRepair(session: any, device: WeatherDevice) {
         let state = this.createSessionState(device.getStore());
-        session.setHandler("getData", async (data: {
-            view: string,
-        }) => {
+        session.setHandler("getData", async (data: SessionViewRequest) => {
             let store = device.getStore();
             if (data.view === "setup") {
                 return {
@@ -156,17 +181,13 @@ class WeatherDriver extends Homey.Driver {
 
         });
 
-        session.setHandler("setup", async (data: {
-            location: Location
-            tempUnit: string
-            windSpeedUnit: string
-            timezone: string
-            precipitationUnit: string
-            forecast: number
-        }) => {
+        session.setHandler("setup", async (data: SetupPayload) => {
             await device.setStoreValue("location", data.location);
             await device.setStoreValue("timezone", data.timezone == "auto" ? data.location.timezone : data.timezone);
             await device.setStoreValue("forecast", data.forecast);
+            state.tempUnit = data.tempUnit;
+            state.windSpeedUnit = data.windSpeedUnit;
+            state.precipitationUnit = data.precipitationUnit;
             state.location = data.location;
             state.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
             state.forecast = data.forecast;
@@ -188,14 +209,7 @@ class WeatherDriver extends Homey.Driver {
             if (data == undefined) return false;
             state.hourlyAirQualityValues = data;
             let capabilities = this.variablesToCapabilities(state);
-            for (let capability of capabilities) {
-                if (device.hasCapability(capability)) continue;
-                await device.addCapability(capability);
-            }
-            for (let deviceCapability of device.getCapabilities()) {
-                if (capabilities.includes(deviceCapability)) continue;
-                await device.removeCapability(deviceCapability);
-            }
+            await this.syncCapabilities(device, capabilities);
             await device.setStoreValue("dailyWeatherVariables", state.dailyWeatherVariables);
             await device.setStoreValue("hourlyWeatherVariables", state.hourlyWeatherVariables);
             await device.setStoreValue("hourlyAirQualityValues", state.hourlyAirQualityValues);
@@ -215,14 +229,7 @@ class WeatherDriver extends Homey.Driver {
         });
 
         //Handle Setup
-        session.setHandler("setup", async (data: {
-            location: Location
-            tempUnit: string
-            windSpeedUnit: string
-            timezone: string
-            precipitationUnit: string
-            forecast: number
-        }) => {
+        session.setHandler("setup", async (data: SetupPayload) => {
             if (data == undefined) return false;
             state.location = data.location;
             state.tempUnit = data.tempUnit;
@@ -306,7 +313,17 @@ class WeatherDriver extends Homey.Driver {
         return capabilities;
     }
 
-    private createSessionState(store?: any): SessionState {
+    private createSessionState(store?: {
+        location?: Location;
+        tempUnit?: string;
+        windSpeedUnit?: string;
+        timezone?: string;
+        precipitationUnit?: string;
+        hourlyWeatherVariables?: string[];
+        dailyWeatherVariables?: string[];
+        hourlyAirQualityValues?: string[];
+        forecast?: number | string;
+    }): SessionState {
         return {
             location: store?.location,
             tempUnit: store?.tempUnit,
@@ -318,6 +335,26 @@ class WeatherDriver extends Homey.Driver {
             hourlyAirQualityValues: store?.hourlyAirQualityValues ?? [],
             forecast: Number(store?.forecast ?? 0),
         };
+    }
+
+    private async syncCapabilities(device: WeatherDevice, capabilities: string[]) {
+        for (let capability of capabilities) {
+            if (device.hasCapability(capability)) continue;
+            try {
+                await device.addCapability(capability);
+            } catch (err: any) {
+                this.error(`Failed to add capability "${capability}" to ${device.getName()}: ${err?.message ?? err}`);
+            }
+        }
+
+        for (let deviceCapability of device.getCapabilities()) {
+            if (capabilities.includes(deviceCapability)) continue;
+            try {
+                await device.removeCapability(deviceCapability);
+            } catch (err: any) {
+                this.error(`Failed to remove capability "${deviceCapability}" from ${device.getName()}: ${err?.message ?? err}`);
+            }
+        }
     }
 }
 
