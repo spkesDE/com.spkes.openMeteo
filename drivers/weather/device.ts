@@ -42,13 +42,8 @@ export default class WeatherDevice extends Homey.Device {
         try {
             let store = this.getStore();
             let forecast = Number(store.forecast ?? 0);
-
-            //Getting the target date in the right timezone, that's why we have to use 3 new Date();
-            //store.forecast is a number in days. 0 = today, 1 = tomorrow etc..
-            let date = new Date(
-                new Date(new Date().getTime() + (forecast * 24 * 60 * 60 * 1000))
-                    .toLocaleString("en-US", {timeZone: store.timezone})
-            );
+            let date = this.getTargetDateInTimezone(store.timezone, forecast);
+            let currentHourInTimezone = this.getNowInTimezone(store.timezone).getHours();
 
             //Getting the weather data from open-meteo
             let weather = await this.getCurrentWeather(
@@ -65,9 +60,8 @@ export default class WeatherDevice extends Homey.Device {
             for (let v of store.dailyWeatherVariables ?? []) {
                 await this.updateWeather(v, weather.daily);
             }
-            let timeIndex = new Date(new Date().toLocaleString("en-US", {timeZone: store.timezone})).getHours();
             for (let v of store.hourlyWeatherVariables ?? []) {
-                await this.updateWeather(v, weather.hourly, timeIndex);
+                await this.updateWeather(v, weather.hourly, currentHourInTimezone);
             }
 
             //Setting Date capability to current day/time
@@ -90,7 +84,8 @@ export default class WeatherDevice extends Homey.Device {
             }
             this.log(`Updating weather for location: ${store.location.name}`)
         } catch (err: any) {
-            this.error(`Failed to update weather for ${this.getName()}: ${err?.message ?? err}`);
+            let store = this.getStore();
+            this.error(`Failed to update weather for ${this.getName()} (${store.location?.name ?? "unknown location"}, forecast +${store.forecast ?? 0}d): ${err?.message ?? err}`);
         } finally {
             this.isUpdating = false;
         }
@@ -100,14 +95,14 @@ export default class WeatherDevice extends Homey.Device {
         //Getting JSON entry of the weatherValue
         let config = this.getConfig(weatherValue);
         if (config === null) {
-            this.error("No config found for " + weatherValue);
+            this.error(`No config found for weather value "${weatherValue}" on ${this.getName()}`);
             return;
         }
         if (!this.hasCapability(config.capability)) return;
 
         let values = weatherArray?.[config.value];
         if (!Array.isArray(values)) {
-            this.error(`Weather field "${config.value}" is missing in API response for ${this.getName()}`);
+            this.error(`Weather field "${config.value}" is missing in API response for ${this.getName()} (requested by "${weatherValue}")`);
             return;
         }
 
@@ -115,7 +110,7 @@ export default class WeatherDevice extends Homey.Device {
         let value = values[safeIndex];
 
         if (value === undefined) {
-            this.error(`Weather field "${config.value}" has no value at index ${index} for ${this.getName()}`);
+            this.error(`Weather field "${config.value}" has no value at index ${index} for ${this.getName()} (using index ${safeIndex})`);
             return;
         }
 
@@ -224,6 +219,15 @@ export default class WeatherDevice extends Homey.Device {
     private clearUpdateInterval() {
         if (!this.updateInterval) return;
         this.homey.clearInterval(this.updateInterval);
+    }
+
+    private getTargetDateInTimezone(timeZone: string, forecast: number) {
+        let targetTimestamp = Date.now() + (forecast * 24 * 60 * 60 * 1000);
+        return new Date(new Date(targetTimestamp).toLocaleString("en-US", {timeZone}));
+    }
+
+    private getNowInTimezone(timeZone: string) {
+        return new Date(new Date().toLocaleString("en-US", {timeZone}));
     }
 
     private buildWeatherParams(location: Location, timeZone: string, startDate: string, hourlyWeatherValues: string[], dailyWeatherValues: string[]) {
