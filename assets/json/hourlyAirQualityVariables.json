@@ -14,7 +14,7 @@
     "capability": "measure_pm25"
   },
   {
-    "value": "pm10",
+    "value": "carbon_monoxide",
     "i18n": "pair.weatherVariables.hourly.airQuality.carbon_monoxide",
     "apiVar": true,
     "default": false,
@@ -32,14 +32,14 @@
     "i18n": "pair.weatherVariables.hourly.airQuality.sulphur_dioxide",
     "apiVar": true,
     "default": false,
-    "capability": "measure_sulphur_dioxide"
+    "capability": "measure_so2"
   },
   {
     "value": "ozone",
     "i18n": "pair.weatherVariables.hourly.airQuality.ozone",
     "apiVar": true,
     "default": false,
-    "capability": "measure_ozone"
+    "capability": "measure_o3"
   },
   {
     "value": "ammonia",
