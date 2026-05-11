@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "US AQI",
+    "de": "US Luftqualitätsindex"
+  },
+  "title": {
+    "en": "US AQI",
+    "de": "US Luftqualitätsindex"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/placeholder.svg"
+}

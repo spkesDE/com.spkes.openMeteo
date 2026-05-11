@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "European AQI Ozone",
+    "de": "Europäischer AQI Ozon"
+  },
+  "title": {
+    "en": "European AQI Ozone",
+    "de": "Europäischer AQI Ozon"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_ozone.svg"
+}

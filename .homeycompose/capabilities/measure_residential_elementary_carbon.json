@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Residential Elementary Carbon",
+    "de": "Elementarer Kohlenstoff (Haushalte)"
+  },
+  "title": {
+    "en": "Residential Elementary Carbon",
+    "de": "Elementarer Kohlenstoff (Haushalte)"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "µg/m³",
+    "de": "µg/m³"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

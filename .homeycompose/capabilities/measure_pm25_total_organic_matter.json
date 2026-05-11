@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "PM2.5 Total Organic Matter",
+    "de": "PM2,5 Organische Gesamtmasse"
+  },
+  "title": {
+    "en": "PM2.5 Total Organic Matter",
+    "de": "PM2,5 Organische Gesamtmasse"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "µg/m³",
+    "de": "µg/m³"
+  },
+  "icon": "/assets/icons/measure_pm10.svg"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "US AQI Carbon Monoxide",
+    "de": "US AQI Kohlenmonoxid"
+  },
+  "title": {
+    "en": "US AQI Carbon Monoxide",
+    "de": "US AQI Kohlenmonoxid"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_carbon_monoxide.svg"
+}
