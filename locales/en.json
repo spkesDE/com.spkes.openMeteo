@@ -158,6 +158,8 @@
         "visibility": "Visibility",
         "weathercode": "Weathercode",
         "weathercondition": "Weather Condition",
+        "alarm_rain": "Rain Alarm",
+        "alarm_freeze_risk": "Freeze Risk Alarm",
         "winddirection_10m": "Wind Direction",
         "windgusts_10m": "Wind Gusts",
         "windspeed_10m": "Wind Speed"

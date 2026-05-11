@@ -77,10 +77,15 @@ export default class WeatherDevice extends Homey.Device {
             let currentHourInTimezone = this.getNowInTimezone(store.timezone).getHours();
 
             //Getting the weather data from open-meteo
+            let hourlyApiVars = store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true);
+            if (store.hourlyWeatherVariables.includes("weatherCondition") && !hourlyApiVars.includes("weathercode")) {
+                hourlyApiVars.push("weathercode");
+            }
+
             let weather = await this.getCurrentWeather(
                 store.location,
                 store.timezone,
-                store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true),
+                hourlyApiVars,
                 store.dailyWeatherVariables,
                 date.toISOString().split('T')[0]
             );
@@ -136,6 +141,8 @@ export default class WeatherDevice extends Homey.Device {
         }
         let capabilityId = this.resolveCapabilityId(config.capability);
         if (!capabilityId) return;
+
+        if (config.value === "alarm_rain" || config.value === "alarm_freeze_risk") return;
 
         if (config.value == "weatherCondition") {
             let weatherCodes = weatherArray?.["weathercode"];

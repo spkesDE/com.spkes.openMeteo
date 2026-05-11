@@ -364,7 +364,7 @@ class WeatherDriver extends Homey.Driver {
     }
 
     private variablesToCapabilities(state: SessionState) {
-        let capabilities: string[] = ["date", "alarm_rain", "alarm_freeze_risk"];
+        let capabilities: string[] = ["date"];
         DailyWeatherVariablesConfig.forEach((d) => {
             if (state.dailyWeatherVariables.includes(d.value) && d.capability != "")
                 capabilities.push(d.capability);
