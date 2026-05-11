@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "UV Index",
+    "de": "UV-Index"
+  },
+  "title": {
+    "en": "UV Index",
+    "de": "UV-Index"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_uv_index.svg"
+}

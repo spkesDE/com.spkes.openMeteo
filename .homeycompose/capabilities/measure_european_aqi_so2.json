@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "European AQI Sulphur Dioxide",
+    "de": "Europäischer AQI Schwefeldioxid"
+  },
+  "title": {
+    "en": "European AQI Sulphur Dioxide",
+    "de": "Europäischer AQI Schwefeldioxid"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_sulphur_dioxide.svg"
+}

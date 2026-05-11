@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "US AQI Ozone",
+    "de": "US AQI Ozon"
+  },
+  "title": {
+    "en": "US AQI Ozone",
+    "de": "US AQI Ozon"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_ozone.svg"
+}

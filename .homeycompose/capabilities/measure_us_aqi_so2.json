@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "US AQI Sulphur Dioxide",
+    "de": "US AQI Schwefeldioxid"
+  },
+  "title": {
+    "en": "US AQI Sulphur Dioxide",
+    "de": "US AQI Schwefeldioxid"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_sulphur_dioxide.svg"
+}

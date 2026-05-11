@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "European AQI Nitrogen Dioxide",
+    "de": "Europäischer AQI Stickstoffdioxid"
+  },
+  "title": {
+    "en": "European AQI Nitrogen Dioxide",
+    "de": "Europäischer AQI Stickstoffdioxid"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+}

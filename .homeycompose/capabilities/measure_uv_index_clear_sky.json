@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "UV Index Clear Sky",
+    "de": "UV-Index Klarer Himmel"
+  },
+  "title": {
+    "en": "UV Index Clear Sky",
+    "de": "UV-Index Klarer Himmel"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_uv_index.svg"
+}

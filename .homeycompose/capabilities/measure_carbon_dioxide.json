@@ -1,12 +1,12 @@
 {
   "type": "number",
   "label": {
-    "en": "PM10",
-    "de": "PM10"
+    "en": "Carbon Dioxide",
+    "de": "Kohlendioxid"
   },
   "title": {
-    "en": "PM10",
-    "de": "PM10"
+    "en": "Carbon Dioxide",
+    "de": "Kohlendioxid"
   },
   "uiComponent": "sensor",
   "getable": true,
@@ -16,5 +16,5 @@
     "en": "µg/m³",
     "de": "µg/m³"
   },
-  "icon": "/assets/icons/measure_pm10.svg"
+  "icon": "/assets/icons/measure_carbon_monoxide.svg"
 }

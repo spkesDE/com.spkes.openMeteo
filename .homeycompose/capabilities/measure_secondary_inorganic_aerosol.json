@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Secondary Inorganic Aerosol",
+    "de": "Sekundäres anorganisches Aerosol"
+  },
+  "title": {
+    "en": "Secondary Inorganic Aerosol",
+    "de": "Sekundäres anorganisches Aerosol"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "µg/m³",
+    "de": "µg/m³"
+  },
+  "icon": "/assets/icons/placeholder.svg"
+}

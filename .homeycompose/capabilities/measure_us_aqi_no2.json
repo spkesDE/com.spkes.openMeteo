@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "US AQI Nitrogen Dioxide",
+    "de": "US AQI Stickstoffdioxid"
+  },
+  "title": {
+    "en": "US AQI Nitrogen Dioxide",
+    "de": "US AQI Stickstoffdioxid"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+}

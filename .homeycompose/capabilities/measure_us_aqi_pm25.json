@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "label": {
+    "en": "US AQI PM2.5",
+    "de": "US AQI PM2,5"
+  },
+  "title": {
+    "en": "US AQI PM2.5",
+    "de": "US AQI PM2,5"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "icon": "/assets/icons/measure_pm10.svg"
+}

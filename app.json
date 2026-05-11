@@ -1,8 +1,8 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.spkes.openMeteo",
-  "version": "1.5.1",
-  "compatibility": ">=8.1.0",
+  "version": "2.0.0",
+  "compatibility": ">=12.11.0",
   "sdk": 3,
   "platforms": [
     "local"
@@ -98,6 +98,122 @@
     "triggers": [
       {
         "title": {
+          "en": "Rain expected started",
+          "de": "Regenwahrscheinlichkeit hat begonnen"
+        },
+        "titleFormatted": {
+          "en": "Rain expected started",
+          "de": "Regenwahrscheinlichkeit hat begonnen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "id": "rain-started"
+      },
+      {
+        "title": {
+          "en": "Rain expected stopped",
+          "de": "Regenwahrscheinlichkeit hat aufgehört"
+        },
+        "titleFormatted": {
+          "en": "Rain expected stopped",
+          "de": "Regenwahrscheinlichkeit hat aufgehört"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "id": "rain-stopped"
+      },
+      {
+        "title": {
+          "en": "Severe weather expected",
+          "de": "Kritisches Wetter erwartet"
+        },
+        "titleFormatted": {
+          "en": "Severe weather expected",
+          "de": "Kritisches Wetter erwartet"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "reasons",
+            "type": "string",
+            "title": {
+              "en": "Reasons",
+              "de": "Gruende"
+            }
+          }
+        ],
+        "id": "severe-weather-expected"
+      },
+      {
+        "title": {
+          "en": "Weather condition changed",
+          "de": "Wetterzustand hat sich geaendert"
+        },
+        "titleFormatted": {
+          "en": "Weather condition changed",
+          "de": "Wetterzustand hat sich geaendert"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "previous_condition",
+            "type": "string",
+            "title": {
+              "en": "Previous condition",
+              "de": "Vorheriger Zustand"
+            }
+          },
+          {
+            "name": "current_condition",
+            "type": "string",
+            "title": {
+              "en": "Current condition",
+              "de": "Aktueller Zustand"
+            }
+          },
+          {
+            "name": "previous_code",
+            "type": "number",
+            "title": {
+              "en": "Previous code",
+              "de": "Vorheriger Code"
+            }
+          },
+          {
+            "name": "current_code",
+            "type": "number",
+            "title": {
+              "en": "Current code",
+              "de": "Aktueller Code"
+            }
+          }
+        ],
+        "id": "weather-condition-changed"
+      },
+      {
+        "title": {
           "en": "Weather has been updated",
           "de": "Wetter wurde aktualisiert"
         },
@@ -113,17 +229,198 @@
           }
         ],
         "id": "weather-has-been-updated"
+      },
+      {
+        "title": {
+          "en": "Weather threshold crossed",
+          "de": "Wetter-Schwelle geaendert"
+        },
+        "titleFormatted": {
+          "en": "Weather threshold crossed",
+          "de": "Wetter-Schwelle geaendert"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "threshold",
+            "type": "string",
+            "title": {
+              "en": "Threshold",
+              "de": "Schwelle"
+            }
+          },
+          {
+            "name": "active",
+            "type": "string",
+            "title": {
+              "en": "Active",
+              "de": "Aktiv"
+            }
+          }
+        ],
+        "id": "weather-threshold-crossed"
+      }
+    ],
+    "conditions": [
+      {
+        "title": {
+          "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
+          "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+        },
+        "titleFormatted": {
+          "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
+          "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          },
+          {
+            "type": "autocomplete",
+            "required": true,
+            "name": "weatherVariable",
+            "placeholder": {
+              "en": "Daily forecast value",
+              "de": "Taeglicher Vorhersagewert"
+            }
+          },
+          {
+            "name": "operator",
+            "type": "dropdown",
+            "title": {
+              "en": "Operator",
+              "de": "Operator"
+            },
+            "values": [
+              {
+                "id": "gt",
+                "title": {
+                  "en": "greater than",
+                  "de": "groesser als"
+                }
+              },
+              {
+                "id": "gte",
+                "title": {
+                  "en": "greater or equal",
+                  "de": "groesser oder gleich"
+                }
+              },
+              {
+                "id": "lt",
+                "title": {
+                  "en": "less than",
+                  "de": "kleiner als"
+                }
+              },
+              {
+                "id": "lte",
+                "title": {
+                  "en": "less or equal",
+                  "de": "kleiner oder gleich"
+                }
+              },
+              {
+                "id": "eq",
+                "title": {
+                  "en": "equal",
+                  "de": "gleich"
+                }
+              }
+            ]
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "title": {
+              "en": "Value",
+              "de": "Wert"
+            }
+          }
+        ],
+        "id": "forecast-matches"
+      },
+      {
+        "title": {
+          "en": "Weather state is [[state]]",
+          "de": "Wetterzustand ist [[state]]"
+        },
+        "titleFormatted": {
+          "en": "Weather state is [[state]]",
+          "de": "Wetterzustand ist [[state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          },
+          {
+            "name": "state",
+            "type": "dropdown",
+            "title": {
+              "en": "State",
+              "de": "Zustand"
+            },
+            "values": [
+              {
+                "id": "rain_likely",
+                "title": {
+                  "en": "Rain likely",
+                  "de": "Regen wahrscheinlich"
+                }
+              },
+              {
+                "id": "freezing",
+                "title": {
+                  "en": "Freezing",
+                  "de": "Gefrierend"
+                }
+              },
+              {
+                "id": "windy",
+                "title": {
+                  "en": "Windy",
+                  "de": "Windig"
+                }
+              },
+              {
+                "id": "hot",
+                "title": {
+                  "en": "Hot",
+                  "de": "Heiss"
+                }
+              },
+              {
+                "id": "good_air_quality",
+                "title": {
+                  "en": "Good air quality",
+                  "de": "Gute Luftqualitaet"
+                }
+              }
+            ]
+          }
+        ],
+        "id": "is-weather-state"
       }
     ],
     "actions": [
       {
         "title": {
-          "en": "Create chart for Hourly Weather Variable",
-          "de": "Erstelle ein Graph für die Stündlichen Wetter Werte"
+          "en": "Create chart for Weather Variable",
+          "de": "Erstelle ein Diagramm fuer Wetterwerte"
         },
         "titleFormatted": {
-          "en": "Create chart for Hourly Weather Variable [[weatherVariable]] ([[type]] [[lineColor]] [[backgroundColor]])",
-          "de": "Erstelle ein Graph für die Stündlichen Wetter Werte [[weatherVariable]] ([[type]] [[lineColor]] [[backgroundColor]])"
+          "en": "Create chart for [[weatherVariable]] over [[period]] ([[type]] [[lineColor]] [[backgroundColor]])",
+          "de": "Erstelle ein Diagramm fuer [[weatherVariable]] ueber [[period]] ([[type]] [[lineColor]] [[backgroundColor]])"
         },
         "args": [
           {
@@ -137,8 +434,60 @@
             "name": "weatherVariable",
             "placeholder": {
               "en": "Weather Variable",
-              "de": "Wetter Werte"
+              "de": "Wetterwert"
             }
+          },
+          {
+            "name": "period",
+            "type": "dropdown",
+            "title": {
+              "en": "Period",
+              "de": "Zeitraum"
+            },
+            "values": [
+              {
+                "id": "auto",
+                "title": {
+                  "en": "Auto",
+                  "de": "Automatisch"
+                }
+              },
+              {
+                "id": "24h",
+                "title": {
+                  "en": "24 hours",
+                  "de": "24 Stunden"
+                }
+              },
+              {
+                "id": "48h",
+                "title": {
+                  "en": "48 hours",
+                  "de": "48 Stunden"
+                }
+              },
+              {
+                "id": "7d",
+                "title": {
+                  "en": "7 days",
+                  "de": "7 Tage"
+                }
+              },
+              {
+                "id": "14d",
+                "title": {
+                  "en": "14 days",
+                  "de": "14 Tage"
+                }
+              },
+              {
+                "id": "16d",
+                "title": {
+                  "en": "16 days",
+                  "de": "16 Tage"
+                }
+              }
+            ]
           },
           {
             "name": "type",
@@ -152,14 +501,14 @@
                 "id": "line",
                 "title": {
                   "en": "Line Chart",
-                  "de": "Linen-graph"
+                  "de": "Liniendiagramm"
                 }
               },
               {
                 "id": "bar",
                 "title": {
                   "en": "Bar Chart",
-                  "de": "Bar-graph"
+                  "de": "Balkendiagramm"
                 }
               }
             ]
@@ -179,7 +528,7 @@
             "required": false,
             "title": {
               "en": "Background Color",
-              "dn": "Hintergrundfarbe"
+              "de": "Hintergrundfarbe"
             },
             "values": [
               {
@@ -212,11 +561,29 @@
             "type": "image",
             "title": {
               "en": "Chart",
-              "de": "Graph"
+              "de": "Diagramm"
             }
           }
         ],
         "id": "create-chart"
+      },
+      {
+        "title": {
+          "en": "Refresh weather now",
+          "de": "Wetter jetzt aktualisieren"
+        },
+        "titleFormatted": {
+          "en": "Refresh weather now",
+          "de": "Wetter jetzt aktualisieren"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          }
+        ],
+        "id": "refresh-weather-now"
       }
     ]
   },
@@ -511,6 +878,26 @@
       },
       "icon": "/assets/icons/measure_cape.svg"
     },
+    "measure_carbon_dioxide": {
+      "type": "number",
+      "label": {
+        "en": "Carbon Dioxide",
+        "de": "Kohlendioxid"
+      },
+      "title": {
+        "en": "Carbon Dioxide",
+        "de": "Kohlendioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_carbon_monoxide.svg"
+    },
     "measure_carbon_monoxide": {
       "type": "number",
       "label": {
@@ -632,6 +1019,102 @@
       },
       "icon": "/assets/icons/measure_evaporation.svg"
     },
+    "measure_european_aqi": {
+      "type": "number",
+      "label": {
+        "en": "European AQI",
+        "de": "Europäischer Luftqualitätsindex"
+      },
+      "title": {
+        "en": "European AQI",
+        "de": "Europäischer Luftqualitätsindex"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_european_aqi_no2": {
+      "type": "number",
+      "label": {
+        "en": "European AQI Nitrogen Dioxide",
+        "de": "Europäischer AQI Stickstoffdioxid"
+      },
+      "title": {
+        "en": "European AQI Nitrogen Dioxide",
+        "de": "Europäischer AQI Stickstoffdioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+    },
+    "measure_european_aqi_o3": {
+      "type": "number",
+      "label": {
+        "en": "European AQI Ozone",
+        "de": "Europäischer AQI Ozon"
+      },
+      "title": {
+        "en": "European AQI Ozone",
+        "de": "Europäischer AQI Ozon"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_ozone.svg"
+    },
+    "measure_european_aqi_pm10": {
+      "type": "number",
+      "label": {
+        "en": "European AQI PM10",
+        "de": "Europäischer AQI PM10"
+      },
+      "title": {
+        "en": "European AQI PM10",
+        "de": "Europäischer AQI PM10"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_pm10.svg"
+    },
+    "measure_european_aqi_pm25": {
+      "type": "number",
+      "label": {
+        "en": "European AQI PM2.5",
+        "de": "Europäischer AQI PM2,5"
+      },
+      "title": {
+        "en": "European AQI PM2.5",
+        "de": "Europäischer AQI PM2,5"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_pm10.svg"
+    },
+    "measure_european_aqi_so2": {
+      "type": "number",
+      "label": {
+        "en": "European AQI Sulphur Dioxide",
+        "de": "Europäischer AQI Schwefeldioxid"
+      },
+      "title": {
+        "en": "European AQI Sulphur Dioxide",
+        "de": "Europäischer AQI Schwefeldioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_sulphur_dioxide.svg"
+    },
     "measure_evapotranspiration": {
       "type": "number",
       "label": {
@@ -651,6 +1134,26 @@
         "de": "mm"
       },
       "icon": "/assets/icons/measure_evaporation.svg"
+    },
+    "measure_formaldehyde": {
+      "type": "number",
+      "label": {
+        "en": "Formaldehyde",
+        "de": "Formaldehyd"
+      },
+      "title": {
+        "en": "Formaldehyde",
+        "de": "Formaldehyd"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
     },
     "measure_freezinglevel_height": {
       "type": "number",
@@ -672,6 +1175,26 @@
       },
       "icon": "/assets/icons/measure_freezinglevel_height.svg"
     },
+    "measure_glyoxal": {
+      "type": "number",
+      "label": {
+        "en": "Glyoxal",
+        "de": "Glyoxal"
+      },
+      "title": {
+        "en": "Glyoxal",
+        "de": "Glyoxal"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
     "measure_grass_pollen": {
       "type": "number",
       "label": {
@@ -691,6 +1214,26 @@
         "de": "Körner/m³"
       },
       "icon": "/assets/icons/measure_pollen.svg"
+    },
+    "measure_methane": {
+      "type": "number",
+      "label": {
+        "en": "Methane",
+        "de": "Methan"
+      },
+      "title": {
+        "en": "Methane",
+        "de": "Methan"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_carbon_monoxide.svg"
     },
     "measure_mugwort_pollen": {
       "type": "number",
@@ -732,6 +1275,46 @@
       },
       "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
     },
+    "measure_nitrogen_monoxide": {
+      "type": "number",
+      "label": {
+        "en": "Nitrogen Monoxide",
+        "de": "Stickstoffmonoxid"
+      },
+      "title": {
+        "en": "Nitrogen Monoxide",
+        "de": "Stickstoffmonoxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+    },
+    "measure_non_methane_voc": {
+      "type": "number",
+      "label": {
+        "en": "Non-Methane VOCs",
+        "de": "Flüchtige org. Verbindungen (ohne Methan)"
+      },
+      "title": {
+        "en": "Non-Methane VOCs",
+        "de": "Flüchtige org. Verbindungen (ohne Methan)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
     "measure_olive_pollen": {
       "type": "number",
       "label": {
@@ -772,15 +1355,35 @@
       },
       "icon": "/assets/icons/measure_ozone.svg"
     },
-    "measure_pm10": {
+    "measure_peroxyacyl_nitrates": {
       "type": "number",
       "label": {
-        "en": "PM10",
-        "de": "PM10"
+        "en": "Peroxyacyl Nitrates",
+        "de": "Peroxyacylnitrate"
       },
       "title": {
-        "en": "PM10",
-        "de": "PM10"
+        "en": "Peroxyacyl Nitrates",
+        "de": "Peroxyacylnitrate"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_pm25_total_organic_matter": {
+      "type": "number",
+      "label": {
+        "en": "PM2.5 Total Organic Matter",
+        "de": "PM2,5 Organische Gesamtmasse"
+      },
+      "title": {
+        "en": "PM2.5 Total Organic Matter",
+        "de": "PM2,5 Organische Gesamtmasse"
       },
       "uiComponent": "sensor",
       "getable": true,
@@ -952,6 +1555,66 @@
         "de": "mm"
       },
       "icon": "/assets/icons/measure_rain.svg"
+    },
+    "measure_residential_elementary_carbon": {
+      "type": "number",
+      "label": {
+        "en": "Residential Elementary Carbon",
+        "de": "Elementarer Kohlenstoff (Haushalte)"
+      },
+      "title": {
+        "en": "Residential Elementary Carbon",
+        "de": "Elementarer Kohlenstoff (Haushalte)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_sea_salt_aerosol": {
+      "type": "number",
+      "label": {
+        "en": "Sea Salt Aerosol",
+        "de": "Meeressalzaerosol"
+      },
+      "title": {
+        "en": "Sea Salt Aerosol",
+        "de": "Meeressalzaerosol"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_secondary_inorganic_aerosol": {
+      "type": "number",
+      "label": {
+        "en": "Secondary Inorganic Aerosol",
+        "de": "Sekundäres anorganisches Aerosol"
+      },
+      "title": {
+        "en": "Secondary Inorganic Aerosol",
+        "de": "Sekundäres anorganisches Aerosol"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
     },
     "measure_shortwave_radiation_sum": {
       "type": "number",
@@ -1172,6 +1835,170 @@
         "de": "°C"
       },
       "icon": "/assets/icons/measure_temperature_min.svg"
+    },
+    "measure_total_elementary_carbon": {
+      "type": "number",
+      "label": {
+        "en": "Total Elementary Carbon",
+        "de": "Elementarer Kohlenstoff (Gesamt)"
+      },
+      "title": {
+        "en": "Total Elementary Carbon",
+        "de": "Elementarer Kohlenstoff (Gesamt)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "µg/m³",
+        "de": "µg/m³"
+      },
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_us_aqi": {
+      "type": "number",
+      "label": {
+        "en": "US AQI",
+        "de": "US Luftqualitätsindex"
+      },
+      "title": {
+        "en": "US AQI",
+        "de": "US Luftqualitätsindex"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_us_aqi_co": {
+      "type": "number",
+      "label": {
+        "en": "US AQI Carbon Monoxide",
+        "de": "US AQI Kohlenmonoxid"
+      },
+      "title": {
+        "en": "US AQI Carbon Monoxide",
+        "de": "US AQI Kohlenmonoxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_carbon_monoxide.svg"
+    },
+    "measure_us_aqi_no2": {
+      "type": "number",
+      "label": {
+        "en": "US AQI Nitrogen Dioxide",
+        "de": "US AQI Stickstoffdioxid"
+      },
+      "title": {
+        "en": "US AQI Nitrogen Dioxide",
+        "de": "US AQI Stickstoffdioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_nitrogen_dioxide.svg"
+    },
+    "measure_us_aqi_o3": {
+      "type": "number",
+      "label": {
+        "en": "US AQI Ozone",
+        "de": "US AQI Ozon"
+      },
+      "title": {
+        "en": "US AQI Ozone",
+        "de": "US AQI Ozon"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_ozone.svg"
+    },
+    "measure_us_aqi_pm10": {
+      "type": "number",
+      "label": {
+        "en": "US AQI PM10",
+        "de": "US AQI PM10"
+      },
+      "title": {
+        "en": "US AQI PM10",
+        "de": "US AQI PM10"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_pm10.svg"
+    },
+    "measure_us_aqi_pm25": {
+      "type": "number",
+      "label": {
+        "en": "US AQI PM2.5",
+        "de": "US AQI PM2,5"
+      },
+      "title": {
+        "en": "US AQI PM2.5",
+        "de": "US AQI PM2,5"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_pm10.svg"
+    },
+    "measure_us_aqi_so2": {
+      "type": "number",
+      "label": {
+        "en": "US AQI Sulphur Dioxide",
+        "de": "US AQI Schwefeldioxid"
+      },
+      "title": {
+        "en": "US AQI Sulphur Dioxide",
+        "de": "US AQI Schwefeldioxid"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_sulphur_dioxide.svg"
+    },
+    "measure_uv_index": {
+      "type": "number",
+      "label": {
+        "en": "UV Index",
+        "de": "UV-Index"
+      },
+      "title": {
+        "en": "UV Index",
+        "de": "UV-Index"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_uv_index.svg"
+    },
+    "measure_uv_index_clear_sky": {
+      "type": "number",
+      "label": {
+        "en": "UV Index Clear Sky",
+        "de": "UV-Index Klarer Himmel"
+      },
+      "title": {
+        "en": "UV Index Clear Sky",
+        "de": "UV-Index Klarer Himmel"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "icon": "/assets/icons/measure_uv_index.svg"
     },
     "measure_uv_index_clear_sky_max": {
       "type": "number",
