@@ -73,5 +73,8 @@
   },
   "2.0.1": {
     "en": "Added major Flow card improvements, migrated newer Homey capability standards for new/repaired devices, and improved runtime stability, recovery, and weather state handling."
+  },
+  "2.0.2": {
+    "en": "Added more AQI (WIP)"
   }
 }
