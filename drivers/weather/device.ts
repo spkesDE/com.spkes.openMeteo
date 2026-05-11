@@ -108,7 +108,14 @@ export default class WeatherDevice extends Homey.Device {
             }
 
             if (store.hourlyAirQualityValues.length > 0) {
-                let airQuality = await this.getAirQuality(store.location, store.hourlyAirQualityValues, date.toISOString().split('T')[0]);
+                let aqiApiVars = store.hourlyAirQualityValues.filter((e: string) => this.getConfig(e)?.apiVar === true);
+                for (let v of store.hourlyAirQualityValues) {
+                    let cfg = this.getConfig(v);
+                    if (cfg?.labelOf && !aqiApiVars.includes(cfg.labelOf)) {
+                        aqiApiVars.push(cfg.labelOf);
+                    }
+                }
+                let airQuality = await this.getAirQuality(store.location, aqiApiVars, date.toISOString().split('T')[0]);
                 this.latestAirQualityReport = airQuality;
                 for (let v of store.hourlyAirQualityValues) {
                     await this.updateWeather(v, airQuality.hourly);
@@ -158,6 +165,22 @@ export default class WeatherDevice extends Homey.Device {
             return;
         }
 
+        if (config.labelOf && config.labelScale) {
+            let sourceValues = weatherArray?.[config.labelOf];
+            if (!Array.isArray(sourceValues)) {
+                this.error(`AQI field "${config.labelOf}" is missing in API response for ${this.getName()} (requested by "${weatherValue}")`);
+                return;
+            }
+            let safeIndex = Math.max(0, Math.min(index, sourceValues.length - 1));
+            let raw = sourceValues[safeIndex];
+            let numericValue = typeof raw === "number" ? raw : -1;
+            let label = config.labelScale === "european"
+                ? this.getEuropeanAqiLabel(numericValue)
+                : this.getUsAqiLabel(numericValue);
+            await this.setCapabilityValue(capabilityId, label);
+            return;
+        }
+
         let values = weatherArray?.[config.value];
         if (!Array.isArray(values)) {
             this.error(`Weather field "${config.value}" is missing in API response for ${this.getName()} (requested by "${weatherValue}")`);
@@ -191,7 +214,7 @@ export default class WeatherDevice extends Homey.Device {
         await this.setCapabilityValue(capabilityId, value ?? 0).catch((err) => this.error(err))
     }
 
-    public getConfig(query: string): { value: string; i18n: string; apiVar: boolean; default: boolean; capability: string } | null {
+    public getConfig(query: string): { value: string; i18n: string; apiVar: boolean; default: boolean; capability: string; labelOf?: string; labelScale?: string } | null {
         let result = null;
         HourlyWeatherVariablesConfig.forEach((v) => {
             if (v.value === query) {
@@ -439,6 +462,24 @@ export default class WeatherDevice extends Homey.Device {
     private async setBooleanCapabilityIfPresent(capability: string, value: boolean) {
         if (!this.hasCapability(capability)) return;
         await this.setCapabilityValue(capability, value).catch((err) => this.error(err));
+    }
+
+    private getEuropeanAqiLabel(value: number): string {
+        if (value < 20) return this.homey.__("aqi.european.good");
+        if (value < 40) return this.homey.__("aqi.european.fair");
+        if (value < 60) return this.homey.__("aqi.european.moderate");
+        if (value < 80) return this.homey.__("aqi.european.poor");
+        if (value < 100) return this.homey.__("aqi.european.very_poor");
+        return this.homey.__("aqi.european.extremely_poor");
+    }
+
+    private getUsAqiLabel(value: number): string {
+        if (value <= 50) return this.homey.__("aqi.us.good");
+        if (value <= 100) return this.homey.__("aqi.us.moderate");
+        if (value <= 150) return this.homey.__("aqi.us.unhealthy_sensitive");
+        if (value <= 200) return this.homey.__("aqi.us.unhealthy");
+        if (value <= 300) return this.homey.__("aqi.us.very_unhealthy");
+        return this.homey.__("aqi.us.hazardous");
     }
 
     private resolveCapabilityId(capability: string) {

@@ -110,6 +110,19 @@
           "uv_index": "UV-Index",
           "uv_index_clear_sky": "UV-Index Klarer Himmel",
           "european_aqi": "Europäischer Luftqualitätsindex",
+          "european_aqi_label": "Europäischer Luftqualitätsindex (Bezeichnung)",
+          "european_aqi_pm25_label": "Europäischer Luftqualitätsindex PM2.5 (Bezeichnung)",
+          "european_aqi_pm10_label": "Europäischer Luftqualitätsindex PM10 (Bezeichnung)",
+          "european_aqi_no2_label": "Europäischer Luftqualitätsindex NO2 (Bezeichnung)",
+          "european_aqi_o3_label": "Europäischer Luftqualitätsindex O3 (Bezeichnung)",
+          "european_aqi_so2_label": "Europäischer Luftqualitätsindex SO2 (Bezeichnung)",
+          "us_aqi_label": "US Luftqualitätsindex (Bezeichnung)",
+          "us_aqi_pm25_label": "US Luftqualitätsindex PM2.5 (Bezeichnung)",
+          "us_aqi_pm10_label": "US Luftqualitätsindex PM10 (Bezeichnung)",
+          "us_aqi_no2_label": "US Luftqualitätsindex NO2 (Bezeichnung)",
+          "us_aqi_o3_label": "US Luftqualitätsindex O3 (Bezeichnung)",
+          "us_aqi_so2_label": "US Luftqualitätsindex SO2 (Bezeichnung)",
+          "us_aqi_co_label": "US Luftqualitätsindex CO (Bezeichnung)",
           "european_aqi_pm2_5": "Europäischer AQI PM2,5",
           "european_aqi_pm10": "Europäischer AQI PM10",
           "european_aqi_nitrogen_dioxide": "Europäischer AQI Stickstoffdioxid",
@@ -257,5 +270,23 @@
     "97": "Mäßiger/starker gefrierender Regen/Schnee",
     "98": "Leichte Regenschauer",
     "99": "Mäßige/starke Regenschauer"
+  },
+  "aqi": {
+    "european": {
+      "good": "Gut",
+      "fair": "Mäßig gut",
+      "moderate": "Mäßig",
+      "poor": "Schlecht",
+      "very_poor": "Sehr schlecht",
+      "extremely_poor": "Extrem schlecht"
+    },
+    "us": {
+      "good": "Gut",
+      "moderate": "Mäßig",
+      "unhealthy_sensitive": "Ungesund für empfindliche Gruppen",
+      "unhealthy": "Ungesund",
+      "very_unhealthy": "Sehr ungesund",
+      "hazardous": "Gefährlich"
+    }
   }
 }

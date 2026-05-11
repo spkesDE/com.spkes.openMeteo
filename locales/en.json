@@ -110,6 +110,19 @@
           "uv_index": "UV Index",
           "uv_index_clear_sky": "UV Index Clear Sky",
           "european_aqi": "European AQI",
+          "european_aqi_label": "European AQI (Label)",
+          "european_aqi_pm25_label": "European AQI PM2.5 (Label)",
+          "european_aqi_pm10_label": "European AQI PM10 (Label)",
+          "european_aqi_no2_label": "European AQI NO2 (Label)",
+          "european_aqi_o3_label": "European AQI O3 (Label)",
+          "european_aqi_so2_label": "European AQI SO2 (Label)",
+          "us_aqi_label": "US AQI (Label)",
+          "us_aqi_pm25_label": "US AQI PM2.5 (Label)",
+          "us_aqi_pm10_label": "US AQI PM10 (Label)",
+          "us_aqi_no2_label": "US AQI NO2 (Label)",
+          "us_aqi_o3_label": "US AQI O3 (Label)",
+          "us_aqi_so2_label": "US AQI SO2 (Label)",
+          "us_aqi_co_label": "US AQI CO (Label)",
           "european_aqi_pm2_5": "European AQI PM2.5",
           "european_aqi_pm10": "European AQI PM10",
           "european_aqi_nitrogen_dioxide": "European AQI Nitrogen Dioxide",
@@ -256,5 +269,23 @@
     "97": "Moderate/heavy freezing rain/snow",
     "98": "Light rain showers",
     "99": "Moderate/heavy rain showers"
+  },
+  "aqi": {
+    "european": {
+      "good": "Good",
+      "fair": "Fair",
+      "moderate": "Moderate",
+      "poor": "Poor",
+      "very_poor": "Very Poor",
+      "extremely_poor": "Extremely Poor"
+    },
+    "us": {
+      "good": "Good",
+      "moderate": "Moderate",
+      "unhealthy_sensitive": "Unhealthy for Sensitive Groups",
+      "unhealthy": "Unhealthy",
+      "very_unhealthy": "Very Unhealthy",
+      "hazardous": "Hazardous"
+    }
   }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "European AQI NO₂",
+    "de": "Europäischer Luftqualitätsindex NO₂"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icons/placeholder.svg"
+}

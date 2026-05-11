@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "US AQI SO₂",
+    "de": "US Luftqualitätsindex SO₂"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icons/placeholder.svg"
+}
