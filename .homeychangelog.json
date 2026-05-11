@@ -76,5 +76,8 @@
   },
   "2.0.2": {
     "en": "Added more AQI (WIP)"
+  },
+  "2.0.3": {
+    "en": "Bug fixes"
   }
 }
