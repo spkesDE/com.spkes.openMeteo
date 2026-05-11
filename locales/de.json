@@ -159,6 +159,8 @@
         "visibility": "Sichtweite",
         "weathercode": "Wettercode",
         "weathercondition": "Wetterverhältnisse",
+        "alarm_rain": "Regenalarm",
+        "alarm_freeze_risk": "Frostrisiko-Alarm",
         "winddirection_10m": "Windrichtung",
         "windgusts_10m": "Windböen",
         "windspeed_10m": "Windgeschwindigkeit"

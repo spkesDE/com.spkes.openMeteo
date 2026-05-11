@@ -91,6 +91,20 @@
     "capability": "weatherCondition"
   },
   {
+    "value": "alarm_rain",
+    "i18n": "pair.weatherVariables.hourly.alarm_rain",
+    "apiVar": false,
+    "default": false,
+    "capability": "alarm_rain"
+  },
+  {
+    "value": "alarm_freeze_risk",
+    "i18n": "pair.weatherVariables.hourly.alarm_freeze_risk",
+    "apiVar": false,
+    "default": false,
+    "capability": "alarm_freeze_risk"
+  },
+  {
     "value": "pressure_msl",
     "i18n": "pair.weatherVariables.hourly.pressure_msl",
     "apiVar": true,
