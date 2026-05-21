@@ -1,7 +1,8 @@
 {
-  "dailyWeatherVariables": "tägliche Wettervariable",
-  "hourlyAirQualityVariables": "Stündliche Luftqualität",
-  "hourlyWeatherVariables": "Stündliche Wetter Variablen",
+  "dailyWeatherVariables": "Tägliche Wettervariablen",
+  "hourlyAirQualityVariables": "Stündliche Luftqualitätswerte",
+  "hourlyWeatherVariables": "Stündliche Wettervariablen",
+  "currentValue": "Aktuell",
   "language": "de",
   "pair": {
     "disclaimer": {
@@ -37,13 +38,15 @@
         "today": "Heute"
       },
       "hourlyForecast": {
-        "current": "Akutelle Zeit (+0h)",
-        "label": "Get hourly forecast"
+        "current": "Aktuelle Zeit (+0h)",
+        "label": "Stündliche Vorhersage abrufen"
       },
       "loading": "Lädt",
       "location": {
         "label": "Standort",
-        "placeholder": "Hamburg"
+        "placeholder": "Hamburg",
+        "required": "Bitte waehle einen Standort aus den Suchergebnissen aus",
+        "noResults": "Keine Ergebnisse fuer \"%s\" gefunden"
       },
       "next": "Fortfahren",
       "open-meteo": "Wetterdaten von Open-Meteo.com",
@@ -172,7 +175,7 @@
         "visibility": "Sichtweite",
         "weathercode": "Wettercode",
         "weathercondition": "Wetterverhältnisse",
-        "alarm_rain": "Regenalarm",
+        "alarm_rain": "Regen wahrscheinlich",
         "alarm_freeze_risk": "Frostrisiko-Alarm",
         "winddirection_10m": "Windrichtung",
         "windgusts_10m": "Windböen",
@@ -287,6 +290,18 @@
       "unhealthy": "Ungesund",
       "very_unhealthy": "Sehr ungesund",
       "hazardous": "Gefährlich"
+    }
+  },
+  "settings": {
+    "time_format": {
+      "errors": {
+        "required": "Bitte gib ein Zeitformat ein",
+        "invalid": "Ungueltiges Zeitformat. Unterstuetzte Tokens: H, HH, m, mm, s, ss",
+        "duplicate_hour": "Bitte verwende entweder H oder HH, nicht beides",
+        "duplicate_minute": "Bitte verwende entweder m oder mm, nicht beides",
+        "duplicate_second": "Bitte verwende entweder s oder ss, nicht beides",
+        "duplicate_token": "Jedes Zeit-Token darf nur einmal verwendet werden"
+      }
     }
   }
 }

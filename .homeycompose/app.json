@@ -11,7 +11,8 @@
     "de": "Wetter von Open-Meteo"
   },
   "description": {
-    "en": "Always be weather-ready."
+    "en": "Always be weather-ready.",
+    "de": "Immer bestens aufs Wetter vorbereitet."
   },
   "category": [
     "tools"
@@ -30,6 +31,7 @@
   "tags": {
     "en": [
       "Weather app",
+      "Weather",
       "Open-source",
       "Free API",
       "Hourly forecast",
@@ -49,6 +51,7 @@
     ],
     "de": [
       "Wetter-App",
+      "Wetter",
       "Open-Source",
       "Kostenlose API",
       "Stündliche Vorhersage",

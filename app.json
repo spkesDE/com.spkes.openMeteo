@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.spkes.openMeteo",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "compatibility": ">=12.11.0",
   "sdk": 3,
   "platforms": [
@@ -12,7 +12,8 @@
     "de": "Wetter von Open-Meteo"
   },
   "description": {
-    "en": "Always be weather-ready."
+    "en": "Always be weather-ready.",
+    "de": "Immer bestens aufs Wetter vorbereitet."
   },
   "category": [
     "tools"
@@ -31,6 +32,7 @@
   "tags": {
     "en": [
       "Weather app",
+      "Weather",
       "Open-source",
       "Free API",
       "Hourly forecast",
@@ -50,6 +52,7 @@
     ],
     "de": [
       "Wetter-App",
+      "Wetter",
       "Open-Source",
       "Kostenlose API",
       "Stündliche Vorhersage",
@@ -270,12 +273,12 @@
     "conditions": [
       {
         "title": {
-          "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
-          "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+          "en": "Weather value [[weatherVariable]] [[operator]] [[value]]",
+          "de": "Wetterwert [[weatherVariable]] [[operator]] [[value]]"
         },
         "titleFormatted": {
-          "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
-          "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+          "en": "Weather value [[weatherVariable]] [[operator]] [[value]]",
+          "de": "Wetterwert [[weatherVariable]] [[operator]] [[value]]"
         },
         "args": [
           {
@@ -288,8 +291,8 @@
             "required": true,
             "name": "weatherVariable",
             "placeholder": {
-              "en": "Daily forecast value",
-              "de": "Taeglicher Vorhersagewert"
+              "en": "Weather value",
+              "de": "Wetterwert"
             }
           },
           {
@@ -304,14 +307,14 @@
                 "id": "gt",
                 "title": {
                   "en": "greater than",
-                  "de": "groesser als"
+                  "de": "größer als"
                 }
               },
               {
                 "id": "gte",
                 "title": {
                   "en": "greater or equal",
-                  "de": "groesser oder gleich"
+                  "de": "größer oder gleich"
                 }
               },
               {
@@ -569,6 +572,266 @@
       },
       {
         "title": {
+          "en": "Get weather forecast",
+          "de": "Wettervorhersage abrufen"
+        },
+        "titleFormatted": {
+          "en": "Get weather in [[days]] day(s) at [[hour]]:00",
+          "de": "Wetter in [[days]] Tag(en) um [[hour]]:00 Uhr abrufen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=weather"
+          },
+          {
+            "type": "number",
+            "name": "days",
+            "required": true,
+            "min": 0,
+            "max": 16,
+            "step": 1,
+            "placeholder": {
+              "en": "Days (0-16)",
+              "de": "Tage (0-16)"
+            },
+            "title": {
+              "en": "Days ahead",
+              "de": "Tage im Voraus"
+            }
+          },
+          {
+            "type": "number",
+            "name": "hour",
+            "required": true,
+            "min": 0,
+            "max": 23,
+            "step": 1,
+            "placeholder": {
+              "en": "Hour (0-23)",
+              "de": "Stunde (0-23)"
+            },
+            "title": {
+              "en": "Hour of day",
+              "de": "Tagesstunde"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature (°C)",
+              "de": "Temperatur (°C)"
+            }
+          },
+          {
+            "name": "apparent_temperature",
+            "type": "number",
+            "title": {
+              "en": "Apparent Temperature (°C)",
+              "de": "Gefühlte Temperatur (°C)"
+            }
+          },
+          {
+            "name": "dewpoint",
+            "type": "number",
+            "title": {
+              "en": "Dewpoint (°C)",
+              "de": "Taupunkt (°C)"
+            }
+          },
+          {
+            "name": "weather_condition",
+            "type": "string",
+            "title": {
+              "en": "Weather Condition",
+              "de": "Wetterverhältnisse"
+            }
+          },
+          {
+            "name": "weather_code",
+            "type": "number",
+            "title": {
+              "en": "Weather Code",
+              "de": "Wettercode"
+            }
+          },
+          {
+            "name": "humidity",
+            "type": "number",
+            "title": {
+              "en": "Relative Humidity (%)",
+              "de": "Relative Luftfeuchtigkeit (%)"
+            }
+          },
+          {
+            "name": "precipitation_probability",
+            "type": "number",
+            "title": {
+              "en": "Precipitation Probability (%)",
+              "de": "Niederschlagswahrscheinlichkeit (%)"
+            }
+          },
+          {
+            "name": "precipitation",
+            "type": "number",
+            "title": {
+              "en": "Precipitation (mm)",
+              "de": "Niederschlag (mm)"
+            }
+          },
+          {
+            "name": "rain",
+            "type": "number",
+            "title": {
+              "en": "Rain (mm)",
+              "de": "Regen (mm)"
+            }
+          },
+          {
+            "name": "showers",
+            "type": "number",
+            "title": {
+              "en": "Showers (mm)",
+              "de": "Schauer (mm)"
+            }
+          },
+          {
+            "name": "snowfall",
+            "type": "number",
+            "title": {
+              "en": "Snowfall (cm)",
+              "de": "Schneefall (cm)"
+            }
+          },
+          {
+            "name": "cloudcover",
+            "type": "number",
+            "title": {
+              "en": "Cloud cover (%)",
+              "de": "Bewölkung (%)"
+            }
+          },
+          {
+            "name": "visibility",
+            "type": "number",
+            "title": {
+              "en": "Visibility (m)",
+              "de": "Sichtweite (m)"
+            }
+          },
+          {
+            "name": "pressure_msl",
+            "type": "number",
+            "title": {
+              "en": "Sea Level Pressure (hPa)",
+              "de": "Luftdruck auf Meereshöhe (hPa)"
+            }
+          },
+          {
+            "name": "wind_speed",
+            "type": "number",
+            "title": {
+              "en": "Wind Speed (km/h)",
+              "de": "Windgeschwindigkeit (km/h)"
+            }
+          },
+          {
+            "name": "wind_direction",
+            "type": "number",
+            "title": {
+              "en": "Wind Direction (°)",
+              "de": "Windrichtung (°)"
+            }
+          },
+          {
+            "name": "wind_gusts",
+            "type": "number",
+            "title": {
+              "en": "Wind Gusts (km/h)",
+              "de": "Windböen (km/h)"
+            }
+          },
+          {
+            "name": "temperature_min",
+            "type": "number",
+            "title": {
+              "en": "Min Temperature (°C)",
+              "de": "Mindesttemperatur (°C)"
+            }
+          },
+          {
+            "name": "temperature_max",
+            "type": "number",
+            "title": {
+              "en": "Max Temperature (°C)",
+              "de": "Höchsttemperatur (°C)"
+            }
+          },
+          {
+            "name": "apparent_temperature_min",
+            "type": "number",
+            "title": {
+              "en": "Min Apparent Temperature (°C)",
+              "de": "Minimale gefühlte Temperatur (°C)"
+            }
+          },
+          {
+            "name": "apparent_temperature_max",
+            "type": "number",
+            "title": {
+              "en": "Max Apparent Temperature (°C)",
+              "de": "Maximale gefühlte Temperatur (°C)"
+            }
+          },
+          {
+            "name": "precipitation_sum",
+            "type": "number",
+            "title": {
+              "en": "Precipitation Sum (mm)",
+              "de": "Niederschlagssumme (mm)"
+            }
+          },
+          {
+            "name": "uv_index_max",
+            "type": "number",
+            "title": {
+              "en": "Max UV Index",
+              "de": "UV-Index Maximum"
+            }
+          },
+          {
+            "name": "wind_gusts_max",
+            "type": "number",
+            "title": {
+              "en": "Max Wind Gusts (km/h)",
+              "de": "Maximale Windböen (km/h)"
+            }
+          },
+          {
+            "name": "sunrise",
+            "type": "string",
+            "title": {
+              "en": "Sunrise (HH:MM)",
+              "de": "Sonnenaufgang (HH:MM)"
+            }
+          },
+          {
+            "name": "sunset",
+            "type": "string",
+            "title": {
+              "en": "Sunset (HH:MM)",
+              "de": "Sonnenuntergang (HH:MM)"
+            }
+          }
+        ],
+        "id": "get-weather-forecast"
+      },
+      {
+        "title": {
           "en": "Refresh weather now",
           "de": "Wetter jetzt aktualisieren"
         },
@@ -620,7 +883,7 @@
             "id": "hourlyWeatherVariables",
             "title": {
               "en": "Hourly Weather Variables",
-              "de": "Stündliche Wetter Variablen"
+              "de": "Stündliche Wettervariablen"
             },
             "json": "../../../assets/json/hourlyWeatherVariables.json"
           }
@@ -631,7 +894,7 @@
             "id": "dailyWeatherVariables",
             "title": {
               "en": "Daily Weather Variables",
-              "de": "Tägliche Wetter Variablen"
+              "de": "Tägliche Wettervariablen"
             },
             "json": "../../../assets/json/dailyWeatherVariables.json"
           }
@@ -642,7 +905,7 @@
             "id": "hourlyAirQualityValues",
             "title": {
               "en": "Hourly Air Quality Variables",
-              "de": "Stündliche Luftqualität"
+              "de": "Stündliche Luftqualitätsvariablen"
             },
             "json": "../../../assets/json/hourlyAirQualityVariables.json"
           }
@@ -675,7 +938,7 @@
             "id": "hourlyWeatherVariables",
             "title": {
               "en": "Hourly Weather Variables",
-              "de": "Stündliche Wetter Variablen"
+              "de": "Stündliche Wettervariablen"
             },
             "json": "../../../assets/json/hourlyWeatherVariables.json"
           }
@@ -686,7 +949,7 @@
             "id": "dailyWeatherVariables",
             "title": {
               "en": "Daily Weather Variables",
-              "de": "Tägliche Wetter Variablen"
+              "de": "Tägliche Wettervariablen"
             },
             "json": "../../../assets/json/dailyWeatherVariables.json"
           }
@@ -697,13 +960,29 @@
             "id": "hourlyAirQualityValues",
             "title": {
               "en": "Hourly Air Quality Variables",
-              "de": "Stündliche Luftqualität"
+              "de": "Stündliche Luftqualitätsvariablen"
             },
             "json": "../../../assets/json/hourlyAirQualityVariables.json"
           }
         }
       ],
-      "id": "weather"
+      "id": "weather",
+      "settings": [
+        {
+          "id": "time_format",
+          "type": "text",
+          "label": {
+            "en": "Time format",
+            "de": "Zeitformat"
+          },
+          "value": "HH:mm",
+          "hint": {
+            "en": "Used for sunrise, sunset and the time part of the date capability. Supported tokens: H, HH, m, mm, s, ss. Examples: HH:mm or HH:mm:ss",
+            "de": "Wird für Sonnenaufgang, Sonnenuntergang und den Zeitanteil der Datums-Capability verwendet. Unterstützte Tokens: H, HH, m, mm, s, ss. Beispiele: HH:mm oder HH:mm:ss"
+          },
+          "highlight": true
+        }
+      ]
     }
   ],
   "capabilities": {
@@ -717,6 +996,72 @@
       "getable": true,
       "setable": false,
       "icon": "/assets/icons/date.svg"
+    },
+    "european_aqi_label": {
+      "type": "string",
+      "title": {
+        "en": "European AQI",
+        "de": "Europäischer Luftqualitätsindex"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "european_aqi_no2_label": {
+      "type": "string",
+      "title": {
+        "en": "European AQI NO₂",
+        "de": "Europäischer Luftqualitätsindex NO₂"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "european_aqi_o3_label": {
+      "type": "string",
+      "title": {
+        "en": "European AQI O₃",
+        "de": "Europäischer Luftqualitätsindex O₃"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "european_aqi_pm10_label": {
+      "type": "string",
+      "title": {
+        "en": "European AQI PM10",
+        "de": "Europäischer Luftqualitätsindex PM10"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "european_aqi_pm25_label": {
+      "type": "string",
+      "title": {
+        "en": "European AQI PM2.5",
+        "de": "Europäischer Luftqualitätsindex PM2.5"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "european_aqi_so2_label": {
+      "type": "string",
+      "title": {
+        "en": "European AQI SO₂",
+        "de": "Europäischer Luftqualitätsindex SO₂"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
     },
     "measure_aerosol_optical_depth": {
       "type": "number",
@@ -2169,6 +2514,83 @@
       "getable": true,
       "setable": false,
       "icon": "/assets/icons/sunset.svg"
+    },
+    "us_aqi_co_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI CO",
+        "de": "US Luftqualitätsindex CO"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "us_aqi_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI",
+        "de": "US Luftqualitätsindex"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "us_aqi_no2_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI NO₂",
+        "de": "US Luftqualitätsindex NO₂"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "us_aqi_o3_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI O₃",
+        "de": "US Luftqualitätsindex O₃"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "us_aqi_pm10_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI PM10",
+        "de": "US Luftqualitätsindex PM10"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "us_aqi_pm25_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI PM2.5",
+        "de": "US Luftqualitätsindex PM2.5"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "us_aqi_so2_label": {
+      "type": "string",
+      "title": {
+        "en": "US AQI SO₂",
+        "de": "US Luftqualitätsindex SO₂"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "icon": "/assets/icons/placeholder.svg"
     },
     "weatherCondition": {
       "type": "string",
