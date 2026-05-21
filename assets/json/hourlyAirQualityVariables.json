@@ -84,11 +84,29 @@
     "capability": "measure_european_aqi"
   },
   {
+    "value": "european_aqi_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "european_aqi_label",
+    "labelOf": "european_aqi",
+    "labelScale": "european"
+  },
+  {
     "value": "european_aqi_pm2_5",
     "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_pm2_5",
     "apiVar": true,
     "default": false,
     "capability": "measure_european_aqi_pm25"
+  },
+  {
+    "value": "european_aqi_pm25_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_pm25_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "european_aqi_pm25_label",
+    "labelOf": "european_aqi_pm2_5",
+    "labelScale": "european"
   },
   {
     "value": "european_aqi_pm10",
@@ -98,11 +116,29 @@
     "capability": "measure_european_aqi_pm10"
   },
   {
+    "value": "european_aqi_pm10_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_pm10_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "european_aqi_pm10_label",
+    "labelOf": "european_aqi_pm10",
+    "labelScale": "european"
+  },
+  {
     "value": "european_aqi_nitrogen_dioxide",
     "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_nitrogen_dioxide",
     "apiVar": true,
     "default": false,
     "capability": "measure_european_aqi_no2"
+  },
+  {
+    "value": "european_aqi_no2_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_no2_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "european_aqi_no2_label",
+    "labelOf": "european_aqi_nitrogen_dioxide",
+    "labelScale": "european"
   },
   {
     "value": "european_aqi_ozone",
@@ -112,11 +148,29 @@
     "capability": "measure_european_aqi_o3"
   },
   {
+    "value": "european_aqi_o3_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_o3_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "european_aqi_o3_label",
+    "labelOf": "european_aqi_ozone",
+    "labelScale": "european"
+  },
+  {
     "value": "european_aqi_sulphur_dioxide",
     "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_sulphur_dioxide",
     "apiVar": true,
     "default": false,
     "capability": "measure_european_aqi_so2"
+  },
+  {
+    "value": "european_aqi_so2_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.european_aqi_so2_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "european_aqi_so2_label",
+    "labelOf": "european_aqi_sulphur_dioxide",
+    "labelScale": "european"
   },
   {
     "value": "us_aqi",
@@ -126,11 +180,29 @@
     "capability": "measure_us_aqi"
   },
   {
+    "value": "us_aqi_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_label",
+    "labelOf": "us_aqi",
+    "labelScale": "us"
+  },
+  {
     "value": "us_aqi_pm2_5",
     "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_pm2_5",
     "apiVar": true,
     "default": false,
     "capability": "measure_us_aqi_pm25"
+  },
+  {
+    "value": "us_aqi_pm25_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_pm25_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_pm25_label",
+    "labelOf": "us_aqi_pm2_5",
+    "labelScale": "us"
   },
   {
     "value": "us_aqi_pm10",
@@ -140,11 +212,29 @@
     "capability": "measure_us_aqi_pm10"
   },
   {
+    "value": "us_aqi_pm10_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_pm10_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_pm10_label",
+    "labelOf": "us_aqi_pm10",
+    "labelScale": "us"
+  },
+  {
     "value": "us_aqi_nitrogen_dioxide",
     "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_nitrogen_dioxide",
     "apiVar": true,
     "default": false,
     "capability": "measure_us_aqi_no2"
+  },
+  {
+    "value": "us_aqi_no2_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_no2_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_no2_label",
+    "labelOf": "us_aqi_nitrogen_dioxide",
+    "labelScale": "us"
   },
   {
     "value": "us_aqi_ozone",
@@ -154,6 +244,15 @@
     "capability": "measure_us_aqi_o3"
   },
   {
+    "value": "us_aqi_o3_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_o3_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_o3_label",
+    "labelOf": "us_aqi_ozone",
+    "labelScale": "us"
+  },
+  {
     "value": "us_aqi_sulphur_dioxide",
     "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_sulphur_dioxide",
     "apiVar": true,
@@ -161,11 +260,29 @@
     "capability": "measure_us_aqi_so2"
   },
   {
+    "value": "us_aqi_so2_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_so2_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_so2_label",
+    "labelOf": "us_aqi_sulphur_dioxide",
+    "labelScale": "us"
+  },
+  {
     "value": "us_aqi_carbon_monoxide",
     "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_carbon_monoxide",
     "apiVar": true,
     "default": false,
     "capability": "measure_us_aqi_co"
+  },
+  {
+    "value": "us_aqi_co_label",
+    "i18n": "pair.weatherVariables.hourly.airQuality.us_aqi_co_label",
+    "apiVar": false,
+    "default": false,
+    "capability": "us_aqi_co_label",
+    "labelOf": "us_aqi_carbon_monoxide",
+    "labelScale": "us"
   },
   {
     "value": "carbon_dioxide",

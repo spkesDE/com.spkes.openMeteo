@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "US AQI O₃",
+    "de": "US Luftqualitätsindex O₃"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icons/placeholder.svg"
+}

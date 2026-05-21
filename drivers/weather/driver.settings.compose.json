@@ -1,0 +1,16 @@
+[
+  {
+    "id": "time_format",
+    "type": "text",
+    "label": {
+      "en": "Time format",
+      "de": "Zeitformat"
+    },
+    "value": "HH:mm",
+    "hint": {
+      "en": "Used for sunrise, sunset and the time part of the date capability. Supported tokens: H, HH, m, mm, s, ss. Examples: HH:mm or HH:mm:ss",
+      "de": "Wird für Sonnenaufgang, Sonnenuntergang und den Zeitanteil der Datums-Capability verwendet. Unterstützte Tokens: H, HH, m, mm, s, ss. Beispiele: HH:mm oder HH:mm:ss"
+    },
+    "highlight": true
+  }
+]

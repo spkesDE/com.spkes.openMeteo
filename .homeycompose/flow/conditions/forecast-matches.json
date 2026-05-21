@@ -1,11 +1,11 @@
 {
   "title": {
-    "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
-    "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+    "en": "Weather value [[weatherVariable]] [[operator]] [[value]]",
+    "de": "Wetterwert [[weatherVariable]] [[operator]] [[value]]"
   },
   "titleFormatted": {
-    "en": "Forecast value [[weatherVariable]] [[operator]] [[value]]",
-    "de": "Vorhersagewert [[weatherVariable]] [[operator]] [[value]]"
+    "en": "Weather value [[weatherVariable]] [[operator]] [[value]]",
+    "de": "Wetterwert [[weatherVariable]] [[operator]] [[value]]"
   },
   "args": [
     {
@@ -18,8 +18,8 @@
       "required": true,
       "name": "weatherVariable",
       "placeholder": {
-        "en": "Daily forecast value",
-        "de": "Taeglicher Vorhersagewert"
+        "en": "Weather value",
+        "de": "Wetterwert"
       }
     },
     {
@@ -34,14 +34,14 @@
           "id": "gt",
           "title": {
             "en": "greater than",
-            "de": "groesser als"
+            "de": "größer als"
           }
         },
         {
           "id": "gte",
           "title": {
             "en": "greater or equal",
-            "de": "groesser oder gleich"
+            "de": "größer oder gleich"
           }
         },
         {

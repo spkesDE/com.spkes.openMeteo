@@ -33,7 +33,7 @@
         "id": "hourlyWeatherVariables",
         "title": {
           "en": "Hourly Weather Variables",
-          "de": "Stündliche Wetter Variablen"
+          "de": "Stündliche Wettervariablen"
         },
         "json": "../../../assets/json/hourlyWeatherVariables.json"
       }
@@ -45,7 +45,7 @@
         "id": "dailyWeatherVariables",
         "title": {
           "en": "Daily Weather Variables",
-          "de": "Tägliche Wetter Variablen"
+          "de": "Tägliche Wettervariablen"
         },
         "json": "../../../assets/json/dailyWeatherVariables.json"
       }
@@ -57,7 +57,7 @@
         "id": "hourlyAirQualityValues",
         "title": {
           "en": "Hourly Air Quality Variables",
-          "de": "Stündliche Luftqualität"
+          "de": "Stündliche Luftqualitätsvariablen"
         },
         "json": "../../../assets/json/hourlyAirQualityVariables.json"
       }
@@ -93,7 +93,7 @@
         "id": "hourlyWeatherVariables",
         "title": {
           "en": "Hourly Weather Variables",
-          "de": "Stündliche Wetter Variablen"
+          "de": "Stündliche Wettervariablen"
         },
         "json": "../../../assets/json/hourlyWeatherVariables.json"
       }
@@ -105,7 +105,7 @@
         "id": "dailyWeatherVariables",
         "title": {
           "en": "Daily Weather Variables",
-          "de": "Tägliche Wetter Variablen"
+          "de": "Tägliche Wettervariablen"
         },
         "json": "../../../assets/json/dailyWeatherVariables.json"
       }
@@ -117,7 +117,7 @@
         "id": "hourlyAirQualityValues",
         "title": {
           "en": "Hourly Air Quality Variables",
-          "de": "Stündliche Luftqualität"
+          "de": "Stündliche Luftqualitätsvariablen"
         },
         "json": "../../../assets/json/hourlyAirQualityVariables.json"
       }

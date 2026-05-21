@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "European AQI SO₂",
+    "de": "Europäischer Luftqualitätsindex SO₂"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icons/placeholder.svg"
+}

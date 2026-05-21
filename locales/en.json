@@ -1,7 +1,8 @@
 {
-  "dailyWeatherVariables": "Daily weather variable",
+  "dailyWeatherVariables": "Daily Weather Variables",
   "hourlyAirQualityVariables": "Hourly Air Quality Variables",
   "hourlyWeatherVariables": "Hourly Weather Variables",
+  "currentValue": "Current",
   "language": "en",
   "pair": {
     "disclaimer": {
@@ -43,7 +44,9 @@
       "loading": "Loading",
       "location": {
         "label": "Location",
-        "placeholder": "Hamburg"
+        "placeholder": "Hamburg",
+        "required": "Please select a location from the search results",
+        "noResults": "Found no results for \"%s\""
       },
       "next": "Next",
       "open-meteo": "Weather data by Open-Meteo.com",
@@ -60,7 +63,7 @@
       },
       "timezone": {
         "auto": "Automatically detect time zone",
-        "label": "TimeZone"
+        "label": "Time zone"
       },
       "title": "Please enter your location",
       "windspeed_unit": {
@@ -110,6 +113,19 @@
           "uv_index": "UV Index",
           "uv_index_clear_sky": "UV Index Clear Sky",
           "european_aqi": "European AQI",
+          "european_aqi_label": "European AQI (Label)",
+          "european_aqi_pm25_label": "European AQI PM2.5 (Label)",
+          "european_aqi_pm10_label": "European AQI PM10 (Label)",
+          "european_aqi_no2_label": "European AQI NO2 (Label)",
+          "european_aqi_o3_label": "European AQI O3 (Label)",
+          "european_aqi_so2_label": "European AQI SO2 (Label)",
+          "us_aqi_label": "US AQI (Label)",
+          "us_aqi_pm25_label": "US AQI PM2.5 (Label)",
+          "us_aqi_pm10_label": "US AQI PM10 (Label)",
+          "us_aqi_no2_label": "US AQI NO2 (Label)",
+          "us_aqi_o3_label": "US AQI O3 (Label)",
+          "us_aqi_so2_label": "US AQI SO2 (Label)",
+          "us_aqi_co_label": "US AQI CO (Label)",
           "european_aqi_pm2_5": "European AQI PM2.5",
           "european_aqi_pm10": "European AQI PM10",
           "european_aqi_nitrogen_dioxide": "European AQI Nitrogen Dioxide",
@@ -137,14 +153,14 @@
         },
         "apparent_temperature": "Apparent Temperature",
         "cape": "Convective Available Potential Energy",
-        "cloudcover": "Cloudcover",
+        "cloudcover": "Cloud cover",
         "dewpoint_2m": "Dewpoint",
         "et0_fao_evapotranspiration": "Reference Evapotranspiration (ET₀)",
         "evapotranspiration": "Evapotranspiration",
         "freezinglevel_height": "Freezinglevel Height",
         "precipitation": "Precipitation (rain + showers + snow)",
         "precipitation_probability": "Precipitation Probability",
-        "pressure_msl": "Sealevel Pressure",
+        "pressure_msl": "Sea Level Pressure",
         "rain": "Rain",
         "relativehumidity_2m": "Relative Humidity",
         "showers": "Showers",
@@ -158,7 +174,7 @@
         "visibility": "Visibility",
         "weathercode": "Weathercode",
         "weathercondition": "Weather Condition",
-        "alarm_rain": "Rain Alarm",
+        "alarm_rain": "Rain likely",
         "alarm_freeze_risk": "Freeze Risk Alarm",
         "winddirection_10m": "Wind Direction",
         "windgusts_10m": "Wind Gusts",
@@ -256,5 +272,35 @@
     "97": "Moderate/heavy freezing rain/snow",
     "98": "Light rain showers",
     "99": "Moderate/heavy rain showers"
+  },
+  "aqi": {
+    "european": {
+      "good": "Good",
+      "fair": "Fair",
+      "moderate": "Moderate",
+      "poor": "Poor",
+      "very_poor": "Very Poor",
+      "extremely_poor": "Extremely Poor"
+    },
+    "us": {
+      "good": "Good",
+      "moderate": "Moderate",
+      "unhealthy_sensitive": "Unhealthy for Sensitive Groups",
+      "unhealthy": "Unhealthy",
+      "very_unhealthy": "Very Unhealthy",
+      "hazardous": "Hazardous"
+    }
+  },
+  "settings": {
+    "time_format": {
+      "errors": {
+        "required": "Please enter a time format",
+        "invalid": "Invalid time format. Supported tokens: H, HH, m, mm, s, ss",
+        "duplicate_hour": "Use either H or HH, not both",
+        "duplicate_minute": "Use either m or mm, not both",
+        "duplicate_second": "Use either s or ss, not both",
+        "duplicate_token": "Each time token may only be used once"
+      }
+    }
   }
 }

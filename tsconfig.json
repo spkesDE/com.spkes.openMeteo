@@ -4,5 +4,10 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "outDir": ".homeybuild/"
-  }
+  },
+  "exclude": [
+    ".homeybuild",
+    "node_modules",
+    "test"
+  ]
 }

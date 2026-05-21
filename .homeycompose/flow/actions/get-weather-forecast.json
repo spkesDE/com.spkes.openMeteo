@@ -1,0 +1,259 @@
+{
+  "title": {
+    "en": "Get weather forecast",
+    "de": "Wettervorhersage abrufen"
+  },
+  "titleFormatted": {
+    "en": "Get weather in [[days]] day(s) at [[hour]]:00",
+    "de": "Wetter in [[days]] Tag(en) um [[hour]]:00 Uhr abrufen"
+  },
+  "args": [
+    {
+      "type": "device",
+      "name": "device",
+      "filter": "driver_id=weather"
+    },
+    {
+      "type": "number",
+      "name": "days",
+      "required": true,
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "placeholder": {
+        "en": "Days (0-16)",
+        "de": "Tage (0-16)"
+      },
+      "title": {
+        "en": "Days ahead",
+        "de": "Tage im Voraus"
+      }
+    },
+    {
+      "type": "number",
+      "name": "hour",
+      "required": true,
+      "min": 0,
+      "max": 23,
+      "step": 1,
+      "placeholder": {
+        "en": "Hour (0-23)",
+        "de": "Stunde (0-23)"
+      },
+      "title": {
+        "en": "Hour of day",
+        "de": "Tagesstunde"
+      }
+    }
+  ],
+  "tokens": [
+    {
+      "name": "temperature",
+      "type": "number",
+      "title": {
+        "en": "Temperature (°C)",
+        "de": "Temperatur (°C)"
+      }
+    },
+    {
+      "name": "apparent_temperature",
+      "type": "number",
+      "title": {
+        "en": "Apparent Temperature (°C)",
+        "de": "Gefühlte Temperatur (°C)"
+      }
+    },
+    {
+      "name": "dewpoint",
+      "type": "number",
+      "title": {
+        "en": "Dewpoint (°C)",
+        "de": "Taupunkt (°C)"
+      }
+    },
+    {
+      "name": "weather_condition",
+      "type": "string",
+      "title": {
+        "en": "Weather Condition",
+        "de": "Wetterverhältnisse"
+      }
+    },
+    {
+      "name": "weather_code",
+      "type": "number",
+      "title": {
+        "en": "Weather Code",
+        "de": "Wettercode"
+      }
+    },
+    {
+      "name": "humidity",
+      "type": "number",
+      "title": {
+        "en": "Relative Humidity (%)",
+        "de": "Relative Luftfeuchtigkeit (%)"
+      }
+    },
+    {
+      "name": "precipitation_probability",
+      "type": "number",
+      "title": {
+        "en": "Precipitation Probability (%)",
+        "de": "Niederschlagswahrscheinlichkeit (%)"
+      }
+    },
+    {
+      "name": "precipitation",
+      "type": "number",
+      "title": {
+        "en": "Precipitation (mm)",
+        "de": "Niederschlag (mm)"
+      }
+    },
+    {
+      "name": "rain",
+      "type": "number",
+      "title": {
+        "en": "Rain (mm)",
+        "de": "Regen (mm)"
+      }
+    },
+    {
+      "name": "showers",
+      "type": "number",
+      "title": {
+        "en": "Showers (mm)",
+        "de": "Schauer (mm)"
+      }
+    },
+    {
+      "name": "snowfall",
+      "type": "number",
+      "title": {
+        "en": "Snowfall (cm)",
+        "de": "Schneefall (cm)"
+      }
+    },
+    {
+      "name": "cloudcover",
+      "type": "number",
+      "title": {
+        "en": "Cloud cover (%)",
+        "de": "Bewölkung (%)"
+      }
+    },
+    {
+      "name": "visibility",
+      "type": "number",
+      "title": {
+        "en": "Visibility (m)",
+        "de": "Sichtweite (m)"
+      }
+    },
+    {
+      "name": "pressure_msl",
+      "type": "number",
+      "title": {
+        "en": "Sea Level Pressure (hPa)",
+        "de": "Luftdruck auf Meereshöhe (hPa)"
+      }
+    },
+    {
+      "name": "wind_speed",
+      "type": "number",
+      "title": {
+        "en": "Wind Speed (km/h)",
+        "de": "Windgeschwindigkeit (km/h)"
+      }
+    },
+    {
+      "name": "wind_direction",
+      "type": "number",
+      "title": {
+        "en": "Wind Direction (°)",
+        "de": "Windrichtung (°)"
+      }
+    },
+    {
+      "name": "wind_gusts",
+      "type": "number",
+      "title": {
+        "en": "Wind Gusts (km/h)",
+        "de": "Windböen (km/h)"
+      }
+    },
+    {
+      "name": "temperature_min",
+      "type": "number",
+      "title": {
+        "en": "Min Temperature (°C)",
+        "de": "Mindesttemperatur (°C)"
+      }
+    },
+    {
+      "name": "temperature_max",
+      "type": "number",
+      "title": {
+        "en": "Max Temperature (°C)",
+        "de": "Höchsttemperatur (°C)"
+      }
+    },
+    {
+      "name": "apparent_temperature_min",
+      "type": "number",
+      "title": {
+        "en": "Min Apparent Temperature (°C)",
+        "de": "Minimale gefühlte Temperatur (°C)"
+      }
+    },
+    {
+      "name": "apparent_temperature_max",
+      "type": "number",
+      "title": {
+        "en": "Max Apparent Temperature (°C)",
+        "de": "Maximale gefühlte Temperatur (°C)"
+      }
+    },
+    {
+      "name": "precipitation_sum",
+      "type": "number",
+      "title": {
+        "en": "Precipitation Sum (mm)",
+        "de": "Niederschlagssumme (mm)"
+      }
+    },
+    {
+      "name": "uv_index_max",
+      "type": "number",
+      "title": {
+        "en": "Max UV Index",
+        "de": "UV-Index Maximum"
+      }
+    },
+    {
+      "name": "wind_gusts_max",
+      "type": "number",
+      "title": {
+        "en": "Max Wind Gusts (km/h)",
+        "de": "Maximale Windböen (km/h)"
+      }
+    },
+    {
+      "name": "sunrise",
+      "type": "string",
+      "title": {
+        "en": "Sunrise (HH:MM)",
+        "de": "Sonnenaufgang (HH:MM)"
+      }
+    },
+    {
+      "name": "sunset",
+      "type": "string",
+      "title": {
+        "en": "Sunset (HH:MM)",
+        "de": "Sonnenuntergang (HH:MM)"
+      }
+    }
+  ]
+}

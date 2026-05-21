@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": {
+    "en": "US AQI PM10",
+    "de": "US Luftqualitätsindex PM10"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "icon": "/assets/icons/placeholder.svg"
+}
