@@ -82,5 +82,8 @@
   },
   "2.0.4": {
     "en": "Added some new flow cards. Fixed some bugs."
+  },
+  "2.0.5": {
+    "en": "Renamed Capability to make it more clear. Fixed CVE"
   }
 }
