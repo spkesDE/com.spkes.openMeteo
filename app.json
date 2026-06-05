@@ -989,8 +989,8 @@
     "date": {
       "type": "string",
       "title": {
-        "en": "Date of Weather",
-        "de": "Wetterdatum"
+        "en": "Last update",
+        "de": "Letzte Aktualisierung"
       },
       "uiComponent": "sensor",
       "getable": true,
