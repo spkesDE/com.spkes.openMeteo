@@ -1,64 +1,22 @@
 import Homey from 'homey';
 import * as crypto from "crypto";
-import Location from "../../lib/weather/interface/location";
 import OpenMeteo from "../../app";
 import Forecast, {AirQualityForecast, OpenMeteoVariableMap} from "../../lib/weather/interface/forecast";
-import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
-import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
-import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 import AppManifest from "../../app.json";
 import WeatherDevice from "./device";
+import {getConfiguredCapabilityIds, WeatherConfigSource} from "../../lib/weather/weatherConfig";
+import {
+    ChartVariableArgument,
+    CreateChartFlowArgs,
+    ForecastConditionArgs,
+    SessionState,
+    SessionStateStore,
+    SessionViewRequest,
+    SetupPayload,
+} from "./types";
 import QuickChart from "quickchart-js";
 import path from "path";
 import Utils from "../../lib/utils";
-
-interface SessionState {
-    location?: Location;
-    tempUnit?: string;
-    windSpeedUnit?: string;
-    timezone?: string;
-    precipitationUnit?: string;
-    hourlyWeatherVariables: string[];
-    dailyWeatherVariables: string[];
-    hourlyAirQualityValues: string[];
-    forecast: number;
-}
-
-interface SessionViewRequest {
-    view: "setup" | "dailyWeatherVariables" | "hourlyWeatherVariables" | "hourlyAirQualityValues";
-}
-
-interface SetupPayload {
-    location: Location;
-    tempUnit: string;
-    windSpeedUnit: string;
-    timezone: string;
-    precipitationUnit: string;
-    forecast: number;
-}
-
-interface ChartVariableArgument {
-    id: string;
-    name: string;
-    description?: string;
-    type: "weather" | "weatherDaily" | "airQuality";
-}
-
-interface CreateChartFlowArgs {
-    device: WeatherDevice;
-    weatherVariable: ChartVariableArgument;
-    type?: string;
-    period?: string;
-    lineColor: string;
-    backgroundColor: string;
-}
-
-interface ForecastConditionArgs {
-    device: WeatherDevice;
-    weatherVariable: ChartVariableArgument;
-    operator: "gt" | "gte" | "lt" | "lte" | "eq";
-    value: number;
-}
 
 class WeatherDriver extends Homey.Driver {
     /**
@@ -85,17 +43,17 @@ class WeatherDriver extends Homey.Driver {
                 let results: ChartVariableArgument[] = [];
                 let store = this.createSessionState(device.getStore());
                 store.hourlyWeatherVariables.forEach((s: string) => {
-                    let config = device.getConfig(s);
+                    let config = device.getConfig(s, "weather");
                     if (!this.isChartableVariable(config)) return;
                     results.push(this.buildFlowVariableArgument(device, s, "hourlyWeatherVariables", "weather"));
                 });
                 store.dailyWeatherVariables.forEach((s: string) => {
-                    let config = device.getConfig(s);
+                    let config = device.getConfig(s, "weatherDaily");
                     if (!this.isChartableVariable(config)) return;
                     results.push(this.buildFlowVariableArgument(device, s, "dailyWeatherVariables", "weatherDaily"));
                 });
                 store.hourlyAirQualityValues.forEach((s: string) => {
-                    let config = device.getConfig(s);
+                    let config = device.getConfig(s, "airQuality");
                     if (!this.isChartableVariable(config)) return;
                     results.push(this.buildFlowVariableArgument(device, s, "hourlyAirQualityVariables", "airQuality"));
                 });
@@ -182,19 +140,19 @@ class WeatherDriver extends Homey.Driver {
                 let results: ChartVariableArgument[] = [];
 
                 store.hourlyWeatherVariables.forEach((variable) => {
-                    let config = device.getConfig(variable);
+                    let config = device.getConfig(variable, "weather");
                     if (!this.isComparableVariable(config)) return;
                     results.push(this.buildFlowVariableArgument(device, variable, "hourlyWeatherVariables", "weather"));
                 });
 
                 store.dailyWeatherVariables.forEach((variable) => {
-                    let config = device.getConfig(variable);
+                    let config = device.getConfig(variable, "weatherDaily");
                     if (!this.isComparableVariable(config)) return;
                     results.push(this.buildFlowVariableArgument(device, variable, "dailyWeatherVariables", "weatherDaily"));
                 });
 
                 store.hourlyAirQualityValues.forEach((variable) => {
-                    let config = device.getConfig(variable);
+                    let config = device.getConfig(variable, "airQuality");
                     if (!this.isComparableVariable(config)) return;
                     results.push(this.buildFlowVariableArgument(device, variable, "hourlyAirQualityVariables", "airQuality"));
                 });
@@ -202,7 +160,7 @@ class WeatherDriver extends Homey.Driver {
                 return results.filter((result) => result.name.toLowerCase().includes(query.toLowerCase()));
             })
             .registerRunListener(async (args: ForecastConditionArgs) => {
-                let value = args.device.getComparableWeatherValue(args.weatherVariable.id);
+                let value = args.device.getComparableWeatherValue(args.weatherVariable.id, args.weatherVariable.type);
                 if (value === null) return false;
 
                 switch (args.operator) {
@@ -370,39 +328,10 @@ class WeatherDriver extends Homey.Driver {
     }
 
     private variablesToCapabilities(state: SessionState) {
-        let capabilities: string[] = ["date"];
-        DailyWeatherVariablesConfig.forEach((d) => {
-            if (state.dailyWeatherVariables.includes(d.value) && d.capability != "")
-                capabilities.push(d.capability);
-            else if (state.dailyWeatherVariables.includes(d.value))
-                this.error(d.value + " has no capability")
-        });
-        HourlyWeatherVariablesConfig.forEach((d) => {
-            if (state.hourlyWeatherVariables.includes(d.value) && d.capability != "")
-                capabilities.push(d.capability);
-            else if (state.hourlyWeatherVariables.includes(d.value))
-                this.error(d.value + " has no capability")
-        });
-        HourlyAirQualityVariablesConfig.forEach((d) => {
-            if (state.hourlyAirQualityValues.includes(d.value) && d.capability != "")
-                capabilities.push(d.capability);
-            else if (state.hourlyAirQualityValues.includes(d.value))
-                this.error(d.value + " has no capability")
-        });
-        return [...new Set(capabilities)];
+        return getConfiguredCapabilityIds(state);
     }
 
-    private createSessionState(store?: {
-        location?: Location;
-        tempUnit?: string;
-        windSpeedUnit?: string;
-        timezone?: string;
-        precipitationUnit?: string;
-        hourlyWeatherVariables?: string[];
-        dailyWeatherVariables?: string[];
-        hourlyAirQualityValues?: string[];
-        forecast?: number | string;
-    }): SessionState {
+    private createSessionState(store?: SessionStateStore): SessionState {
         return {
             location: store?.location,
             tempUnit: store?.tempUnit,
@@ -661,9 +590,9 @@ class WeatherDriver extends Homey.Driver {
         categoryI18nKey: "hourlyWeatherVariables" | "dailyWeatherVariables" | "hourlyAirQualityVariables",
         type: "weather" | "weatherDaily" | "airQuality"
     ): ChartVariableArgument {
-        let config = device.getConfig(variable);
+        let config = device.getConfig(variable, type as WeatherConfigSource);
         let category = this.homey.__(categoryI18nKey);
-        let currentValue = device.getComparableWeatherValue(variable);
+        let currentValue = device.getComparableWeatherValue(variable, type as WeatherConfigSource);
         let formattedCurrentValue = currentValue === null || !config?.capability
             ? null
             : this.formatCapabilityValue(currentValue, config.capability);

@@ -2,33 +2,17 @@ import Homey from 'homey';
 import Location from "../../lib/weather/interface/location";
 import OpenMeteo from "../../app";
 import Forecast, {AirQualityForecast, OpenMeteoVariableMap} from "../../lib/weather/interface/forecast";
-import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
-import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
-import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
 import {DeviceSettings} from "../../lib/weather/interface/settings";
+import {buildAirQualityParams, buildWeatherParams} from "../../lib/weather/weatherApi";
+import {capabilityMigrations, findLegacyCapabilityFor} from "../../lib/weather/weatherCapabilities";
+import {
+    findWeatherConfig,
+    getConfiguredCapabilityIds,
+    WeatherConfig,
+    WeatherConfigSource,
+} from "../../lib/weather/weatherConfig";
+import {DeviceStore, NormalizedDeviceStore, WeatherFlowSnapshot} from "./types";
 import Utils from "../../lib/utils";
-
-interface DeviceStore {
-    location?: Location;
-    timezone?: string;
-    forecast?: number | string;
-    dailyWeatherVariables?: string[];
-    hourlyWeatherVariables?: string[];
-    hourlyAirQualityValues?: string[];
-}
-
-export interface WeatherFlowSnapshot {
-    hasWeatherData: boolean;
-    conditionCode: number;
-    conditionLabel: string;
-    rainLikely: boolean;
-    freezing: boolean;
-    windy: boolean;
-    hot: boolean;
-    goodAirQuality: boolean;
-    severeExpected: boolean;
-    severeReasons: string[];
-}
 
 export default class WeatherDevice extends Homey.Device {
     private static readonly DEFAULT_TIME_FORMAT = "HH:mm";
@@ -42,10 +26,8 @@ export default class WeatherDevice extends Homey.Device {
     async onInit() {
         this.randomNumber = Math.floor(Math.random() * (15 - 2 + 1) + 2);
 
-        if(this.hasCapability("mesaure_weathercode")){
-            await this.removeCapability("mesaure_weathercode")
-            await this.addCapability("measure_weathercode")
-        }
+        await this.migrateLegacyCapabilities();
+        await this.ensureConfiguredCapabilitiesPresent();
 
         try {
             await this.update(true);
@@ -77,67 +59,22 @@ export default class WeatherDevice extends Homey.Device {
             }
 
             let date = this.getTargetDateInTimezone(store.timezone, store.forecast);
-            let nowInTimezone = this.getNowInTimezone(store.timezone);
             let targetDateTime = this.getTargetDateTimeInTimezone(store.timezone, store.forecast);
-
-            //Getting the weather data from open-meteo
-            let hourlyApiVars = store.hourlyWeatherVariables.filter((e: string) => this.getConfig(e)?.apiVar === true);
-            if (store.hourlyWeatherVariables.includes("weatherCondition") && !hourlyApiVars.includes("weathercode")) {
-                hourlyApiVars.push("weathercode");
-            }
+            let startDate = date.toISOString().split('T')[0];
 
             let weather = await this.getCurrentWeather(
                 store.location,
                 store.timezone,
-                hourlyApiVars,
+                this.getRequestedHourlyWeatherVariables(store.hourlyWeatherVariables),
                 store.dailyWeatherVariables,
-                date.toISOString().split('T')[0]
+                startDate
             );
-
             this.latestWeatherReport = weather;
 
-            //Setting the weather variables
-            for (let v of store.dailyWeatherVariables) {
-                await this.updateWeather(v, weather.daily);
-            }
             let targetHourIndex = this.getHourIndexForDateTime(weather.hourly?.time, targetDateTime);
-            for (let v of store.hourlyWeatherVariables) {
-                await this.updateWeather(v, weather.hourly, targetHourIndex);
-            }
-
-            //Setting Date capability to current day/time
-            if(this.hasCapability("date")) {
-                let displayDate = Utils.createDateFromParts({
-                    year: date.getUTCFullYear(),
-                    month: date.getUTCMonth() + 1,
-                    day: date.getUTCDate(),
-                }, {
-                    hour: nowInTimezone.getUTCHours(),
-                    minute: nowInTimezone.getUTCMinutes(),
-                    second: nowInTimezone.getUTCSeconds(),
-                });
-                let hours = this.formatDateWithSetting(displayDate);
-                let day = ("0" + displayDate.getUTCDate()).slice(-2) + "." + ("0" + (displayDate.getUTCMonth()+1)).slice(-2) + "." + displayDate.getUTCFullYear();
-                await this.setCapabilityValue("date", `${hours} ${day}`);
-            }
-
-            if (store.hourlyAirQualityValues.length > 0) {
-                let aqiApiVars = store.hourlyAirQualityValues.filter((e: string) => this.getConfig(e)?.apiVar === true);
-                for (let v of store.hourlyAirQualityValues) {
-                    let cfg = this.getConfig(v);
-                    if (cfg?.labelOf && !aqiApiVars.includes(cfg.labelOf)) {
-                        aqiApiVars.push(cfg.labelOf);
-                    }
-                }
-                let airQuality = await this.getAirQuality(store.location, aqiApiVars, date.toISOString().split('T')[0]);
-                this.latestAirQualityReport = airQuality;
-                for (let v of store.hourlyAirQualityValues) {
-                    await this.updateWeather(v, airQuality.hourly, targetHourIndex);
-                }
-            } else {
-                this.latestAirQualityReport = undefined;
-            }
-
+            await this.updateConfiguredWeatherValues(store, weather, targetHourIndex);
+            await this.updateDateCapability(store.timezone, store.forecast);
+            await this.updateConfiguredAirQualityValues(store, store.location, startDate, targetHourIndex);
             await this.updateDerivedAlarmCapabilities();
 
             if (!this.isUninitializing) {
@@ -153,9 +90,9 @@ export default class WeatherDevice extends Homey.Device {
         }
     }
 
-    public async updateWeather(weatherValue: string, weatherArray: OpenMeteoVariableMap | undefined, index: number = 0) {
+    public async updateWeather(weatherValue: string, weatherArray: OpenMeteoVariableMap | undefined, index: number = 0, source: WeatherConfigSource = "weather") {
         //Getting JSON entry of the weatherValue
-        let config = this.getConfig(weatherValue);
+        let config = this.getConfig(weatherValue, source);
         if (config === null) {
             this.error(`No config found for weather value "${weatherValue}" on ${this.getName()}`);
             return;
@@ -226,29 +163,8 @@ export default class WeatherDevice extends Homey.Device {
         await this.setCapabilityValue(capabilityId, value ?? 0).catch((err) => this.error(err))
     }
 
-    public getConfig(query: string): { value: string; i18n: string; apiVar: boolean; default: boolean; capability: string; labelOf?: string; labelScale?: string } | null {
-        let result = null;
-        HourlyWeatherVariablesConfig.forEach((v) => {
-            if (v.value === query) {
-                result = v;
-                return;
-            }
-        })
-        if(result !== null) return result;
-        DailyWeatherVariablesConfig.forEach((v) => {
-            if (v.value === query) {
-                result = v;
-                return;
-            }
-        })
-        if(result !== null) return result;
-        HourlyAirQualityVariablesConfig.forEach((v) => {
-            if (v.value === query) {
-                result = v;
-                return;
-            }
-        })
-        return result;
+    public getConfig(query: string, source?: WeatherConfigSource): WeatherConfig | null {
+        return findWeatherConfig(query, source);
     }
 
     public getFlowSnapshot(): WeatherFlowSnapshot {
@@ -337,8 +253,8 @@ export default class WeatherDevice extends Homey.Device {
         return this.latestWeatherReport?.daily?.[variable]?.[0];
     }
 
-    public getComparableWeatherValue(variable: string) {
-        let config = this.getConfig(variable);
+    public getComparableWeatherValue(variable: string, source?: WeatherConfigSource) {
+        let config = this.getConfig(variable, source);
         if (!config?.capability) return null;
 
         let capabilityId = this.resolveCapabilityId(config.capability);
@@ -346,6 +262,77 @@ export default class WeatherDevice extends Homey.Device {
 
         let value = this.getCapabilityValue(capabilityId);
         return typeof value === "number" ? value : null;
+    }
+
+    private getRequestedHourlyWeatherVariables(hourlyWeatherVariables: string[]) {
+        let hourlyApiVars = hourlyWeatherVariables.filter((variable) => this.getConfig(variable, "weather")?.apiVar === true);
+        if (hourlyWeatherVariables.includes("weatherCondition") && !hourlyApiVars.includes("weathercode")) {
+            hourlyApiVars.push("weathercode");
+        }
+        return hourlyApiVars;
+    }
+
+    private getRequestedHourlyAirQualityVariables(hourlyAirQualityValues: string[]) {
+        let aqiApiVars = hourlyAirQualityValues.filter((variable) => this.getConfig(variable, "airQuality")?.apiVar === true);
+        for (let variable of hourlyAirQualityValues) {
+            let config = this.getConfig(variable, "airQuality");
+            if (config?.labelOf && !aqiApiVars.includes(config.labelOf)) {
+                aqiApiVars.push(config.labelOf);
+            }
+        }
+        return aqiApiVars;
+    }
+
+    private async updateConfiguredWeatherValues(store: NormalizedDeviceStore, weather: Forecast, targetHourIndex: number) {
+        for (let variable of store.dailyWeatherVariables) {
+            await this.updateWeather(variable, weather.daily, 0, "weatherDaily");
+        }
+
+        for (let variable of store.hourlyWeatherVariables) {
+            await this.updateWeather(variable, weather.hourly, targetHourIndex, "weather");
+        }
+    }
+
+    private async updateConfiguredAirQualityValues(
+        store: NormalizedDeviceStore,
+        location: Location,
+        startDate: string,
+        targetHourIndex: number,
+    ) {
+        if (store.hourlyAirQualityValues.length === 0) {
+            this.latestAirQualityReport = undefined;
+            return;
+        }
+
+        let airQuality = await this.getAirQuality(
+            location,
+            this.getRequestedHourlyAirQualityVariables(store.hourlyAirQualityValues),
+            startDate,
+        );
+        this.latestAirQualityReport = airQuality;
+
+        for (let variable of store.hourlyAirQualityValues) {
+            await this.updateWeather(variable, airQuality.hourly, targetHourIndex, "airQuality");
+        }
+    }
+
+    private async updateDateCapability(timeZone: string, forecast: number) {
+        if (!this.hasCapability("date")) return;
+
+        let date = this.getTargetDateInTimezone(timeZone, forecast);
+        let nowInTimezone = this.getNowInTimezone(timeZone);
+        let displayDate = Utils.createDateFromParts({
+            year: date.getUTCFullYear(),
+            month: date.getUTCMonth() + 1,
+            day: date.getUTCDate(),
+        }, {
+            hour: nowInTimezone.getUTCHours(),
+            minute: nowInTimezone.getUTCMinutes(),
+            second: nowInTimezone.getUTCSeconds(),
+        });
+        let hours = this.formatDateWithSetting(displayDate);
+        let day = ("0" + displayDate.getUTCDate()).slice(-2) + "." + ("0" + (displayDate.getUTCMonth() + 1)).slice(-2) + "." + displayDate.getUTCFullYear();
+        await this.setCapabilityValue("date", `${hours} ${day}`);
     }
 
     private async getCurrentWeather(location: Location, timeZone: string, hourlyWeatherValues: string[], dailyWeatherValues: string[], startDate: string): Promise<Forecast> {
@@ -356,7 +343,7 @@ export default class WeatherDevice extends Homey.Device {
         let app = this.homey.app as OpenMeteo;
         return app.getApi()
             .get<Forecast>("", {
-                params: this.buildWeatherParams(location, timeZone, startDate, hourlyWeatherValues, dailyWeatherValues)
+                params: buildWeatherParams(location, timeZone, startDate, hourlyWeatherValues, dailyWeatherValues)
             })
             .then((r) => {
                 if (r.status == 200) {
@@ -376,7 +363,7 @@ export default class WeatherDevice extends Homey.Device {
         let app = this.homey.app as OpenMeteo;
         return app.getAirQualityApi()
             .get<AirQualityForecast>("", {
-                params: this.buildAirQualityParams(location, startDate, hourlyAirQualityValues)
+                params: buildAirQualityParams(location, startDate, hourlyAirQualityValues)
             })
             .then((r) => {
                 if (r.status == 200) {
@@ -460,14 +447,7 @@ export default class WeatherDevice extends Homey.Device {
         });
     }
 
-    private getNormalizedStore(): {
-        location?: Location;
-        timezone?: string;
-        forecast: number;
-        dailyWeatherVariables: string[];
-        hourlyWeatherVariables: string[];
-        hourlyAirQualityValues: string[];
-    } {
+    private getNormalizedStore(): NormalizedDeviceStore {
         let store = this.getStore() as DeviceStore;
         return {
             location: store.location,
@@ -535,17 +515,42 @@ export default class WeatherDevice extends Homey.Device {
     private resolveCapabilityId(capability: string) {
         if (this.hasCapability(capability)) return capability;
 
-        let legacyCapabilities: Record<string, string> = {
-            measure_o3: "measure_ozone",
-            measure_so2: "measure_sulphur_dioxide",
-        };
-
-        let legacyCapability = legacyCapabilities[capability];
+        let legacyCapability = findLegacyCapabilityFor(capability);
         if (legacyCapability && this.hasCapability(legacyCapability)) {
             return legacyCapability;
         }
 
         return null;
+    }
+
+    private async migrateLegacyCapabilities() {
+        for (let migration of capabilityMigrations) {
+            await this.migrateLegacyCapability(migration.legacyCapability, migration.nextCapability);
+        }
+    }
+
+    private async migrateLegacyCapability(legacyCapability: string, nextCapability: string) {
+        if (!this.hasCapability(legacyCapability)) return;
+
+        try {
+            if (!this.hasCapability(nextCapability)) {
+                await this.addCapability(nextCapability);
+            }
+            await this.removeCapability(legacyCapability);
+        } catch (err: any) {
+            this.error(`Failed to migrate capability "${legacyCapability}" to "${nextCapability}" on ${this.getName()}: ${err?.message ?? err}`);
+        }
+    }
+
+    private async ensureConfiguredCapabilitiesPresent() {
+        for (let capability of getConfiguredCapabilityIds(this.getNormalizedStore())) {
+            if (this.resolveCapabilityId(capability)) continue;
+            try {
+                await this.addCapability(capability);
+            } catch (err: any) {
+                this.error(`Failed to add missing capability "${capability}" to ${this.getName()}: ${err?.message ?? err}`);
+            }
+        }
     }
 
     private getTargetDateInTimezone(timeZone: string, forecast: number) {
@@ -569,42 +574,6 @@ export default class WeatherDevice extends Homey.Device {
             minute: nowInTimezone.getUTCMinutes(),
             second: nowInTimezone.getUTCSeconds(),
         });
-    }
-
-    private buildWeatherParams(location: Location, timeZone: string, startDate: string, hourlyWeatherValues: string[], dailyWeatherValues: string[]) {
-        let params: Record<string, string | number | boolean> = {
-            latitude: location.latitude,
-            longitude: location.longitude,
-            timezone: timeZone,
-            current_weather: true,
-            start_date: startDate,
-            end_date: startDate,
-        };
-
-        if (hourlyWeatherValues.length > 0) {
-            params.hourly = hourlyWeatherValues.join(",");
-        }
-
-        if (dailyWeatherValues.length > 0) {
-            params.daily = dailyWeatherValues.join(",");
-        }
-
-        return params;
-    }
-
-    private buildAirQualityParams(location: Location, startDate: string, hourlyAirQualityValues: string[]) {
-        let params: Record<string, string | number> = {
-            latitude: location.latitude,
-            longitude: location.longitude,
-            start_date: startDate,
-            end_date: startDate,
-        };
-
-        if (hourlyAirQualityValues.length > 0) {
-            params.hourly = hourlyAirQualityValues.join(",");
-        }
-
-        return params;
     }
 
     private formatDateWithSetting(date: Date) {
