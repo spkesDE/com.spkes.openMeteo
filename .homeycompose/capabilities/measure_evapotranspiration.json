@@ -12,6 +12,7 @@
   "getable": true,
   "setable": false,
   "insights": true,
+  "decimals": 2,
   "units": {
     "en": "mm",
     "de": "mm"
