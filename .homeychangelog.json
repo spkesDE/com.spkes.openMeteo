@@ -85,5 +85,8 @@
   },
   "2.0.5": {
     "en": "Renamed Capability to make it more clear. Fixed CVE"
+  },
+  "2.0.6": {
+    "en": "Fix ET0 capability mapping and weather refactor"
   }
 }

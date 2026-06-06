@@ -1,6 +1,6 @@
 {
   "id": "com.spkes.openMeteo",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "compatibility": ">=12.11.0",
   "sdk": 3,
   "platforms": [
