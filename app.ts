@@ -1,3 +1,4 @@
+import "module-alias/register";
 import Homey from 'homey';
 import axios, {AxiosInstance} from 'axios';
 import axiosRetry from "axios-retry";

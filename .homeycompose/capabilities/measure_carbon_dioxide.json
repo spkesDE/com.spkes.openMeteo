@@ -13,8 +13,8 @@
   "setable": false,
   "insights": true,
   "units": {
-    "en": "µg/m³",
-    "de": "µg/m³"
+    "en": "ppm",
+    "de": "ppm"
   },
   "icon": "/assets/icons/measure_carbon_monoxide.svg"
 }

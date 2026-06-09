@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Minimum visibility", "de": "Minimale Sichtweite" },
+  "title": { "en": "Daily minimum visibility", "de": "Tägliche minimale Sichtweite" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "m", "de": "m" },
+  "icon": "/assets/icons/measure_visibility.svg"
+}

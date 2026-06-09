@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "High cloud cover", "de": "Hohe Bewölkung" },
+  "title": { "en": "High cloud cover", "de": "Hohe Bewölkung" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "%", "de": "%" },
+  "icon": "/assets/icons/measure_cloudcover.svg"
+}

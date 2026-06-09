@@ -13,8 +13,8 @@
   "setable": false,
   "insights": true,
   "units": {
-    "en": "hPa",
-    "de": "hPa"
+    "en": "kPa",
+    "de": "kPa"
   },
   "icon": "/assets/icons/measure_evaporation.svg"
 }

@@ -1,32 +1,54 @@
 <link rel="stylesheet" type="text/css" href="../../../assets/css/autoComplete.css"/>
 <link rel="stylesheet" type="text/css" href="../../../assets/css/setup.css"/>
 
-<div class="hy-view __private__open_meteo-setup__view" data-id="setup" data-template-id="setup"
+<div class="hy-view __private__open_meteo-setup__view"
+     data-id="setup"
+     data-template-id="setup"
      id="684836237846456.454564564561236">
-
     <div class="__private__open_meteo-setup">
-        <form id="setup-form" class="__private__open_meteo-setup__form homey-form" action="/" method="post">
-            <div class="__private__open_meteo-setup__center">
-                <h1 id="setup-title" data-i18n="pair.setup.title" class="homey-title homey-text-align-center">Please
-                    enter your location</h1>
+        <form id="setup-form"
+              class="__private__open_meteo-setup__form homey-form location-setup-form"
+              action="/"
+              method="post">
+            <div class="__private__open_meteo-setup__center location-setup-center">
+                <h1 id="setup-title"
+                    data-i18n="pair.setup.title"
+                    class="homey-title homey-text-align-center">
+                    Please enter your location
+                </h1>
+                <p class="location-setup-hint homey-text-align-center"
+                   data-i18n="pair.setup.location.hint">
+                    Start typing and select a location from the search results.
+                </p>
 
                 <div class="homey-form-group">
-                    <label class="homey-form-label autocomplete" data-i18n="pair.setup.location.label" for="location">Location</label>
-                    <input class="homey-form-input" data-i18n="pair.setup.location.placeholder" id="location"
-                           name="location" type="text" value=""
-                           placeholder="Hamburg" required>
+                    <label class="homey-form-label"
+                           data-i18n="pair.setup.location.label"
+                           for="location">
+                        Location
+                    </label>
+                    <input class="homey-form-input"
+                           data-i18n="pair.setup.location.placeholder"
+                           id="location"
+                           name="location"
+                           type="text"
+                           placeholder="Hamburg"
+                           autocomplete="off"
+                           required>
                     <div class="selectedResult hidden" id="selectedResult">
                         <div class="selectedResultLabel" data-i18n="pair.setup.selectedLocation">
                             Selected Location
                         </div>
-                        <div class="selectedResultItem" id="selectedResultItem">
-                        </div>
+                        <div class="selectedResultItem" id="selectedResultItem"></div>
                     </div>
                 </div>
 
                 <div class="homey-form-group">
-                    <label data-i18n="pair.setup.forecast.label" class="homey-form-label"
-                           for="select-forecast">Get forecast</label>
+                    <label data-i18n="pair.setup.forecast.label"
+                           class="homey-form-label"
+                           for="select-forecast">
+                        Get forecast
+                    </label>
                     <select class="homey-form-select" name="select-forecast" id="select-forecast">
                         <option data-i18n="pair.setup.forecast.today" selected value="0">Current Day</option>
                         <option data-i18n="pair.setup.forecast.1day" value="1">Tomorrow</option>
@@ -36,8 +58,8 @@
                         <option data-i18n="pair.setup.forecast.5day" value="5">In 5 days</option>
                         <option data-i18n="pair.setup.forecast.6day" value="6">In 6 days</option>
                         <option data-i18n="pair.setup.forecast.7day" value="7">In 7 days</option>
-                        <option data-i18n="pair.setup.forecast.7day" value="8">In 8 days</option>
-                        <option data-i18n="pair.setup.forecast.8day" value="9">In 9 days</option>
+                        <option data-i18n="pair.setup.forecast.8day" value="8">In 8 days</option>
+                        <option data-i18n="pair.setup.forecast.9day" value="9">In 9 days</option>
                         <option data-i18n="pair.setup.forecast.10day" value="10">In 10 days</option>
                         <option data-i18n="pair.setup.forecast.11day" value="11">In 11 days</option>
                         <option data-i18n="pair.setup.forecast.12day" value="12">In 12 days</option>
@@ -48,31 +70,12 @@
                     </select>
                 </div>
 
-                <!--<div class="homey-form-group">
-                    <label class="homey-form-label" for="select-tempUnit" data-i18n="pair.setup.tempUnit.label">Temperature
-                        Unit</label>
-                    <select class="homey-form-select" name="select-tempUnit" id="select-tempUnit">
-                        <option data-i18n="pair.setup.tempUnit.celsius" selected value="celsius">Celsius &#8451;
-                        </option>
-                        <option data-i18n="pair.setup.tempUnit.fahrenheit" value="fahrenheit">Fahrenheit &#8457;
-                        </option>
-                    </select>
-                </div>
-
                 <div class="homey-form-group">
-                    <label data-i18n="pair.setup.windspeed_unit.label" class="homey-form-label"
-                           for="select-windspeed_unit">Windspeed Unit</label>
-                    <select class="homey-form-select" name="select-windspeed_unit" id="select-windspeed_unit">
-                        <option selected value="kmh">Km/h</option>
-                        <option value="ms">m/s</option>
-                        <option value="mph">Mph</option>
-                        <option value="kn">Knots</option>
-                    </select>
-                </div>-->
-
-                <div class="homey-form-group">
-                    <label data-i18n="pair.setup.timezone.label" class="homey-form-label"
-                           for="select-timezone">Timezone</label>
+                    <label data-i18n="pair.setup.timezone.label"
+                           class="homey-form-label"
+                           for="select-timezone">
+                        Time zone
+                    </label>
                     <select class="homey-form-select" name="select-timezone" id="select-timezone">
                         <option value="America/Anchorage">America/Anchorage</option>
                         <option value="America/Los_Angeles">America/Los_Angeles</option>
@@ -81,8 +84,8 @@
                         <option value="America/New_York">America/New_York</option>
                         <option value="America/Sao_Paulo">America/Sao_Paulo</option>
                         <option value="GMT">GMT+0</option>
-                        <option data-i18n="pair.setup.timezone.auto" selected value="auto">Automatically detect time
-                            zone
+                        <option data-i18n="pair.setup.timezone.auto" selected value="auto">
+                            Automatically detect time zone
                         </option>
                         <option value="Europe/London">Europe/London</option>
                         <option value="Europe/Berlin">Europe/Berlin</option>
@@ -95,200 +98,57 @@
                         <option value="Pacific/Auckland">Pacific/Auckland</option>
                     </select>
                 </div>
-
-                <!--
-                <div class="homey-form-group">
-                    <label data-i18n="pair.setup.precipitation_unit.label" class="homey-form-label"
-                           for="select-precipitation_unit">Precipitation Unit</label>
-                    <select class="homey-form-select" name="select-precipitation_unit" id="select-precipitation_unit">
-                        <option data-i18n="pair.setup.precipitation_unit.mm" selected value="mm">Millimeter</option>
-                        <option data-i18n="pair.setup.precipitation_unit.inch" value="inch">Inch</option>
-                    </select>
-                </div>-->
-
             </div>
 
-            <div class="__private__open_meteo-setup__information">
-                <a href="javascript:;"
-                   data-i18n="pair.setup.open-meteo"
-                   onclick="Homey.popup('https://open-meteo.com/')">
-                    Weather data by Open-Meteo.com</a>
-            </div>
-
-            <div class="__private__open_meteo-setup__footer">
-                <button tabindex="0" id="setup-next"
-                        data-i18n="pair.setup.next"
-                        class="homey-button-primary-shadow-full __private__open_meteo-setup__button"
-                        type="submit">
-                    Next
-                </button>
+            <div class="location-setup-bottom">
+                <div class="__private__open_meteo-setup__information">
+                    <a href="javascript:;"
+                       data-i18n="pair.setup.open-meteo"
+                       onclick="Homey.popup('https://open-meteo.com/')">
+                        Weather data by Open-Meteo.com
+                    </a>
+                </div>
+                <div class="__private__open_meteo-setup__footer">
+                    <button tabindex="0"
+                            id="setup-next"
+                            data-i18n="pair.setup.next"
+                            class="homey-button-primary-shadow-full __private__open_meteo-setup__button"
+                            type="submit"
+                            disabled>
+                        Next
+                    </button>
+                </div>
             </div>
         </form>
     </div>
 
     <script src="../../../assets/js/autoComplete.min.js"></script>
+    <script src="../../../assets/js/locationSetup.js"></script>
     <script type="text/javascript">
-        (async function () {
-            Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
-            const $tmpl = document.getElementById('684836237846456.454564564561236');
-            const $form = $tmpl.querySelector('#setup-form');
-            let placeHolder = "Hamburg";
-            let locationObject = undefined;
-            let working = false;
+        (function initializeLocationSetup(attempt) {
+            const form = document.querySelector(
+                '.hy-view.visible form.location-setup-form, form.location-setup-form'
+            );
+            const root = form && form.closest(".hy-view");
 
-            await Homey.emit("getData", {view: "setup", data: null}).then(function (result) {
-                locationObject = result.location;
-                document.getElementById("select-timezone").value = result.timezone;
-                document.getElementById("select-forecast").value = result.forecast;
-            });
-
-            Homey.hideLoadingOverlay()
-            autoCompleteHandler();
-
-
-            placeHolder = Homey.__('pair.setup.location.placeholder');
-            // Hide default title bar
-            Homey.setTitle(null);
-
-            $form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                if (working) return;
-                working = true;
-                Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
-                Homey.emit('setup', {
-                        location: locationObject,
-                        tempUnit: "celsius", //document.getElementById("select-tempUnit").value,
-                        windSpeedUnit: "Km/h", //document.getElementById("select-windspeed_unit").value,
-                        timezone: document.getElementById("select-timezone").value,
-                        precipitationUnit: "mm", //document.getElementById("select-precipitation_unit").value,
-                        forecast: document.getElementById("select-forecast").value,
-                    },
-                    function (error, valid) {
-                        if (error) {
-                            Homey.error(error);
-                        } else if (!valid) {
-                            Homey.error(Homey.__('pair.setup.failed'));
-                        } else if (valid) {
-                            Homey.nextView();
-                        }
-                        working = false;
-                        Homey.hideLoadingOverlay();
-                    }
-                );
-                return false;
-            });
-
-            function autoCompleteHandler() {
-                const language = Homey.__("language") ?? "en";
-                const autoCompleteJS = new autoComplete({
-                    selector: "#location",
-                    placeHolder: placeHolder,
-                    data: {
-                        src: async (query) => {
-                            try {
-                                const source = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${query}&language=${language}`);
-                                const data = await source.json();
-                                return data.results ?? [];
-                            } catch (error) {
-                                return error;
-                            }
-                        },
-                        keys: ["name"],
-                    },
-                    resultsList: {
-                        element: (list, data) => {
-                            if (!data.results.length || data.results.length === 0) {
-                                const message = document.createElement("div");
-                                message.classList.add("noResult");
-                                message.innerHTML = `<span>Found no results for "${data.query}"</span>`;
-                                list.prepend(message);
-                            }
-                        },
-                        noResults: true,
-                        maxResults: 25
-                    },
-                    resultItem: {
-                        element: (item, data) => {
-                            let reg = new RegExp("(" + autoCompleteJS.feedback.query + ")")
-                            let split = data.value.name.split(reg);
-                            if (split.length > 1)
-                                split[1] = "<mark>" + split[1] + "</mark>";
-
-                            item.innerHTML = split.join("");
-                            const img = document.createElement("img");
-                            img.classList.add("search-icon");
-                            img.src = `https://hatscripts.github.io/circle-flags/flags/${data.value.country_code.toLowerCase()}.svg`;
-                            img.title = data.value.country;
-                            item.prepend(img)
-
-                            const description = document.createElement("div");
-                            description.classList.add("description");
-                            description.classList.add("icon-padding");
-                            let admin = data.value.admin1 ?? data.value.admin2 ?? data.value.admin3 ?? undefined;
-                            description.innerHTML = admin ? admin + " - " + data.value.country : data.value.country
-                            item.append(description)
-                        },
-                        highlight: false,
-                    },
-                    events: {
-                        input: {
-                            keydown: (event) => {
-                                if (event.target.classList.contains("complete"))
-                                    event.target.classList.remove("complete")
-                                let selectedResult = document.getElementById('selectedResult')
-                                if (!selectedResult.classList.contains("hidden"))
-                                    selectedResult.classList.add("hidden")
-                                locationObject = undefined;
-                            }
-                        }
-                    }
+            if (window.OpenMeteoLocationSetup && window.autoComplete && root) {
+                window.OpenMeteoLocationSetup.init({
+                    repair: true,
+                    root: root
+                }).catch(function (error) {
+                    Homey.error(error);
                 });
-
-                if (locationObject !== undefined) {
-                    autoCompleteJS.input.value = locationObject.name;
-                    if (!autoCompleteJS.input.classList.contains("complete"))
-                        autoCompleteJS.input.classList.add("complete")
-                    createResultItem();
-                }
-
-                autoCompleteJS.input.addEventListener("selection", function (event) {
-                    const feedback = event.detail;
-                    //Setting the selection to the value of the input.
-                    autoCompleteJS.input.value = feedback.selection.value.name;
-                    if (!autoCompleteJS.input.classList.contains("complete"))
-                        autoCompleteJS.input.classList.add("complete")
-                    //Set the selection object to variable for later use
-                    locationObject = feedback.selection.value;
-                    createResultItem();
-                });
+                return;
             }
 
-            function createResultItem() {
-                //Create object for selectedResultItem
-                let selectedImg = document.createElement("img");
-                selectedImg.classList.add("search-icon");
-                selectedImg.src = `https://hatscripts.github.io/circle-flags/flags/${locationObject.country_code.toLowerCase()}.svg`;
-                selectedImg.title = locationObject.name;
-
-                let selectedText = document.createElement("div");
-                selectedText.classList.add("selectedText");
-                selectedText.innerText = locationObject.name;
-
-                let description = document.createElement("div");
-                description.classList.add("description");
-                let admin = locationObject.admin1 ?? locationObject.admin2 ?? locationObject.admin3 ?? undefined;
-                description.innerHTML = admin ? admin + " - " + locationObject.country : locationObject.country
-                selectedText.appendChild(description);
-
-                let selectedResultItem = document.getElementById('selectedResultItem')
-                selectedResultItem.innerHTML = ""
-                selectedResultItem.appendChild(selectedImg);
-                selectedResultItem.appendChild(selectedText);
-
-                let selectedResult = document.getElementById('selectedResult')
-                if (selectedResult.classList.contains("hidden"))
-                    selectedResult.classList.remove("hidden")
+            if (attempt < 50) {
+                window.setTimeout(function () {
+                    initializeLocationSetup(attempt + 1);
+                }, 20);
+                return;
             }
-        })();
+
+            Homey.error(new Error("Failed to load the location setup scripts"));
+        })(0);
     </script>
 </div>

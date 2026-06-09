@@ -1,6 +1,6 @@
-import type Location from "../../lib/weather/interface/location";
-import type WeatherDevice from "./device";
-import type {WeatherConfigSource, WeatherVariableSelection} from "../../lib/weather/weatherConfig";
+import type Location from "@/lib/weather/interface/location";
+import type WeatherDevice from "@/drivers/weather/device";
+import type {WeatherConfigSource, WeatherVariableSelection} from "@/lib/weather/weatherConfig";
 
 export interface DeviceStore extends Partial<WeatherVariableSelection> {
     location?: Location;

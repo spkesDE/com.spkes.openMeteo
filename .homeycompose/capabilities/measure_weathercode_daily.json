@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "label": { "en": "Daily weather code (WMO)", "de": "Täglicher Wettercode (WMO)" },
+  "title": { "en": "Daily weather code (WMO)", "de": "Täglicher Wettercode (WMO)" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "icon": "/assets/icons/measure_weathercode.svg"
+}

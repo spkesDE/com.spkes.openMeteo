@@ -99,6 +99,7 @@
   },
   {
     "value": "windspeed_10m_max",
+    "apiValue": "wind_speed_10m_max",
     "i18n": "pair.weatherVariables.daily.windspeed_10m_max",
     "apiVar": true,
     "default": false,
@@ -106,6 +107,7 @@
   },
   {
     "value": "windgusts_10m_max",
+    "apiValue": "wind_gusts_10m_max",
     "i18n": "pair.weatherVariables.daily.windgusts_10m_max",
     "apiVar": true,
     "default": false,
@@ -113,6 +115,7 @@
   },
   {
     "value": "winddirection_10m_dominant",
+    "apiValue": "wind_direction_10m_dominant",
     "i18n": "pair.weatherVariables.daily.winddirection_10m_dominant",
     "apiVar": true,
     "default": false,
@@ -127,9 +130,88 @@
   },
   {
     "value": "et0_fao_evapotranspiration",
+    "apiValue": "et0_fao_evapotranspiration_sum",
     "i18n": "pair.weatherVariables.daily.et0_fao_evapotranspiration",
     "apiVar": true,
     "default": false,
     "capability": "measure_et0_fao_evapotranspiration_sum"
+  },
+  {
+    "value": "weathercode",
+    "apiValue": "weather_code",
+    "i18n": "pair.weatherVariables.daily.weathercode",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_weathercode_daily"
+  },
+  {
+    "value": "daylight_duration",
+    "i18n": "pair.weatherVariables.daily.daylight_duration",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_daylight_duration"
+  },
+  {
+    "value": "sunshine_duration",
+    "i18n": "pair.weatherVariables.daily.sunshine_duration",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_sunshine_duration_daily"
+  },
+  {
+    "value": "temperature_2m_mean",
+    "i18n": "pair.weatherVariables.daily.temperature_2m_mean",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_temperature_mean"
+  },
+  {
+    "value": "apparent_temperature_mean",
+    "i18n": "pair.weatherVariables.daily.apparent_temperature_mean",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_apparent_temperature_mean"
+  },
+  {
+    "value": "precipitation_probability_mean",
+    "i18n": "pair.weatherVariables.daily.precipitation_probability_mean",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_precipitation_probability_mean"
+  },
+  {
+    "value": "relative_humidity_2m_mean",
+    "i18n": "pair.weatherVariables.daily.relative_humidity_2m_mean",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_humidity_mean"
+  },
+  {
+    "value": "wind_speed_10m_mean",
+    "i18n": "pair.weatherVariables.daily.wind_speed_10m_mean",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_windspeed_mean"
+  },
+  {
+    "value": "visibility_min",
+    "i18n": "pair.weatherVariables.daily.visibility_min",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_visibility_min"
+  },
+  {
+    "value": "vapour_pressure_deficit_max",
+    "i18n": "pair.weatherVariables.daily.vapour_pressure_deficit_max",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_vapour_pressure_deficit_max"
+  },
+  {
+    "value": "snowfall_water_equivalent_sum",
+    "i18n": "pair.weatherVariables.daily.snowfall_water_equivalent_sum",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_snowfall_water_equivalent_sum"
   }
 ]

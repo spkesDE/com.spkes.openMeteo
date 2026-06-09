@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Mean relative humidity", "de": "Mittlere relative Luftfeuchtigkeit" },
+  "title": { "en": "Daily mean relative humidity", "de": "Tägliche mittlere relative Luftfeuchtigkeit" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "%", "de": "%" },
+  "icon": "/assets/icons/measure_dewpoint.svg"
+}

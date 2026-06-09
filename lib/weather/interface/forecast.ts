@@ -9,12 +9,9 @@ export interface OpenMeteoUnitMap {
 }
 
 export interface CurrentWeather {
-    temperature?: number;
-    windspeed?: number;
-    winddirection?: number;
-    weathercode?: number;
     time?: string;
-    [key: string]: number | string | undefined;
+    interval?: number;
+    [key: string]: OpenMeteoSeriesValue | undefined;
 }
 
 export default interface Forecast {
@@ -25,6 +22,8 @@ export default interface Forecast {
     timezone: string;
     timezone_abbreviation: string;
     elevation: number;
+    current_units?: OpenMeteoUnitMap;
+    current?: CurrentWeather;
     current_weather?: CurrentWeather;
     hourly_units: OpenMeteoUnitMap;
     hourly: OpenMeteoVariableMap;
@@ -40,6 +39,8 @@ export interface AirQualityForecast {
     timezone?: string;
     timezone_abbreviation?: string;
     elevation?: number;
+    current_units?: OpenMeteoUnitMap;
+    current?: CurrentWeather;
     hourly_units: OpenMeteoUnitMap;
     hourly: OpenMeteoVariableMap;
 }

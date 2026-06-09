@@ -1,10 +1,11 @@
+import "module-alias/register";
 import Homey from 'homey';
 import * as crypto from "crypto";
-import OpenMeteo from "../../app";
-import Forecast, {AirQualityForecast, OpenMeteoVariableMap} from "../../lib/weather/interface/forecast";
-import AppManifest from "../../app.json";
-import WeatherDevice from "./device";
-import {getConfiguredCapabilityIds, WeatherConfigSource} from "../../lib/weather/weatherConfig";
+import OpenMeteo from "@/app";
+import Forecast, {AirQualityForecast, OpenMeteoVariableMap} from "@/lib/weather/interface/forecast";
+import AppManifest from "@/app.json";
+import WeatherDevice from "@/drivers/weather/device";
+import {getApiValue, getConfiguredCapabilityIds, WeatherConfigSource} from "@/lib/weather/weatherConfig";
 import {
     ChartVariableArgument,
     CreateChartFlowArgs,
@@ -13,10 +14,10 @@ import {
     SessionStateStore,
     SessionViewRequest,
     SetupPayload,
-} from "./types";
+} from "@/drivers/weather/types";
 import QuickChart from "quickchart-js";
 import path from "path";
-import Utils from "../../lib/utils";
+import Utils from "@/lib/utils";
 
 class WeatherDriver extends Homey.Driver {
     /**
@@ -186,21 +187,28 @@ class WeatherDriver extends Homey.Driver {
      * Params: device - the device that is currently being repaired
      */
     async onRepair(session: any, device: WeatherDevice) {
-        let state = this.createSessionState(device.getStore());
+        const initialStore = device.getStore() as SessionStateStore;
+        let state = this.createSessionState(initialStore);
+        const hasStoredSelection = {
+            dailyWeatherVariables: Array.isArray(initialStore.dailyWeatherVariables),
+            hourlyWeatherVariables: Array.isArray(initialStore.hourlyWeatherVariables),
+            hourlyAirQualityValues: Array.isArray(initialStore.hourlyAirQualityValues),
+        };
         session.setHandler("getData", async (data: SessionViewRequest) => {
-            let store = device.getStore();
             if (data.view === "setup") {
                 return {
-                    location: store.location,
-                    timezone: store.timezone,
-                    forecast: store.forecast,
+                    location: state.location ?? null,
+                    timezone: state.timezone ?? "auto",
+                    forecast: state.forecast,
                 }
             }
             if (data.view === "dailyWeatherVariables" ||
                 data.view === "hourlyWeatherVariables" ||
                 data.view === "hourlyAirQualityValues") {
                 return {
-                    data: device.getCapabilities()
+                    data: state[data.view],
+                    capabilities: device.getCapabilities(),
+                    hasStoredSelection: hasStoredSelection[data.view],
                 }
             }
 
@@ -225,18 +233,21 @@ class WeatherDriver extends Homey.Driver {
         session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
             state.hourlyWeatherVariables = data;
+            hasStoredSelection.hourlyWeatherVariables = true;
             return true;
         });
 
         session.setHandler("dailyWeatherVariables", async (data: string[]) => {
             if (data == undefined) return false;
             state.dailyWeatherVariables = data;
+            hasStoredSelection.dailyWeatherVariables = true;
             return true;
         });
 
         session.setHandler("hourlyAirQualityValues", async (data: string[]) => {
             if (data == undefined) return false;
             state.hourlyAirQualityValues = data;
+            hasStoredSelection.hourlyAirQualityValues = true;
             let capabilities = this.variablesToCapabilities(state);
             await this.syncCapabilities(device, capabilities);
             await device.setStoreValue("dailyWeatherVariables", state.dailyWeatherVariables);
@@ -363,23 +374,25 @@ class WeatherDriver extends Homey.Driver {
         }
 
         let baseDate = this.getBaseDateInTimezone(store.timezone, store.forecast);
+        let config = device.getConfig(variable, "weather");
+        let apiValue = config ? getApiValue(config) : variable;
         let response = await (this.homey.app as OpenMeteo).getApi().get<Forecast>("", {
             params: {
                 latitude: store.location.latitude,
                 longitude: store.location.longitude,
                 timezone: store.timezone,
-                hourly: variable,
+                hourly: apiValue,
                 start_date: Utils.toIsoDate(baseDate),
                 end_date: Utils.toIsoDate(this.addDays(baseDate, rangeDays - 1)),
             }
         });
 
         let times = this.getStringSeries(response.data.hourly, "time");
-        let series = this.getNumberSeries(response.data.hourly, variable);
+        let series = this.getNumberSeries(response.data.hourly, apiValue);
         return {
             labels: times.slice(0, series.length).map((time) => time.slice(5, 16).replace("T", " ")),
             data: series,
-            unit: response.data.hourly_units[variable] ?? "",
+            unit: response.data.hourly_units[apiValue] ?? "",
         };
     }
 
@@ -391,23 +404,25 @@ class WeatherDriver extends Homey.Driver {
         }
 
         let baseDate = this.getBaseDateInTimezone(store.timezone, store.forecast);
+        let config = device.getConfig(variable, "weatherDaily");
+        let apiValue = config ? getApiValue(config) : variable;
         let response = await (this.homey.app as OpenMeteo).getApi().get<Forecast>("", {
             params: {
                 latitude: store.location.latitude,
                 longitude: store.location.longitude,
                 timezone: store.timezone,
-                daily: variable,
+                daily: apiValue,
                 start_date: Utils.toIsoDate(baseDate),
                 end_date: Utils.toIsoDate(this.addDays(baseDate, rangeDays - 1)),
             }
         });
 
         let times = this.getStringSeries(response.data.daily, "time");
-        let series = this.getNumberSeries(response.data.daily, variable);
+        let series = this.getNumberSeries(response.data.daily, apiValue);
         return {
             labels: times.slice(0, series.length),
             data: series,
-            unit: response.data.daily_units[variable] ?? "",
+            unit: response.data.daily_units[apiValue] ?? "",
         };
     }
 
@@ -419,22 +434,25 @@ class WeatherDriver extends Homey.Driver {
         }
 
         let baseDate = this.getBaseDateInTimezone(store.timezone ?? "UTC", store.forecast);
+        let config = device.getConfig(variable, "airQuality");
+        let apiValue = config ? getApiValue(config) : variable;
         let response = await (this.homey.app as OpenMeteo).getAirQualityApi().get<AirQualityForecast>("", {
             params: {
                 latitude: store.location.latitude,
                 longitude: store.location.longitude,
-                hourly: variable,
+                timezone: store.timezone ?? "UTC",
+                hourly: apiValue,
                 start_date: Utils.toIsoDate(baseDate),
                 end_date: Utils.toIsoDate(this.addDays(baseDate, rangeDays - 1)),
             }
         });
 
         let times = this.getStringSeries(response.data.hourly, "time");
-        let series = this.getNumberSeries(response.data.hourly, variable);
+        let series = this.getNumberSeries(response.data.hourly, apiValue);
         return {
             labels: times.slice(0, series.length).map((time) => time.slice(5, 16).replace("T", " ")),
             data: series,
-            unit: response.data.hourly_units[variable] ?? "",
+            unit: response.data.hourly_units[apiValue] ?? "",
         };
     }
 
@@ -481,16 +499,16 @@ class WeatherDriver extends Homey.Driver {
                         start_date: dateStr,
                         end_date: dateStr,
                         hourly: [
-                            "temperature_2m", "apparent_temperature", "dewpoint_2m",
-                            "relativehumidity_2m", "precipitation_probability", "precipitation",
-                            "rain", "showers", "snowfall", "weathercode", "cloudcover",
-                            "visibility", "pressure_msl", "windspeed_10m", "winddirection_10m",
-                            "windgusts_10m",
+                            "temperature_2m", "apparent_temperature", "dew_point_2m",
+                            "relative_humidity_2m", "precipitation_probability", "precipitation",
+                            "rain", "showers", "snowfall", "weather_code", "cloud_cover",
+                            "visibility", "pressure_msl", "wind_speed_10m", "wind_direction_10m",
+                            "wind_gusts_10m",
                         ].join(","),
                         daily: [
                             "temperature_2m_min", "temperature_2m_max",
                             "apparent_temperature_min", "apparent_temperature_max",
-                            "precipitation_sum", "uv_index_max", "windgusts_10m_max",
+                            "precipitation_sum", "uv_index_max", "wind_gusts_10m_max",
                             "sunrise", "sunset",
                         ].join(","),
                     }
@@ -521,32 +539,32 @@ class WeatherDriver extends Homey.Driver {
                     return Utils.formatTimeValue(val, this.getTimeFormatSetting(args.device));
                 };
 
-                let weatherCode = getHourly("weathercode") ?? -1;
+                let weatherCode = getHourly("weather_code") ?? -1;
                 return {
                     temperature: getHourly("temperature_2m"),
                     apparent_temperature: getHourly("apparent_temperature"),
-                    dewpoint: getHourly("dewpoint_2m"),
+                    dewpoint: getHourly("dew_point_2m"),
                     weather_condition: this.homey.__(`wmo.${weatherCode}`) ?? `Unknown (${weatherCode})`,
                     weather_code: weatherCode,
-                    humidity: getHourly("relativehumidity_2m"),
+                    humidity: getHourly("relative_humidity_2m"),
                     precipitation_probability: getHourly("precipitation_probability"),
                     precipitation: getHourly("precipitation"),
                     rain: getHourly("rain"),
                     showers: getHourly("showers"),
                     snowfall: getHourly("snowfall"),
-                    cloudcover: getHourly("cloudcover"),
+                    cloudcover: getHourly("cloud_cover"),
                     visibility: getHourly("visibility"),
                     pressure_msl: getHourly("pressure_msl"),
-                    wind_speed: getHourly("windspeed_10m"),
-                    wind_direction: getHourly("winddirection_10m"),
-                    wind_gusts: getHourly("windgusts_10m"),
+                    wind_speed: getHourly("wind_speed_10m"),
+                    wind_direction: getHourly("wind_direction_10m"),
+                    wind_gusts: getHourly("wind_gusts_10m"),
                     temperature_min: getDaily("temperature_2m_min"),
                     temperature_max: getDaily("temperature_2m_max"),
                     apparent_temperature_min: getDaily("apparent_temperature_min"),
                     apparent_temperature_max: getDaily("apparent_temperature_max"),
                     precipitation_sum: getDaily("precipitation_sum"),
                     uv_index_max: getDaily("uv_index_max"),
-                    wind_gusts_max: getDaily("windgusts_10m_max"),
+                    wind_gusts_max: getDaily("wind_gusts_10m_max"),
                     sunrise: getDailyTime("sunrise"),
                     sunset: getDailyTime("sunset"),
                 };

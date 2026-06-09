@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Daylight duration", "de": "Tageslichtdauer" },
+  "title": { "en": "Daily daylight duration", "de": "Tägliche Tageslichtdauer" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "s", "de": "s" },
+  "icon": "/assets/icons/sunrise.svg"
+}

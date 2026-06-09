@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Boundary layer height", "de": "Grenzschichthöhe" },
+  "title": { "en": "Boundary layer height", "de": "Grenzschichthöhe" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "m", "de": "m" },
+  "icon": "/assets/icons/measure_visibility.svg"
+}

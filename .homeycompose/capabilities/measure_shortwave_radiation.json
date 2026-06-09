@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Shortwave radiation", "de": "Kurzwellige Strahlung" },
+  "title": { "en": "Shortwave radiation", "de": "Kurzwellige Strahlung" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "W/m²", "de": "W/m²" },
+  "icon": "/assets/icons/measure_shortwave_radiation.svg"
+}

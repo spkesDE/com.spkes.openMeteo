@@ -8,6 +8,7 @@
   },
   {
     "value": "relativehumidity_2m",
+    "apiValue": "relative_humidity_2m",
     "i18n": "pair.weatherVariables.hourly.relativehumidity_2m",
     "apiVar": true,
     "default": true,
@@ -15,6 +16,7 @@
   },
   {
     "value": "dewpoint_2m",
+    "apiValue": "dew_point_2m",
     "i18n": "pair.weatherVariables.hourly.dewpoint_2m",
     "apiVar": true,
     "default": false,
@@ -71,6 +73,7 @@
   },
   {
     "value": "freezinglevel_height",
+    "apiValue": "freezing_level_height",
     "i18n": "pair.weatherVariables.hourly.freezinglevel_height",
     "apiVar": true,
     "default": false,
@@ -78,6 +81,7 @@
   },
   {
     "value": "weathercode",
+    "apiValue": "weather_code",
     "i18n": "pair.weatherVariables.hourly.weathercode",
     "apiVar": true,
     "default": false,
@@ -120,6 +124,7 @@
   },
   {
     "value": "cloudcover",
+    "apiValue": "cloud_cover",
     "i18n": "pair.weatherVariables.hourly.cloudcover",
     "apiVar": true,
     "default": false,
@@ -148,6 +153,7 @@
   },
   {
     "value": "vapor_pressure_deficit",
+    "apiValue": "vapour_pressure_deficit",
     "i18n": "pair.weatherVariables.hourly.vapor_pressure_deficit",
     "apiVar": true,
     "default": false,
@@ -162,6 +168,7 @@
   },
   {
     "value": "windspeed_10m",
+    "apiValue": "wind_speed_10m",
     "i18n": "pair.weatherVariables.hourly.windspeed_10m",
     "apiVar": true,
     "default": false,
@@ -169,6 +176,7 @@
   },
   {
     "value": "winddirection_10m",
+    "apiValue": "wind_direction_10m",
     "i18n": "pair.weatherVariables.hourly.winddirection_10m",
     "apiVar": true,
     "default": false,
@@ -176,6 +184,7 @@
   },
   {
     "value": "windgusts_10m",
+    "apiValue": "wind_gusts_10m",
     "i18n": "pair.weatherVariables.hourly.windgusts_10m",
     "apiVar": true,
     "default": false,
@@ -190,9 +199,129 @@
   },
   {
     "value": "soil_moisture_0_1cm",
+    "apiValue": "soil_moisture_0_to_1cm",
     "i18n": "pair.weatherVariables.hourly.soil_moisture_0_1cm",
     "apiVar": true,
     "default": false,
     "capability": "measure_soil_moisture_0"
+  },
+  {
+    "value": "is_day",
+    "i18n": "pair.weatherVariables.hourly.is_day",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_is_day"
+  },
+  {
+    "value": "sunshine_duration",
+    "i18n": "pair.weatherVariables.hourly.sunshine_duration",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_sunshine_duration"
+  },
+  {
+    "value": "uv_index",
+    "i18n": "pair.weatherVariables.hourly.uv_index",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_uv_index"
+  },
+  {
+    "value": "wet_bulb_temperature_2m",
+    "i18n": "pair.weatherVariables.hourly.wet_bulb_temperature_2m",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_wet_bulb_temperature"
+  },
+  {
+    "value": "cloud_cover_low",
+    "i18n": "pair.weatherVariables.hourly.cloud_cover_low",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_cloud_cover_low"
+  },
+  {
+    "value": "cloud_cover_mid",
+    "i18n": "pair.weatherVariables.hourly.cloud_cover_mid",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_cloud_cover_mid"
+  },
+  {
+    "value": "cloud_cover_high",
+    "i18n": "pair.weatherVariables.hourly.cloud_cover_high",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_cloud_cover_high"
+  },
+  {
+    "value": "soil_temperature_6cm",
+    "i18n": "pair.weatherVariables.hourly.soil_temperature_6cm",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_soil_temperature_6"
+  },
+  {
+    "value": "soil_moisture_1_to_3cm",
+    "i18n": "pair.weatherVariables.hourly.soil_moisture_1_to_3cm",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_soil_moisture_1_3"
+  },
+  {
+    "value": "soil_moisture_3_to_9cm",
+    "i18n": "pair.weatherVariables.hourly.soil_moisture_3_to_9cm",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_soil_moisture_3_9"
+  },
+  {
+    "value": "soil_moisture_9_to_27cm",
+    "i18n": "pair.weatherVariables.hourly.soil_moisture_9_to_27cm",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_soil_moisture_9_27"
+  },
+  {
+    "value": "soil_moisture_27_to_81cm",
+    "i18n": "pair.weatherVariables.hourly.soil_moisture_27_to_81cm",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_soil_moisture_27_81"
+  },
+  {
+    "value": "shortwave_radiation",
+    "i18n": "pair.weatherVariables.hourly.shortwave_radiation",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_shortwave_radiation"
+  },
+  {
+    "value": "direct_normal_irradiance",
+    "i18n": "pair.weatherVariables.hourly.direct_normal_irradiance",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_direct_normal_irradiance"
+  },
+  {
+    "value": "boundary_layer_height",
+    "i18n": "pair.weatherVariables.hourly.boundary_layer_height",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_boundary_layer_height"
+  },
+  {
+    "value": "lifted_index",
+    "i18n": "pair.weatherVariables.hourly.lifted_index",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_lifted_index"
+  },
+  {
+    "value": "convective_inhibition",
+    "i18n": "pair.weatherVariables.hourly.convective_inhibition",
+    "apiVar": true,
+    "default": false,
+    "capability": "measure_convective_inhibition"
   }
 ]

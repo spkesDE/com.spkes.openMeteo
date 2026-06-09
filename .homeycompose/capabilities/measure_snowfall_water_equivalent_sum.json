@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Snowfall water equivalent", "de": "Schneewasseräquivalent" },
+  "title": { "en": "Daily snowfall water equivalent", "de": "Tägliches Schneewasseräquivalent" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 2,
+  "units": { "en": "mm", "de": "mm" },
+  "icon": "/assets/icons/measure_snow.svg"
+}

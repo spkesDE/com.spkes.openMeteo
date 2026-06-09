@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Wet bulb temperature", "de": "Feuchtkugeltemperatur" },
+  "title": { "en": "Wet bulb temperature", "de": "Feuchtkugeltemperatur" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "°C", "de": "°C" },
+  "icon": "/assets/icons/measure_dewpoint.svg"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Mean wind speed", "de": "Mittlere Windgeschwindigkeit" },
+  "title": { "en": "Daily mean wind speed", "de": "Tägliche mittlere Windgeschwindigkeit" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "km/h", "de": "km/h" },
+  "icon": "/assets/icons/measure_windspeed.svg"
+}

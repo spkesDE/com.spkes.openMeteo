@@ -1,9 +1,10 @@
-import DailyWeatherVariablesConfig from "../../assets/json/dailyWeatherVariables.json";
-import HourlyWeatherVariablesConfig from "../../assets/json/hourlyWeatherVariables.json";
-import HourlyAirQualityVariablesConfig from "../../assets/json/hourlyAirQualityVariables.json";
+import DailyWeatherVariablesConfig from "@/assets/json/dailyWeatherVariables.json";
+import HourlyWeatherVariablesConfig from "@/assets/json/hourlyWeatherVariables.json";
+import HourlyAirQualityVariablesConfig from "@/assets/json/hourlyAirQualityVariables.json";
 
 export interface WeatherConfig {
     value: string;
+    apiValue?: string;
     i18n: string;
     apiVar: boolean;
     default: boolean;
@@ -41,6 +42,10 @@ export function findWeatherConfig(query: string, source?: WeatherConfigSource): 
     }
 
     return null;
+}
+
+export function getApiValue(config: WeatherConfig): string {
+    return config.apiValue ?? config.value;
 }
 
 export function getConfiguredCapabilityIds(selection: WeatherVariableSelection, baseCapabilities: string[] = ["date"]) {
