@@ -88,5 +88,8 @@
   },
   "2.0.6": {
     "en": "Fix ET0 capability mapping and weather refactor"
+  },
+  "2.0.7": {
+    "en": "Update weather capabilities, WMO labels, and unit handling"
   }
 }
