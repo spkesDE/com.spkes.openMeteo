@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Low cloud cover", "de": "Tiefe Bewölkung" },
+  "title": { "en": "Low cloud cover", "de": "Tiefe Bewölkung" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "%", "de": "%" },
+  "icon": "/assets/icons/measure_cloudcover.svg"
+}

@@ -2,11 +2,17 @@
   "extends": "@tsconfig/node12/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"]
+    },
     "resolveJsonModule": true,
     "outDir": ".homeybuild/"
   },
   "exclude": [
     ".homeybuild",
+    "assets/js/locationSetup.js",
+    "assets/js/weatherVariableSelector.js",
     "node_modules",
     "test"
   ]

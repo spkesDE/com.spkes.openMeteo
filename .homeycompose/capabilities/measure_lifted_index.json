@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "label": { "en": "Lifted index", "de": "Lifted Index" },
+  "title": { "en": "Lifted index", "de": "Lifted Index" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "icon": "/assets/icons/measure_cape.svg"
+}

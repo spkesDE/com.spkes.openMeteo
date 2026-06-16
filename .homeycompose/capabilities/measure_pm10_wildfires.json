@@ -1,0 +1,21 @@
+{
+  "type": "number",
+  "label": {
+    "en": "Wildfire PM10",
+    "de": "Waldbrand-PM10"
+  },
+  "title": {
+    "en": "PM10 caused by wildfires",
+    "de": "Durch Waldbrände verursachtes PM10"
+  },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": {
+    "en": "μg/m³",
+    "de": "μg/m³"
+  },
+  "icon": "/assets/icons/measure_pm10.svg"
+}

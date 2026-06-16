@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "com.spkes.openMeteo",
-  "version": "2.0.4",
+  "version": "2.0.6",
   "compatibility": ">=12.11.0",
   "sdk": 3,
   "platforms": [
@@ -1163,6 +1163,27 @@
       },
       "icon": "/assets/icons/measure_apparent_temperature_max.svg"
     },
+    "measure_apparent_temperature_mean": {
+      "type": "number",
+      "label": {
+        "en": "Mean apparent temperature",
+        "de": "Mittlere gefühlte Temperatur"
+      },
+      "title": {
+        "en": "Daily mean apparent temperature",
+        "de": "Tägliche mittlere gefühlte Temperatur"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_apparent_temperature.svg"
+    },
     "measure_apparent_temperature_min": {
       "type": "number",
       "label": {
@@ -1203,6 +1224,27 @@
       },
       "icon": "/assets/icons/measure_pollen.svg"
     },
+    "measure_boundary_layer_height": {
+      "type": "number",
+      "label": {
+        "en": "Boundary layer height",
+        "de": "Grenzschichthöhe"
+      },
+      "title": {
+        "en": "Boundary layer height",
+        "de": "Grenzschichthöhe"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "m",
+        "de": "m"
+      },
+      "icon": "/assets/icons/measure_visibility.svg"
+    },
     "measure_cape": {
       "type": "number",
       "label": {
@@ -1238,8 +1280,8 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "µg/m³",
-        "de": "µg/m³"
+        "en": "ppm",
+        "de": "ppm"
       },
       "icon": "/assets/icons/measure_carbon_monoxide.svg"
     },
@@ -1263,6 +1305,69 @@
       },
       "icon": "/assets/icons/measure_carbon_monoxide.svg"
     },
+    "measure_cloud_cover_high": {
+      "type": "number",
+      "label": {
+        "en": "High cloud cover",
+        "de": "Hohe Bewölkung"
+      },
+      "title": {
+        "en": "High cloud cover",
+        "de": "Hohe Bewölkung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "icon": "/assets/icons/measure_cloudcover.svg"
+    },
+    "measure_cloud_cover_low": {
+      "type": "number",
+      "label": {
+        "en": "Low cloud cover",
+        "de": "Tiefe Bewölkung"
+      },
+      "title": {
+        "en": "Low cloud cover",
+        "de": "Tiefe Bewölkung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "icon": "/assets/icons/measure_cloudcover.svg"
+    },
+    "measure_cloud_cover_mid": {
+      "type": "number",
+      "label": {
+        "en": "Mid cloud cover",
+        "de": "Mittelhohe Bewölkung"
+      },
+      "title": {
+        "en": "Mid cloud cover",
+        "de": "Mittelhohe Bewölkung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "icon": "/assets/icons/measure_cloudcover.svg"
+    },
     "measure_cloudcover": {
       "type": "number",
       "label": {
@@ -1283,6 +1388,48 @@
       },
       "icon": "/assets/icons/measure_cloudcover.svg"
     },
+    "measure_convective_inhibition": {
+      "type": "number",
+      "label": {
+        "en": "Convective inhibition",
+        "de": "Konvektive Hemmung"
+      },
+      "title": {
+        "en": "Convective inhibition",
+        "de": "Konvektive Hemmung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "units": {
+        "en": "J/kg",
+        "de": "J/kg"
+      },
+      "icon": "/assets/icons/measure_cape.svg"
+    },
+    "measure_daylight_duration": {
+      "type": "number",
+      "label": {
+        "en": "Daylight duration",
+        "de": "Tageslichtdauer"
+      },
+      "title": {
+        "en": "Daily daylight duration",
+        "de": "Tägliche Tageslichtdauer"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "s",
+        "de": "s"
+      },
+      "icon": "/assets/icons/sunrise.svg"
+    },
     "measure_dewpoint": {
       "type": "number",
       "label": {
@@ -1302,6 +1449,27 @@
         "de": "°C"
       },
       "icon": "/assets/icons/measure_dewpoint.svg"
+    },
+    "measure_direct_normal_irradiance": {
+      "type": "number",
+      "label": {
+        "en": "Direct normal irradiance",
+        "de": "Direkte Normalstrahlung"
+      },
+      "title": {
+        "en": "Direct normal irradiance",
+        "de": "Direkte Normalstrahlung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "units": {
+        "en": "W/m²",
+        "de": "W/m²"
+      },
+      "icon": "/assets/icons/measure_shortwave_radiation.svg"
     },
     "measure_dust": {
       "type": "number",
@@ -1562,6 +1730,61 @@
       },
       "icon": "/assets/icons/measure_pollen.svg"
     },
+    "measure_humidity_mean": {
+      "type": "number",
+      "label": {
+        "en": "Mean relative humidity",
+        "de": "Mittlere relative Luftfeuchtigkeit"
+      },
+      "title": {
+        "en": "Daily mean relative humidity",
+        "de": "Tägliche mittlere relative Luftfeuchtigkeit"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "icon": "/assets/icons/measure_dewpoint.svg"
+    },
+    "measure_is_day": {
+      "type": "number",
+      "label": {
+        "en": "Daylight",
+        "de": "Tageslicht"
+      },
+      "title": {
+        "en": "Daylight (1 = day)",
+        "de": "Tageslicht (1 = Tag)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "icon": "/assets/icons/placeholder.svg"
+    },
+    "measure_lifted_index": {
+      "type": "number",
+      "label": {
+        "en": "Lifted index",
+        "de": "Lifted Index"
+      },
+      "title": {
+        "en": "Lifted index",
+        "de": "Lifted Index"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "icon": "/assets/icons/measure_cape.svg"
+    },
     "measure_methane": {
       "type": "number",
       "label": {
@@ -1722,6 +1945,27 @@
       },
       "icon": "/assets/icons/placeholder.svg"
     },
+    "measure_pm10_wildfires": {
+      "type": "number",
+      "label": {
+        "en": "Wildfire PM10",
+        "de": "Waldbrand-PM10"
+      },
+      "title": {
+        "en": "PM10 caused by wildfires",
+        "de": "Durch Waldbrände verursachtes PM10"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "units": {
+        "en": "μg/m³",
+        "de": "μg/m³"
+      },
+      "icon": "/assets/icons/measure_pm10.svg"
+    },
     "measure_pm25_total_organic_matter": {
       "type": "number",
       "label": {
@@ -1816,6 +2060,27 @@
       "getable": true,
       "setable": false,
       "insights": true,
+      "units": {
+        "en": "%",
+        "de": "%"
+      },
+      "icon": "/assets/icons/measure_precipitation.svg"
+    },
+    "measure_precipitation_probability_mean": {
+      "type": "number",
+      "label": {
+        "en": "Mean precipitation probability",
+        "de": "Mittlere Niederschlagswahrscheinlichkeit"
+      },
+      "title": {
+        "en": "Mean precipitation probability",
+        "de": "Mittlere Niederschlagswahrscheinlichkeit"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
       "units": {
         "en": "%",
         "de": "%"
@@ -1963,6 +2228,27 @@
       },
       "icon": "/assets/icons/placeholder.svg"
     },
+    "measure_shortwave_radiation": {
+      "type": "number",
+      "label": {
+        "en": "Shortwave radiation",
+        "de": "Kurzwellige Strahlung"
+      },
+      "title": {
+        "en": "Shortwave radiation",
+        "de": "Kurzwellige Strahlung"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "units": {
+        "en": "W/m²",
+        "de": "W/m²"
+      },
+      "icon": "/assets/icons/measure_shortwave_radiation.svg"
+    },
     "measure_shortwave_radiation_sum": {
       "type": "number",
       "label": {
@@ -2083,6 +2369,27 @@
       },
       "icon": "/assets/icons/measure_snow.svg"
     },
+    "measure_snowfall_water_equivalent_sum": {
+      "type": "number",
+      "label": {
+        "en": "Snowfall water equivalent",
+        "de": "Schneewasseräquivalent"
+      },
+      "title": {
+        "en": "Daily snowfall water equivalent",
+        "de": "Tägliches Schneewasseräquivalent"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 2,
+      "units": {
+        "en": "mm",
+        "de": "mm"
+      },
+      "icon": "/assets/icons/measure_snow.svg"
+    },
     "measure_soil_moisture_0": {
       "type": "number",
       "label": {
@@ -2098,8 +2405,92 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "m³",
-        "de": "m³"
+        "en": "m³/m³",
+        "de": "m³/m³"
+      },
+      "icon": "/assets/icons/measure_soil_moisture.svg"
+    },
+    "measure_soil_moisture_1_3": {
+      "type": "number",
+      "label": {
+        "en": "Soil moisture (1-3 cm)",
+        "de": "Bodenfeuchtigkeit (1-3 cm)"
+      },
+      "title": {
+        "en": "Soil moisture (1-3 cm)",
+        "de": "Bodenfeuchtigkeit (1-3 cm)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 3,
+      "units": {
+        "en": "m³/m³",
+        "de": "m³/m³"
+      },
+      "icon": "/assets/icons/measure_soil_moisture.svg"
+    },
+    "measure_soil_moisture_27_81": {
+      "type": "number",
+      "label": {
+        "en": "Soil moisture (27-81 cm)",
+        "de": "Bodenfeuchtigkeit (27-81 cm)"
+      },
+      "title": {
+        "en": "Soil moisture (27-81 cm)",
+        "de": "Bodenfeuchtigkeit (27-81 cm)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 3,
+      "units": {
+        "en": "m³/m³",
+        "de": "m³/m³"
+      },
+      "icon": "/assets/icons/measure_soil_moisture.svg"
+    },
+    "measure_soil_moisture_3_9": {
+      "type": "number",
+      "label": {
+        "en": "Soil moisture (3-9 cm)",
+        "de": "Bodenfeuchtigkeit (3-9 cm)"
+      },
+      "title": {
+        "en": "Soil moisture (3-9 cm)",
+        "de": "Bodenfeuchtigkeit (3-9 cm)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 3,
+      "units": {
+        "en": "m³/m³",
+        "de": "m³/m³"
+      },
+      "icon": "/assets/icons/measure_soil_moisture.svg"
+    },
+    "measure_soil_moisture_9_27": {
+      "type": "number",
+      "label": {
+        "en": "Soil moisture (9-27 cm)",
+        "de": "Bodenfeuchtigkeit (9-27 cm)"
+      },
+      "title": {
+        "en": "Soil moisture (9-27 cm)",
+        "de": "Bodenfeuchtigkeit (9-27 cm)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 3,
+      "units": {
+        "en": "m³/m³",
+        "de": "m³/m³"
       },
       "icon": "/assets/icons/measure_soil_moisture.svg"
     },
@@ -2117,6 +2508,27 @@
       "getable": true,
       "setable": false,
       "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_soil_temperature.svg"
+    },
+    "measure_soil_temperature_6": {
+      "type": "number",
+      "label": {
+        "en": "Soil temperature (6 cm)",
+        "de": "Bodentemperatur (6 cm)"
+      },
+      "title": {
+        "en": "Soil temperature at 6 cm",
+        "de": "Bodentemperatur in 6 cm"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
       "units": {
         "en": "°C",
         "de": "°C"
@@ -2143,6 +2555,48 @@
       },
       "icon": "/assets/icons/measure_sulphur_dioxide.svg"
     },
+    "measure_sunshine_duration": {
+      "type": "number",
+      "label": {
+        "en": "Sunshine duration",
+        "de": "Sonnenscheindauer"
+      },
+      "title": {
+        "en": "Hourly sunshine duration",
+        "de": "Stündliche Sonnenscheindauer"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "s",
+        "de": "s"
+      },
+      "icon": "/assets/icons/measure_shortwave_radiation.svg"
+    },
+    "measure_sunshine_duration_daily": {
+      "type": "number",
+      "label": {
+        "en": "Daily sunshine duration",
+        "de": "Tägliche Sonnenscheindauer"
+      },
+      "title": {
+        "en": "Daily sunshine duration",
+        "de": "Tägliche Sonnenscheindauer"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "s",
+        "de": "s"
+      },
+      "icon": "/assets/icons/measure_shortwave_radiation.svg"
+    },
     "measure_temperature_max": {
       "type": "number",
       "label": {
@@ -2157,6 +2611,27 @@
       "getable": true,
       "setable": false,
       "insights": true,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_temperature_max.svg"
+    },
+    "measure_temperature_mean": {
+      "type": "number",
+      "label": {
+        "en": "Mean temperature",
+        "de": "Mittlere Temperatur"
+      },
+      "title": {
+        "en": "Daily mean temperature",
+        "de": "Tägliche mittlere Temperatur"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
       "units": {
         "en": "°C",
         "de": "°C"
@@ -2394,8 +2869,29 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "hPa",
-        "de": "hPa"
+        "en": "kPa",
+        "de": "kPa"
+      },
+      "icon": "/assets/icons/measure_evaporation.svg"
+    },
+    "measure_vapour_pressure_deficit_max": {
+      "type": "number",
+      "label": {
+        "en": "Maximum vapour pressure deficit",
+        "de": "Maximales Dampfdruckdefizit"
+      },
+      "title": {
+        "en": "Maximum vapour pressure deficit",
+        "de": "Maximales Dampfdruckdefizit"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 2,
+      "units": {
+        "en": "kPa",
+        "de": "kPa"
       },
       "icon": "/assets/icons/measure_evaporation.svg"
     },
@@ -2419,6 +2915,27 @@
       },
       "icon": "/assets/icons/measure_visibility.svg"
     },
+    "measure_visibility_min": {
+      "type": "number",
+      "label": {
+        "en": "Minimum visibility",
+        "de": "Minimale Sichtweite"
+      },
+      "title": {
+        "en": "Daily minimum visibility",
+        "de": "Tägliche minimale Sichtweite"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "units": {
+        "en": "m",
+        "de": "m"
+      },
+      "icon": "/assets/icons/measure_visibility.svg"
+    },
     "measure_weathercode": {
       "type": "number",
       "label": {
@@ -2434,6 +2951,44 @@
       "setable": false,
       "insights": true,
       "icon": "/assets/icons/measure_weathercode.svg"
+    },
+    "measure_weathercode_daily": {
+      "type": "number",
+      "label": {
+        "en": "Daily weather code (WMO)",
+        "de": "Täglicher Wettercode (WMO)"
+      },
+      "title": {
+        "en": "Daily weather code (WMO)",
+        "de": "Täglicher Wettercode (WMO)"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "icon": "/assets/icons/measure_weathercode.svg"
+    },
+    "measure_wet_bulb_temperature": {
+      "type": "number",
+      "label": {
+        "en": "Wet bulb temperature",
+        "de": "Feuchtkugeltemperatur"
+      },
+      "title": {
+        "en": "Wet bulb temperature",
+        "de": "Feuchtkugeltemperatur"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
+      "units": {
+        "en": "°C",
+        "de": "°C"
+      },
+      "icon": "/assets/icons/measure_dewpoint.svg"
     },
     "measure_wind_direction_dominant": {
       "type": "number",
@@ -2489,6 +3044,27 @@
       "getable": true,
       "setable": false,
       "insights": true,
+      "units": {
+        "en": "km/h",
+        "de": "km/h"
+      },
+      "icon": "/assets/icons/measure_windspeed.svg"
+    },
+    "measure_windspeed_mean": {
+      "type": "number",
+      "label": {
+        "en": "Mean wind speed",
+        "de": "Mittlere Windgeschwindigkeit"
+      },
+      "title": {
+        "en": "Daily mean wind speed",
+        "de": "Tägliche mittlere Windgeschwindigkeit"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 1,
       "units": {
         "en": "km/h",
         "de": "km/h"

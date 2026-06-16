@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Daily sunshine duration", "de": "Tägliche Sonnenscheindauer" },
+  "title": { "en": "Daily sunshine duration", "de": "Tägliche Sonnenscheindauer" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "units": { "en": "s", "de": "s" },
+  "icon": "/assets/icons/measure_shortwave_radiation.svg"
+}

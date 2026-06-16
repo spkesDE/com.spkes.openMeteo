@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Soil moisture (9-27 cm)", "de": "Bodenfeuchtigkeit (9-27 cm)" },
+  "title": { "en": "Soil moisture (9-27 cm)", "de": "Bodenfeuchtigkeit (9-27 cm)" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 3,
+  "units": { "en": "m³/m³", "de": "m³/m³" },
+  "icon": "/assets/icons/measure_soil_moisture.svg"
+}

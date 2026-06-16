@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Mean temperature", "de": "Mittlere Temperatur" },
+  "title": { "en": "Daily mean temperature", "de": "Tägliche mittlere Temperatur" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "°C", "de": "°C" },
+  "icon": "/assets/icons/measure_temperature_max.svg"
+}

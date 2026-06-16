@@ -107,32 +107,32 @@
       "name": "precipitation",
       "type": "number",
       "title": {
-        "en": "Precipitation (mm)",
-        "de": "Niederschlag (mm)"
+        "en": "Precipitation",
+        "de": "Niederschlag"
       }
     },
     {
       "name": "rain",
       "type": "number",
       "title": {
-        "en": "Rain (mm)",
-        "de": "Regen (mm)"
+        "en": "Rain",
+        "de": "Regen"
       }
     },
     {
       "name": "showers",
       "type": "number",
       "title": {
-        "en": "Showers (mm)",
-        "de": "Schauer (mm)"
+        "en": "Showers",
+        "de": "Schauer"
       }
     },
     {
       "name": "snowfall",
       "type": "number",
       "title": {
-        "en": "Snowfall (cm)",
-        "de": "Schneefall (cm)"
+        "en": "Snowfall",
+        "de": "Schneefall"
       }
     },
     {
@@ -147,8 +147,8 @@
       "name": "visibility",
       "type": "number",
       "title": {
-        "en": "Visibility (m)",
-        "de": "Sichtweite (m)"
+        "en": "Visibility",
+        "de": "Sichtweite"
       }
     },
     {
@@ -163,8 +163,8 @@
       "name": "wind_speed",
       "type": "number",
       "title": {
-        "en": "Wind Speed (km/h)",
-        "de": "Windgeschwindigkeit (km/h)"
+        "en": "Wind Speed",
+        "de": "Windgeschwindigkeit"
       }
     },
     {
@@ -179,8 +179,8 @@
       "name": "wind_gusts",
       "type": "number",
       "title": {
-        "en": "Wind Gusts (km/h)",
-        "de": "Windböen (km/h)"
+        "en": "Wind Gusts",
+        "de": "Windböen"
       }
     },
     {
@@ -219,8 +219,8 @@
       "name": "precipitation_sum",
       "type": "number",
       "title": {
-        "en": "Precipitation Sum (mm)",
-        "de": "Niederschlagssumme (mm)"
+        "en": "Precipitation Sum",
+        "de": "Niederschlagssumme"
       }
     },
     {
@@ -235,8 +235,8 @@
       "name": "wind_gusts_max",
       "type": "number",
       "title": {
-        "en": "Max Wind Gusts (km/h)",
-        "de": "Maximale Windböen (km/h)"
+        "en": "Max Wind Gusts",
+        "de": "Maximale Windböen"
       }
     },
     {

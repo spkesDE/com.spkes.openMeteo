@@ -1,18 +1,30 @@
 <link rel="stylesheet" type="text/css" href="../../../assets/css/autoComplete.css"/>
 <link rel="stylesheet" type="text/css" href="../../../assets/css/setup.css"/>
+<script src="../../../assets/js/weatherVariableSelector.js"></script>
 
 <div class="hy-view __private__open_meteo-setup__view" data-id="weatherVariables" data-template-id="weatherVariables"
      id="87645378645645-67869978456456">
     <div class="__private__open_meteo-setup">
-        <form id="setup-form" class="__private__open_meteo-setup__form homey-form" action="/" method="post">
-            <div class="__private__open_meteo-setup__center">
-                <h1 id="setup-title" class="homey-title homey-text-align-center">Please enter your location</h1>
-                <div class="homey-form-group">
-                    <div id="checkbox-form">
-
+        <form id="setup-form"
+              class="__private__open_meteo-setup__form homey-form weather-variable-form"
+              action="/"
+              method="post">
+            <div class="__private__open_meteo-setup__center weather-variable-center">
+                <h1 id="setup-title" class="homey-title homey-text-align-center">Weather variables</h1>
+                <div class="weather-variable-controls">
+                    <input id="variable-search" class="homey-form-input weather-variable-search" type="search">
+                    <div class="weather-variable-toolbar">
+                        <span id="selection-summary" class="weather-variable-summary" aria-live="polite"></span>
+                        <div class="weather-variable-actions">
+                            <button id="select-visible" class="weather-variable-action" type="button"></button>
+                            <button id="clear-visible" class="weather-variable-action" type="button"></button>
+                        </div>
                     </div>
                 </div>
-
+                <div class="homey-form-group weather-variable-list">
+                    <div id="checkbox-form"></div>
+                    <p id="variable-no-results" class="weather-variable-no-results" hidden></p>
+                </div>
             </div>
 
             <div class="__private__open_meteo-setup__information">
@@ -34,81 +46,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    (async function () {
-        let id = "unknown";
-        let options;
-        let capabilities;
-        // Hide default title bar
-        await Homey.getOptions(function (err, o) {
-            if (err) return Homey.error(err);
-            options = o;
-            if (o.id) id = o.id;
-        });
-        if (id === "unknown") Homey.alert("Failed to get Pair View ID!");
-        const $pair = document.querySelector(`[data-id="${id}"]`);
-        const $form = $pair.querySelector('#setup-form');
-        $form.querySelector("#setup-title").innerText = Homey.__(options.title);
-        await Homey.emit("getData", {view: options.id, data: null}).then(function (result) {
-            capabilities = result.data;
-            console.log(capabilities)
-        });
-        createForm(options.json, capabilities);
-        let working = false;
-
-        $form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            if (working) return;
-            working = true;
-            Homey.showLoadingOverlay(Homey.__('pair.setup.loading'));
-
-            const data = [...$form.querySelectorAll('input[type="checkbox"]:checked')].map(e => e.value);
-
-            Homey.emit(options.id, data,
-                function (error, valid) {
-                    if (error) {
-                        Homey.error(error);
-                    } else if (!valid) {
-                        Homey.error(Homey.__('pair.setup.failed'));
-                    } else if (valid) {
-                        Homey.nextView();
-                    }
-                    working = false;
-                    Homey.hideLoadingOverlay();
-                }
-            );
-            return false;
-        });
-
-        function createForm(jsonUrl, capabilities = undefined) {
-            const request = new XMLHttpRequest();
-            request.open("GET", jsonUrl, false);
-            request.send(null);
-            let json = JSON.parse(request.response);
-            for (let key in json) {
-                let label = document.createElement("label");
-                label.classList.add("homey-form-checkbox");
-                let input = document.createElement("input");
-                input.classList.add("homey-form-checkbox-input");
-                input.type = "checkbox";
-                input.name = json[key].value;
-                input.value = json[key].value;
-                if(capabilities !== undefined)
-                    input.checked =  capabilities.includes(json[key].capability)
-                else
-                    input.checked = json[key].default;
-                let spanCheckmark = document.createElement("span");
-                spanCheckmark.classList.add("homey-form-checkbox-checkmark");
-                let spanText = document.createElement("span");
-                spanText.classList.add("homey-form-checkbox-text");
-                spanText.innerHTML = Homey.__(json[key].i18n) ?? json[key].i18n;
-                label.appendChild(input);
-                label.appendChild(spanCheckmark);
-                label.appendChild(spanText);
-
-                $pair.querySelector("#checkbox-form").appendChild(label);
-            }
-        }
-    })();
-
+    OpenMeteoWeatherVariables.init({repair: true}).catch(function (error) {
+        Homey.error(error);
+    });
 </script>
-</div>

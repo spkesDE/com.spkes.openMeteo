@@ -1,17 +1,23 @@
-import type Location from "../../lib/weather/interface/location";
-import type WeatherDevice from "./device";
-import type {WeatherConfigSource, WeatherVariableSelection} from "../../lib/weather/weatherConfig";
+import type Location from "@/lib/weather/interface/location";
+import type WeatherDevice from "@/drivers/weather/device";
+import type {WeatherConfigSource, WeatherVariableSelection} from "@/lib/weather/weatherConfig";
+import type {WeatherUnitSystem} from "@/lib/weather/weatherUnits";
 
 export interface DeviceStore extends Partial<WeatherVariableSelection> {
     location?: Location;
     timezone?: string;
     forecast?: number | string;
+    unitSystem?: WeatherUnitSystem;
+    tempUnit?: string;
+    windSpeedUnit?: string;
+    precipitationUnit?: string;
 }
 
 export interface NormalizedDeviceStore extends WeatherVariableSelection {
     location?: Location;
     timezone?: string;
     forecast: number;
+    unitSystem: WeatherUnitSystem;
 }
 
 export interface WeatherFlowSnapshot {
@@ -29,14 +35,15 @@ export interface WeatherFlowSnapshot {
 
 export interface SessionState extends WeatherVariableSelection {
     location?: Location;
-    tempUnit?: string;
-    windSpeedUnit?: string;
     timezone?: string;
-    precipitationUnit?: string;
+    unitSystem: WeatherUnitSystem;
     forecast: number;
 }
 
-export type SessionStateStore = Partial<SessionState>;
+export type SessionStateStore = Partial<SessionState> & Pick<
+    DeviceStore,
+    "tempUnit" | "windSpeedUnit" | "precipitationUnit"
+>;
 
 export interface SessionViewRequest {
     view: "setup" | "dailyWeatherVariables" | "hourlyWeatherVariables" | "hourlyAirQualityValues";
@@ -44,10 +51,8 @@ export interface SessionViewRequest {
 
 export interface SetupPayload {
     location: Location;
-    tempUnit: string;
-    windSpeedUnit: string;
     timezone: string;
-    precipitationUnit: string;
+    unitSystem: WeatherUnitSystem;
     forecast: number;
 }
 

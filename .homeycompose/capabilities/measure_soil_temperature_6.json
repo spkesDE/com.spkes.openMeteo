@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Soil temperature (6 cm)", "de": "Bodentemperatur (6 cm)" },
+  "title": { "en": "Soil temperature at 6 cm", "de": "Bodentemperatur in 6 cm" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "°C", "de": "°C" },
+  "icon": "/assets/icons/measure_soil_temperature.svg"
+}

@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Convective inhibition", "de": "Konvektive Hemmung" },
+  "title": { "en": "Convective inhibition", "de": "Konvektive Hemmung" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "J/kg", "de": "J/kg" },
+  "icon": "/assets/icons/measure_cape.svg"
+}

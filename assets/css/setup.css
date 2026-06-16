@@ -50,6 +50,35 @@
     white-space: nowrap;
 }
 
+.location-setup-form {
+    align-items: stretch;
+}
+
+.location-setup-center {
+    margin-top: 0;
+}
+
+.location-setup-hint {
+    margin: -4px 0 12px;
+    color: var(--homey-color-text-light);
+    font-size: var(--homey-font-size-small);
+}
+
+.location-setup-bottom {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.location-setup-bottom .__private__open_meteo-setup__information {
+    margin: 0 0 10px;
+    text-align: center;
+}
+
+.location-setup-bottom .__private__open_meteo-setup__footer {
+    margin-top: 0;
+}
+
 .autocomplete {
     border-radius: var(--homey-border-radius) !important;
     color: var(--homey-color-text) !important;
@@ -86,17 +115,6 @@
     padding: var(--homey-su-1);
 }
 
-.search-icon {
-    height: 20px;
-    padding-right: 10px;
-    vertical-align: middle;
-    width: 20px;
-}
-
-.icon-padding {
-    padding-left: 30px;
-}
-
 .complete {
     box-shadow: 0 0 0 1px var(--homey-color-green) !important;
 }
@@ -105,6 +123,7 @@
 .autoComplete_wrapper > ul::-webkit-scrollbar {
     display: none;
 }
+
 .autoComplete_wrapper > ul {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -130,13 +149,9 @@
     margin: 0.4rem 0.1rem 0.1rem;
 }
 
-.selectedResultItem > .search-icon {
-    width: 32px;
-    height: 32px;
-}
-
 .description {
     color: var(--homey-color-text-light);
+    font-size: var(--homey-font-size-small);
 }
 
 .selectedResultLabel {
@@ -147,10 +162,144 @@
 
 .selectedResultItem {
     display: flex;
+    gap: 10px;
     align-items: center;
     margin-top: 24px;
 }
 
+.selected-location-name,
+.location-result-name {
+    color: var(--homey-color-text);
+    font-weight: 500;
+}
+
+.country-flag {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    object-fit: contain;
+}
+
+.country-flag-small {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+}
+
+.location-result-text {
+    min-width: 0;
+}
+
+.autoComplete_wrapper > ul > li {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
 .hidden {
     display: none;
+}
+
+.weather-variable-form {
+    align-items: stretch;
+}
+
+.weather-variable-center {
+    margin-top: 0;
+}
+
+.weather-variable-controls {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 4px 0 12px;
+    background: var(--homey-color-background, var(--homey-color-component));
+}
+
+.weather-variable-search {
+    width: 100%;
+}
+
+.weather-variable-toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.weather-variable-summary {
+    color: var(--homey-color-text-light);
+    font-size: var(--homey-font-size-small);
+    white-space: nowrap;
+}
+
+.weather-variable-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.weather-variable-action {
+    appearance: none;
+    padding: 6px 9px;
+    border: 1px solid var(--homey-color-line);
+    border-radius: var(--homey-border-radius-small);
+    background: var(--homey-color-component);
+    color: var(--homey-color-text);
+    font: inherit;
+    font-size: var(--homey-font-size-small);
+    cursor: pointer;
+}
+
+.weather-variable-action:active {
+    transform: translateY(1px);
+}
+
+.weather-variable-list {
+    margin-bottom: 16px;
+}
+
+.weather-variable-category {
+    margin-top: 18px;
+}
+
+.weather-variable-category-title {
+    margin: 0 0 8px;
+    color: var(--homey-color-text-light);
+    font-size: var(--homey-font-size-small);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.weather-variable-items {
+    padding: 0 12px 10px;
+    border: 1px solid var(--homey-color-line);
+    border-radius: var(--homey-border-radius);
+    background: var(--homey-color-component);
+}
+
+.weather-variable-option:last-child {
+    margin-bottom: 0;
+}
+
+.weather-variable-no-results {
+    padding: 24px 0;
+    color: var(--homey-color-text-light);
+    text-align: center;
+}
+
+@media (max-width: 420px) {
+    .weather-variable-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .weather-variable-actions {
+        width: 100%;
+    }
+
+    .weather-variable-action {
+        flex: 1;
+    }
 }

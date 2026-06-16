@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Mean apparent temperature", "de": "Mittlere gefühlte Temperatur" },
+  "title": { "en": "Daily mean apparent temperature", "de": "Tägliche mittlere gefühlte Temperatur" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 1,
+  "units": { "en": "°C", "de": "°C" },
+  "icon": "/assets/icons/measure_apparent_temperature.svg"
+}

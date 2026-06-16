@@ -1,0 +1,11 @@
+{
+  "type": "number",
+  "label": { "en": "Daylight", "de": "Tageslicht" },
+  "title": { "en": "Daylight (1 = day)", "de": "Tageslicht (1 = Tag)" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "icon": "/assets/icons/placeholder.svg"
+}

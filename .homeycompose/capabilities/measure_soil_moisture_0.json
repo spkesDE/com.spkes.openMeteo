@@ -13,8 +13,8 @@
   "setable": false,
   "insights": true,
   "units": {
-    "en": "m³",
-    "de": "m³"
+    "en": "m³/m³",
+    "de": "m³/m³"
   },
   "icon": "/assets/icons/measure_soil_moisture.svg"
 }

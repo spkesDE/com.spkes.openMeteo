@@ -1,0 +1,12 @@
+{
+  "type": "number",
+  "label": { "en": "Maximum vapour pressure deficit", "de": "Maximales Dampfdruckdefizit" },
+  "title": { "en": "Maximum vapour pressure deficit", "de": "Maximales Dampfdruckdefizit" },
+  "uiComponent": "sensor",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 2,
+  "units": { "en": "kPa", "de": "kPa" },
+  "icon": "/assets/icons/measure_evaporation.svg"
+}

@@ -1,5 +1,5 @@
-import Location from "./weather/interface/location";
-import {DateParts, DateTimeParts, TimeParts} from "./weather/interface/time";
+import Location from "@/lib/weather/interface/location";
+import {DateParts, DateTimeParts, TimeParts} from "@/lib/weather/interface/time";
 
 export default class Utils {
     public static hexToRGB(hex: string, alpha?: number) {
