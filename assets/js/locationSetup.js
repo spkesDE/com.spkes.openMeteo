@@ -55,7 +55,8 @@
         const selectedResultItem = form.querySelector("#selectedResultItem");
         const timezone = form.querySelector("#select-timezone");
         const forecast = form.querySelector("#select-forecast");
-        if (!input || !nextButton || !selectedResult || !selectedResultItem || !timezone || !forecast) {
+        const unitSystem = form.querySelector("#select-unit-system");
+        if (!input || !nextButton || !selectedResult || !selectedResultItem || !timezone || !forecast || !unitSystem) {
             throw new Error("Location setup view is missing required elements");
         }
         if (view) {
@@ -67,9 +68,13 @@
         );
         let locationObject;
         let working = false;
+        let unitSystemTouched = false;
 
         Homey.setTitle(null);
         input.placeholder = translate("pair.setup.location.placeholder", "Hamburg");
+        unitSystem.addEventListener("change", function () {
+            unitSystemTouched = true;
+        });
 
         if (config.repair) {
             Homey.showLoadingOverlay(Homey.__("pair.setup.loading"));
@@ -81,6 +86,9 @@
                 }
                 if (result && result.forecast !== undefined) {
                     forecast.value = result.forecast;
+                }
+                if (result && result.unitSystem) {
+                    unitSystem.value = result.unitSystem;
                 }
             } finally {
                 Homey.hideLoadingOverlay();
@@ -207,6 +215,11 @@
             }
             locationObject = location;
             autoCompleteJS.input.value = locationObject.name;
+            if (!config.repair && !unitSystemTouched) {
+                unitSystem.value = String(locationObject.country_code || "").toUpperCase() === "US"
+                    ? "imperial"
+                    : "metric";
+            }
             renderSelection();
         }
 
@@ -238,10 +251,8 @@
             Homey.showLoadingOverlay(Homey.__("pair.setup.loading"));
             Homey.emit("setup", {
                 location: locationObject,
-                tempUnit: "celsius",
-                windSpeedUnit: "Km/h",
                 timezone: timezone.value,
-                precipitationUnit: "mm",
+                unitSystem: unitSystem.value,
                 forecast: forecast.value
             }, function (error, valid) {
                 if (error) {

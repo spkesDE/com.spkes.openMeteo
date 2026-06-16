@@ -15,6 +15,7 @@ import {
 } from "@/lib/weather/weatherConfig";
 import {DeviceStore, NormalizedDeviceStore, WeatherFlowSnapshot} from "@/drivers/weather/types";
 import Utils from "@/lib/utils";
+import WeatherUnits, {WeatherUnitSystem} from "@/lib/weather/weatherUnits";
 
 export default class WeatherDevice extends Homey.Device {
     private static readonly DEFAULT_TIME_FORMAT = "HH:mm";
@@ -30,6 +31,7 @@ export default class WeatherDevice extends Homey.Device {
 
         await this.migrateLegacyCapabilities();
         await this.ensureConfiguredCapabilitiesPresent();
+        await this.applyUnitSystemCapabilityOptions();
 
         try {
             await this.update(true);
@@ -166,7 +168,10 @@ export default class WeatherDevice extends Homey.Device {
             return;
         }
         //If number capability set value.
-        await this.setCapabilityValue(capabilityId, value ?? 0).catch((err) => this.error(err))
+        let displayValue = typeof value === "number"
+            ? WeatherUnits.convertDeviceCapabilityValue(this, capabilityId, value, this.getNormalizedStore().unitSystem)
+            : value;
+        await this.setCapabilityValue(capabilityId, displayValue ?? 0).catch((err) => this.error(err))
     }
 
     public getConfig(query: string, source?: WeatherConfigSource): WeatherConfig | null {
@@ -288,6 +293,22 @@ export default class WeatherDevice extends Homey.Device {
 
         let value = this.getCapabilityValue(capabilityId);
         return typeof value === "number" ? value : null;
+    }
+
+    public getUnitSystem(): WeatherUnitSystem {
+        return this.getNormalizedStore().unitSystem;
+    }
+
+    public getUnitSystemForCapability(capabilityId: string): WeatherUnitSystem {
+        return WeatherUnits.getDeviceCapabilityUnitSystem(this, capabilityId, this.getUnitSystem());
+    }
+
+    public async applyUnitSystemCapabilityOptions(force: boolean = false) {
+        let unitSystem = this.getUnitSystem();
+        let updates = await WeatherUnits.applyCapabilityOptions(this, unitSystem, force);
+        if (updates > 0) {
+            this.log(`Updated ${updates} capability unit option(s) to ${unitSystem}`);
+        }
     }
 
     private getRequestedHourlyWeatherVariables(hourlyWeatherVariables: string[]) {
@@ -563,6 +584,11 @@ export default class WeatherDevice extends Homey.Device {
             location: store.location,
             timezone: store.timezone,
             forecast: this.normalizeForecast(store.forecast),
+            unitSystem: WeatherUnits.normalize(
+                store.unitSystem,
+                store.windSpeedUnit,
+                store.precipitationUnit,
+            ),
             dailyWeatherVariables: this.normalizeStringArray(store.dailyWeatherVariables),
             hourlyWeatherVariables: this.normalizeStringArray(store.hourlyWeatherVariables),
             hourlyAirQualityValues: this.normalizeStringArray(store.hourlyAirQualityValues),
@@ -658,13 +684,18 @@ export default class WeatherDevice extends Homey.Device {
     }
 
     private async ensureConfiguredCapabilitiesPresent() {
+        let addedConvertibleCapability = false;
         for (let capability of getConfiguredCapabilityIds(this.getNormalizedStore())) {
             if (this.resolveCapabilityId(capability)) continue;
             try {
                 await this.addCapability(capability);
+                addedConvertibleCapability ||= WeatherUnits.isConvertibleCapability(capability);
             } catch (err: any) {
                 this.error(`Failed to add missing capability "${capability}" to ${this.getName()}: ${err?.message ?? err}`);
             }
+        }
+        if (addedConvertibleCapability) {
+            await this.applyUnitSystemCapabilityOptions();
         }
     }
 

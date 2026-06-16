@@ -66,6 +66,11 @@
         "auto": "Zeitzone automatisch erkennen",
         "label": "Zeitzone"
       },
+      "unitSystem": {
+        "label": "Einheiten",
+        "metric": "Metrisch (mm, m, km/h)",
+        "imperial": "Imperial (in, ft, mph)"
+      },
       "title": "Standort auswählen",
       "windspeed_unit": {
         "label": "Windgeschwindigkeitseinheit"
