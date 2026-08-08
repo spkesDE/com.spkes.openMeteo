@@ -37,19 +37,27 @@
         "label": "Vorhersage für",
         "mode": {
           "label": "Vorhersagezeitpunkt",
-          "relativeHours": "In einer Anzahl von Stunden",
-          "dayHour": "An einem Tag zu einer bestimmten Uhrzeit"
+          "hoursSegment": "Stunden",
+          "daySegment": "Tag & Uhrzeit"
         },
         "hours": {
-          "label": "Stunden im Voraus (0-360)",
-          "hint": "0 verwendet das aktuelle Wetter; 2 verwendet die Vorhersage für die aktuelle Stunde plus zwei Stunden."
+          "label": "Stunden im Voraus",
+          "hint": "Bewege den Regler oder gib die genaue Stundenzahl ein (0-360)."
         },
         "days": {
-          "label": "Tag"
+          "label": "Vorhersagetag"
         },
         "hour": {
-          "label": "Stunde (0-23)",
+          "label": "Uhrzeit",
           "hint": "Verwendet die stündliche Vorhersage zur gewählten Ortszeit."
+        },
+        "preview": {
+          "label": "Ausgewählte Vorhersage",
+          "today": "Heute",
+          "tomorrow": "Morgen",
+          "now": "Jetzt (%time% Uhr)",
+          "relative": "%date%, %time% Uhr (+%hours% h)",
+          "fixed": "%date% um %time% Uhr"
         },
         "today": "Heute"
       },

@@ -70,6 +70,152 @@
     font-size: var(--homey-font-size-small);
 }
 
+.forecast-schedule {
+    margin: 14px 0 16px !important;
+    padding: 0;
+}
+
+.forecast-card {
+    margin-top: 10px;
+    padding: 14px;
+    border: 1px solid var(--homey-color-line);
+    border-radius: var(--homey-border-radius);
+    background: var(--homey-color-component);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.forecast-choice-panel {
+    margin-top: 14px;
+}
+
+.forecast-choice-panel > .homey-form-group {
+    margin-bottom: 12px;
+}
+
+.forecast-choice-panel > .homey-form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.forecast-mode-segmented {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 3px;
+    border-radius: 12px;
+    background: rgba(127, 127, 127, 0.14);
+}
+
+.forecast-mode-segment {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    cursor: pointer;
+}
+
+.forecast-mode-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.forecast-mode-segment span {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 8px;
+    color: var(--homey-color-text-light);
+    font-size: var(--homey-font-size-small);
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    transition: color var(--homey-duration-fast) var(--homey-curve-fast-in);
+}
+
+.forecast-mode-input:checked + span {
+    color: #fff;
+}
+
+.forecast-mode-input:focus-visible + span {
+    border-radius: 9px;
+    outline: 2px solid var(--homey-color-blue);
+    outline-offset: 1px;
+}
+
+.forecast-mode-indicator {
+    position: absolute;
+    z-index: 0;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 9px;
+    background: var(--homey-color-blue);
+    box-shadow: 0 2px 7px rgba(0, 92, 184, 0.28);
+    transition: transform var(--homey-duration-fast) var(--homey-curve-fast-in);
+}
+
+.forecast-mode-segmented[data-mode="day_hour"] .forecast-mode-indicator {
+    transform: translateX(100%);
+}
+
+.forecast-range-heading,
+.forecast-hours-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.forecast-range-heading {
+    justify-content: space-between;
+}
+
+.forecast-range-heading .homey-form-label {
+    margin: 0;
+}
+
+#forecast-hours-value {
+    min-width: 54px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: var(--homey-color-blue);
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+}
+
+.forecast-range {
+    width: 100%;
+    margin-block: 10px;
+    accent-color: var(--homey-color-blue);
+}
+
+.forecast-hours-input-row .homey-form-input {
+    max-width: 110px;
+}
+
+.forecast-hours-input-row span {
+    color: var(--homey-color-text-light);
+    font-weight: 600;
+}
+
+.forecast-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-block-start: 14px;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--homey-color-line);
+    color: var(--homey-color-text);
+}
+
+.forecast-preview-label {
+    color: var(--homey-color-text-light);
+    font-size: var(--homey-font-size-small);
+}
+
 .location-setup-bottom {
     width: 100%;
     margin-top: auto;
@@ -143,7 +289,7 @@
     display: block;
     box-sizing: border-box;
     background: var(--homey-color-component);
-    padding: var(--homey-su-1);
+    padding: 10px 12px;
     border-radius: var(--homey-border-radius-small);
     font-size: var(--homey-font-size-default);
     color: var(--homey-color-text);
@@ -152,7 +298,7 @@
     transition: var(--homey-duration-fast) var(--homey-curve-fast-in);
     transition-property: box-shadow, color;
     -webkit-tap-highlight-color: transparent;
-    margin: 0.4rem 0.1rem 0.1rem;
+    margin: 6px 0 0;
 }
 
 .description {
@@ -161,16 +307,17 @@
 }
 
 .selectedResultLabel {
-    position: absolute;
+    display: block;
     font-size: var(--homey-font-size-small);
     color: var(--homey-color-text-placeholder);
+    line-height: 1.3;
 }
 
 .selectedResultItem {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 24px;
+    margin-top: 7px;
 }
 
 .selected-location-name,
@@ -200,6 +347,8 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    margin: 2px;
+    padding: 10px 12px;
 }
 
 .hidden {
