@@ -94,5 +94,8 @@
   },
   "2.0.8": {
     "en": "Add support for hourly weather forecasts and improve forecast handling"
+  },
+  "2.0.9": {
+    "en": "Enhance forecast setup UI and functionality"
   }
 }
