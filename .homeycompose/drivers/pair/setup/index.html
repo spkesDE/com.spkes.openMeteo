@@ -43,90 +43,130 @@
                     </div>
                 </div>
 
-                <div class="homey-form-group">
-                    <label data-i18n="pair.setup.forecast.mode.label"
-                           class="homey-form-label"
-                           for="select-forecast-mode">
+                <fieldset class="homey-form-fieldset forecast-schedule">
+                    <legend class="homey-form-legend"
+                            id="forecast-mode-legend"
+                            data-i18n="pair.setup.forecast.mode.label">
                         Forecast time
-                    </label>
-                    <select class="homey-form-select" name="select-forecast-mode" id="select-forecast-mode">
-                        <option data-i18n="pair.setup.forecast.mode.relativeHours" selected value="relative_hours">
-                            In a number of hours
-                        </option>
-                        <option data-i18n="pair.setup.forecast.mode.dayHour" value="day_hour">
-                            On a day at a specific hour
-                        </option>
-                    </select>
-                </div>
+                    </legend>
+                    <div class="forecast-card">
+                        <div class="forecast-mode-segmented"
+                             id="forecast-mode-control"
+                             data-mode="relative_hours"
+                             role="radiogroup"
+                             aria-labelledby="forecast-mode-legend">
+                            <label class="forecast-mode-segment">
+                                <input class="forecast-mode-input"
+                                       type="radio"
+                                       name="forecast-mode"
+                                       value="relative_hours"
+                                       checked>
+                                <span data-i18n="pair.setup.forecast.mode.hoursSegment">
+                                    Hours
+                                </span>
+                            </label>
+                            <label class="forecast-mode-segment">
+                                <input class="forecast-mode-input"
+                                       type="radio"
+                                       name="forecast-mode"
+                                       value="day_hour">
+                                <span data-i18n="pair.setup.forecast.mode.daySegment">
+                                    Day &amp; time
+                                </span>
+                            </label>
+                            <span class="forecast-mode-indicator" aria-hidden="true"></span>
+                        </div>
 
-                <div class="homey-form-group" id="forecast-relative-hours-fields">
-                    <label data-i18n="pair.setup.forecast.hours.label"
-                           class="homey-form-label"
-                           for="forecast-hours">
-                        Hours ahead
-                    </label>
-                    <input class="homey-form-input"
-                           id="forecast-hours"
-                           name="forecast-hours"
-                           type="number"
-                           value="0"
-                           min="0"
-                           max="360"
-                           step="1"
-                           required>
-                    <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hours.hint">
-                        0 uses the current weather; 2 uses the forecast for the current hour plus two hours.
-                    </p>
-                </div>
-
-                <div id="forecast-day-hour-fields" class="hidden">
-                    <div class="homey-form-group">
-                    <label data-i18n="pair.setup.forecast.days.label"
-                           class="homey-form-label"
-                           for="select-forecast">
-                        Day
-                    </label>
-                    <select class="homey-form-select" name="select-forecast" id="select-forecast">
-                        <option data-i18n="pair.setup.forecast.today" selected value="0">Current Day</option>
-                        <option data-i18n="pair.setup.forecast.1day" value="1">Tomorrow</option>
-                        <option data-i18n="pair.setup.forecast.2day" value="2">In 2 days</option>
-                        <option data-i18n="pair.setup.forecast.3day" value="3">In 3 days</option>
-                        <option data-i18n="pair.setup.forecast.4day" value="4">In 4 days</option>
-                        <option data-i18n="pair.setup.forecast.5day" value="5">In 5 days</option>
-                        <option data-i18n="pair.setup.forecast.6day" value="6">In 6 days</option>
-                        <option data-i18n="pair.setup.forecast.7day" value="7">In 7 days</option>
-                        <option data-i18n="pair.setup.forecast.8day" value="8">In 8 days</option>
-                        <option data-i18n="pair.setup.forecast.9day" value="9">In 9 days</option>
-                        <option data-i18n="pair.setup.forecast.10day" value="10">In 10 days</option>
-                        <option data-i18n="pair.setup.forecast.11day" value="11">In 11 days</option>
-                        <option data-i18n="pair.setup.forecast.12day" value="12">In 12 days</option>
-                        <option data-i18n="pair.setup.forecast.13day" value="13">In 13 days</option>
-                        <option data-i18n="pair.setup.forecast.14day" value="14">In 14 days</option>
-                        <option data-i18n="pair.setup.forecast.15day" value="15">In 15 days</option>
-                    </select>
-                    </div>
-
-                    <div class="homey-form-group">
-                        <label data-i18n="pair.setup.forecast.hour.label"
-                               class="homey-form-label"
-                               for="forecast-hour">
-                            Hour
-                        </label>
-                        <input class="homey-form-input"
-                               id="forecast-hour"
-                               name="forecast-hour"
-                               type="number"
-                               value="12"
+                        <div class="forecast-choice-panel" id="forecast-relative-hours-fields">
+                        <div class="forecast-range-heading">
+                            <label data-i18n="pair.setup.forecast.hours.label"
+                                   class="homey-form-label"
+                                   for="forecast-hours-range">
+                                Hours ahead
+                            </label>
+                            <output id="forecast-hours-value" for="forecast-hours-range forecast-hours">0 h</output>
+                        </div>
+                        <input class="forecast-range"
+                               id="forecast-hours-range"
+                               type="range"
+                               value="0"
                                min="0"
-                               max="23"
-                               step="1"
-                               required
-                               disabled>
-                        <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hour.hint">
-                            Uses the hourly forecast at the selected local time.
+                               max="360"
+                               step="1">
+                        <div class="forecast-hours-input-row">
+                            <input class="homey-form-input"
+                                   id="forecast-hours"
+                                   name="forecast-hours"
+                                   type="number"
+                                   value="0"
+                                   min="0"
+                                   max="360"
+                                   step="1"
+                                   required>
+                            <span aria-hidden="true">h</span>
+                        </div>
+                        <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hours.hint">
+                            Move the slider or enter the exact number of hours.
                         </p>
+                        <div class="forecast-preview" aria-live="polite">
+                            <span class="forecast-preview-label" data-i18n="pair.setup.forecast.preview.label">
+                                Selected forecast
+                            </span>
+                            <strong id="forecast-relative-preview"></strong>
+                        </div>
+                        </div>
+
+                        <div id="forecast-day-hour-fields" class="forecast-choice-panel hidden">
+                        <div class="homey-form-group">
+                            <label data-i18n="pair.setup.forecast.days.label"
+                                   class="homey-form-label"
+                                   for="select-forecast">
+                                Day
+                            </label>
+                            <select class="homey-form-select" name="select-forecast" id="select-forecast">
+                                <option data-i18n="pair.setup.forecast.today" selected value="0">Current Day</option>
+                                <option data-i18n="pair.setup.forecast.1day" value="1">Tomorrow</option>
+                                <option data-i18n="pair.setup.forecast.2day" value="2">In 2 days</option>
+                                <option data-i18n="pair.setup.forecast.3day" value="3">In 3 days</option>
+                                <option data-i18n="pair.setup.forecast.4day" value="4">In 4 days</option>
+                                <option data-i18n="pair.setup.forecast.5day" value="5">In 5 days</option>
+                                <option data-i18n="pair.setup.forecast.6day" value="6">In 6 days</option>
+                                <option data-i18n="pair.setup.forecast.7day" value="7">In 7 days</option>
+                                <option data-i18n="pair.setup.forecast.8day" value="8">In 8 days</option>
+                                <option data-i18n="pair.setup.forecast.9day" value="9">In 9 days</option>
+                                <option data-i18n="pair.setup.forecast.10day" value="10">In 10 days</option>
+                                <option data-i18n="pair.setup.forecast.11day" value="11">In 11 days</option>
+                                <option data-i18n="pair.setup.forecast.12day" value="12">In 12 days</option>
+                                <option data-i18n="pair.setup.forecast.13day" value="13">In 13 days</option>
+                                <option data-i18n="pair.setup.forecast.14day" value="14">In 14 days</option>
+                                <option data-i18n="pair.setup.forecast.15day" value="15">In 15 days</option>
+                            </select>
+                        </div>
+
+                        <div class="homey-form-group">
+                            <label data-i18n="pair.setup.forecast.hour.label"
+                                   class="homey-form-label"
+                                   for="forecast-hour">
+                                Hour
+                            </label>
+                            <select class="homey-form-select"
+                                    id="forecast-hour"
+                                    name="forecast-hour"
+                                    required
+                                    disabled></select>
+                            <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hour.hint">
+                                Uses the hourly forecast at the selected local time.
+                            </p>
+                        </div>
+                        <div class="forecast-preview" aria-live="polite">
+                            <span class="forecast-preview-label" data-i18n="pair.setup.forecast.preview.label">
+                                Selected forecast
+                            </span>
+                            <strong id="forecast-fixed-preview"></strong>
+                        </div>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
 
                 <div class="homey-form-group">
                     <label data-i18n="pair.setup.unitSystem.label"

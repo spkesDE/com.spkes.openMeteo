@@ -37,19 +37,27 @@
         "label": "Forecast for",
         "mode": {
           "label": "Forecast time",
-          "relativeHours": "In a number of hours",
-          "dayHour": "On a day at a specific hour"
+          "hoursSegment": "Hours",
+          "daySegment": "Day & time"
         },
         "hours": {
-          "label": "Hours ahead (0-360)",
-          "hint": "0 uses the current weather; 2 uses the forecast for the current hour plus two hours."
+          "label": "Hours ahead",
+          "hint": "Move the slider or enter the exact number of hours (0-360)."
         },
         "days": {
-          "label": "Day"
+          "label": "Forecast day"
         },
         "hour": {
-          "label": "Hour (0-23)",
+          "label": "Time",
           "hint": "Uses the hourly forecast at the selected local time."
+        },
+        "preview": {
+          "label": "Selected forecast",
+          "today": "Today",
+          "tomorrow": "Tomorrow",
+          "now": "Now (%time%)",
+          "relative": "%date%, %time% (+%hours% h)",
+          "fixed": "%date% at %time%"
         },
         "today": "Current Day"
       },
