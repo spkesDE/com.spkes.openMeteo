@@ -91,5 +91,8 @@
   },
   "2.0.7": {
     "en": "Update weather capabilities, WMO labels, and unit handling"
+  },
+  "2.0.8": {
+    "en": "Add support for hourly weather forecasts and improve forecast handling"
   }
 }
