@@ -35,6 +35,22 @@
         "8day": "in 8 tagen",
         "9day": "in 9 tagen",
         "label": "Vorhersage für",
+        "mode": {
+          "label": "Vorhersagezeitpunkt",
+          "relativeHours": "In einer Anzahl von Stunden",
+          "dayHour": "An einem Tag zu einer bestimmten Uhrzeit"
+        },
+        "hours": {
+          "label": "Stunden im Voraus (0-360)",
+          "hint": "0 verwendet das aktuelle Wetter; 2 verwendet die Vorhersage für die aktuelle Stunde plus zwei Stunden."
+        },
+        "days": {
+          "label": "Tag"
+        },
+        "hour": {
+          "label": "Stunde (0-23)",
+          "hint": "Verwendet die stündliche Vorhersage zur gewählten Ortszeit."
+        },
         "today": "Heute"
       },
       "hourlyForecast": {

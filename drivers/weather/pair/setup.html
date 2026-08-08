@@ -44,10 +44,47 @@
                 </div>
 
                 <div class="homey-form-group">
-                    <label data-i18n="pair.setup.forecast.label"
+                    <label data-i18n="pair.setup.forecast.mode.label"
+                           class="homey-form-label"
+                           for="select-forecast-mode">
+                        Forecast time
+                    </label>
+                    <select class="homey-form-select" name="select-forecast-mode" id="select-forecast-mode">
+                        <option data-i18n="pair.setup.forecast.mode.relativeHours" selected value="relative_hours">
+                            In a number of hours
+                        </option>
+                        <option data-i18n="pair.setup.forecast.mode.dayHour" value="day_hour">
+                            On a day at a specific hour
+                        </option>
+                    </select>
+                </div>
+
+                <div class="homey-form-group" id="forecast-relative-hours-fields">
+                    <label data-i18n="pair.setup.forecast.hours.label"
+                           class="homey-form-label"
+                           for="forecast-hours">
+                        Hours ahead
+                    </label>
+                    <input class="homey-form-input"
+                           id="forecast-hours"
+                           name="forecast-hours"
+                           type="number"
+                           value="0"
+                           min="0"
+                           max="360"
+                           step="1"
+                           required>
+                    <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hours.hint">
+                        0 uses the current weather; 2 uses the forecast for the current hour plus two hours.
+                    </p>
+                </div>
+
+                <div id="forecast-day-hour-fields" class="hidden">
+                    <div class="homey-form-group">
+                    <label data-i18n="pair.setup.forecast.days.label"
                            class="homey-form-label"
                            for="select-forecast">
-                        Get forecast
+                        Day
                     </label>
                     <select class="homey-form-select" name="select-forecast" id="select-forecast">
                         <option data-i18n="pair.setup.forecast.today" selected value="0">Current Day</option>
@@ -66,8 +103,29 @@
                         <option data-i18n="pair.setup.forecast.13day" value="13">In 13 days</option>
                         <option data-i18n="pair.setup.forecast.14day" value="14">In 14 days</option>
                         <option data-i18n="pair.setup.forecast.15day" value="15">In 15 days</option>
-                        <option data-i18n="pair.setup.forecast.16day" value="16">In 16 days</option>
                     </select>
+                    </div>
+
+                    <div class="homey-form-group">
+                        <label data-i18n="pair.setup.forecast.hour.label"
+                               class="homey-form-label"
+                               for="forecast-hour">
+                            Hour
+                        </label>
+                        <input class="homey-form-input"
+                               id="forecast-hour"
+                               name="forecast-hour"
+                               type="number"
+                               value="12"
+                               min="0"
+                               max="23"
+                               step="1"
+                               required
+                               disabled>
+                        <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hour.hint">
+                            Uses the hourly forecast at the selected local time.
+                        </p>
+                    </div>
                 </div>
 
                 <div class="homey-form-group">

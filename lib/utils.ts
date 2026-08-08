@@ -120,7 +120,7 @@ export default class Utils {
         if (!Array.isArray(times) || times.length === 0 || !targetDateTime) return 0;
         let targetHourIso = `${Utils.toIsoDate(targetDateTime)}T${String(targetDateTime.getUTCHours()).padStart(2, "0")}`;
         let matchIndex = times.findIndex((time) => typeof time === "string" && time.startsWith(targetHourIso));
-        return matchIndex >= 0 ? matchIndex : 0;
+        return matchIndex;
     }
 
     public static validateTimeFormat(format: string | undefined) {

@@ -16,6 +16,13 @@ import {
 import {DeviceStore, NormalizedDeviceStore, WeatherFlowSnapshot} from "@/drivers/weather/types";
 import Utils from "@/lib/utils";
 import WeatherUnits, {WeatherUnitSystem} from "@/lib/weather/weatherUnits";
+import {
+    normalizeForecastDays,
+    normalizeForecastHour,
+    normalizeForecastHours,
+    normalizeForecastMode,
+    resolveForecastTarget,
+} from "@/lib/weather/forecastTarget";
 
 export default class WeatherDevice extends Homey.Device {
     private static readonly DEFAULT_TIME_FORMAT = "HH:mm";
@@ -62,26 +69,35 @@ export default class WeatherDevice extends Homey.Device {
                 return;
             }
 
-            let date = this.getTargetDateInTimezone(store.timezone, store.forecast);
-            let targetDateTime = this.getTargetDateTimeInTimezone(store.timezone, store.forecast);
-            let startDate = date.toISOString().split('T')[0];
+            let target = resolveForecastTarget(store.timezone, store);
+            let startDate = target.date;
 
             let weather = await this.getCurrentWeather(
                 store.location,
                 store.timezone,
                 this.getRequestedHourlyWeatherVariables(store.hourlyWeatherVariables),
                 store.dailyWeatherVariables,
-                store.forecast === 0
+                target.useCurrent
                     ? this.getRequestedCurrentWeatherVariables(store.hourlyWeatherVariables)
                     : [],
                 startDate
             );
             this.latestWeatherReport = weather;
 
-            let targetHourIndex = this.getHourIndexForDateTime(weather.hourly?.time, targetDateTime);
-            await this.updateConfiguredWeatherValues(store, weather, targetHourIndex);
-            await this.updateDateCapability(store.timezone, store.forecast);
-            await this.updateConfiguredAirQualityValues(store, store.location, startDate, targetHourIndex);
+            let targetHourIndex = this.getHourIndexForDateTime(weather.hourly?.time, target.dateTime);
+            if (targetHourIndex < 0) {
+                throw new Error(`No hourly weather forecast returned for ${this.getTargetHourKey(target.dateTime)}`);
+            }
+            await this.updateConfiguredWeatherValues(store, weather, targetHourIndex, target.useCurrent);
+            await this.updateDateCapability(target.dateTime);
+            await this.updateConfiguredAirQualityValues(
+                store,
+                store.location,
+                startDate,
+                target.dateTime,
+                target.dayOffset,
+                target.useCurrent,
+            );
             await this.updateDerivedAlarmCapabilities();
 
             if (!this.isUninitializing) {
@@ -91,7 +107,7 @@ export default class WeatherDevice extends Homey.Device {
             this.log(`Updating weather for location: ${store.location.name}`)
         } catch (err: any) {
             let store = this.getNormalizedStore();
-            this.error(`Failed to update weather for ${this.getName()} (${store.location?.name ?? "unknown location"}, forecast +${store.forecast}d): ${err?.message ?? err}`);
+            this.error(`Failed to update weather for ${this.getName()} (${store.location?.name ?? "unknown location"}): ${err?.message ?? err}`);
         } finally {
             this.isUpdating = false;
         }
@@ -186,11 +202,10 @@ export default class WeatherDevice extends Homey.Device {
         let airHourly = airQuality?.hourly;
 
         let store = this.getNormalizedStore();
-        let current = store.forecast === 0 ? weather?.current : undefined;
-        let airCurrent = store.forecast === 0 ? airQuality?.current : undefined;
-        let targetDateTime = store.timezone
-            ? this.getTargetDateTimeInTimezone(store.timezone, store.forecast)
-            : undefined;
+        let target = store.timezone ? resolveForecastTarget(store.timezone, store) : undefined;
+        let current = target?.useCurrent ? weather?.current : undefined;
+        let airCurrent = target?.useCurrent ? airQuality?.current : undefined;
+        let targetDateTime = target?.dateTime;
         let targetHourIndex = this.getHourIndexForDateTime(hourly?.time, targetDateTime);
         let temperature = this.getNumericCurrentValue(current, "temperature_2m")
             ?? this.getNumericSeriesValue(hourly, "temperature_2m", targetHourIndex);
@@ -343,12 +358,17 @@ export default class WeatherDevice extends Homey.Device {
         return [...new Set(aqiApiVars)];
     }
 
-    private async updateConfiguredWeatherValues(store: NormalizedDeviceStore, weather: Forecast, targetHourIndex: number) {
+    private async updateConfiguredWeatherValues(
+        store: NormalizedDeviceStore,
+        weather: Forecast,
+        targetHourIndex: number,
+        useCurrent: boolean,
+    ) {
         for (let variable of store.dailyWeatherVariables) {
             await this.updateWeather(variable, weather.daily, 0, "weatherDaily");
         }
 
-        let currentWeather = store.forecast === 0
+        let currentWeather = useCurrent
             ? this.currentWeatherToVariableMap(weather.current)
             : undefined;
         for (let variable of store.hourlyWeatherVariables) {
@@ -379,14 +399,16 @@ export default class WeatherDevice extends Homey.Device {
         store: NormalizedDeviceStore,
         location: Location,
         startDate: string,
-        targetHourIndex: number,
+        targetDateTime: Date,
+        targetDayOffset: number,
+        useCurrent: boolean,
     ) {
         if (store.hourlyAirQualityValues.length === 0) {
             this.latestAirQualityReport = undefined;
             return;
         }
 
-        if (store.forecast > 6) {
+        if (targetDayOffset > 6) {
             this.latestAirQualityReport = undefined;
             this.log(`Skipping air quality for ${this.getName()}: Open-Meteo supports up to 7 forecast days`);
             return;
@@ -397,12 +419,17 @@ export default class WeatherDevice extends Homey.Device {
             location,
             store.timezone!,
             requestedVariables,
-            store.forecast === 0 ? requestedVariables : [],
+            useCurrent ? requestedVariables : [],
             startDate,
         );
         this.latestAirQualityReport = airQuality;
 
-        let currentAirQuality = store.forecast === 0
+        let targetHourIndex = this.getHourIndexForDateTime(airQuality.hourly?.time, targetDateTime);
+        if (targetHourIndex < 0) {
+            throw new Error(`No hourly air-quality forecast returned for ${this.getTargetHourKey(targetDateTime)}`);
+        }
+
+        let currentAirQuality = useCurrent
             ? this.currentWeatherToVariableMap(airQuality.current)
             : undefined;
         for (let variable of store.hourlyAirQualityValues) {
@@ -418,22 +445,11 @@ export default class WeatherDevice extends Homey.Device {
         }
     }
 
-    private async updateDateCapability(timeZone: string, forecast: number) {
+    private async updateDateCapability(targetDateTime: Date) {
         if (!this.hasCapability("date")) return;
 
-        let date = this.getTargetDateInTimezone(timeZone, forecast);
-        let nowInTimezone = this.getNowInTimezone(timeZone);
-        let displayDate = Utils.createDateFromParts({
-            year: date.getUTCFullYear(),
-            month: date.getUTCMonth() + 1,
-            day: date.getUTCDate(),
-        }, {
-            hour: nowInTimezone.getUTCHours(),
-            minute: nowInTimezone.getUTCMinutes(),
-            second: nowInTimezone.getUTCSeconds(),
-        });
-        let hours = this.formatDateWithSetting(displayDate);
-        let day = ("0" + displayDate.getUTCDate()).slice(-2) + "." + ("0" + (displayDate.getUTCMonth() + 1)).slice(-2) + "." + displayDate.getUTCFullYear();
+        let hours = this.formatDateWithSetting(targetDateTime);
+        let day = ("0" + targetDateTime.getUTCDate()).slice(-2) + "." + ("0" + (targetDateTime.getUTCMonth() + 1)).slice(-2) + "." + targetDateTime.getUTCFullYear();
         await this.setCapabilityValue("date", `${hours} ${day}`);
     }
 
@@ -583,7 +599,10 @@ export default class WeatherDevice extends Homey.Device {
         return {
             location: store.location,
             timezone: store.timezone,
-            forecast: this.normalizeForecast(store.forecast),
+            forecast: normalizeForecastDays(store.forecast),
+            forecastMode: normalizeForecastMode(store.forecastMode, store.forecast !== undefined),
+            forecastHours: normalizeForecastHours(store.forecastHours),
+            forecastHour: normalizeForecastHour(store.forecastHour),
             unitSystem: WeatherUnits.normalize(
                 store.unitSystem,
                 store.windSpeedUnit,
@@ -595,12 +614,6 @@ export default class WeatherDevice extends Homey.Device {
         };
     }
 
-    private normalizeForecast(forecast: number | string | undefined) {
-        let parsed = Number(forecast ?? 0);
-        if (!Number.isFinite(parsed)) return 0;
-        return Math.max(0, Math.floor(parsed));
-    }
-
     private normalizeStringArray(values: string[] | undefined) {
         if (!Array.isArray(values)) return [];
         return [...new Set(values.filter((value): value is string => typeof value === "string" && value.length > 0))];
@@ -608,6 +621,10 @@ export default class WeatherDevice extends Homey.Device {
 
     private getHourIndexForDateTime(times?: Array<string | number | null>, targetDateTime?: Date) {
         return Utils.findHourIndexForDateTime(times, targetDateTime);
+    }
+
+    private getTargetHourKey(targetDateTime: Date) {
+        return `${Utils.toIsoDate(targetDateTime)}T${String(targetDateTime.getUTCHours()).padStart(2, "0")}:00`;
     }
 
     private getNumericSeriesValue(data: OpenMeteoVariableMap | undefined, key: string, index: number) {
@@ -697,29 +714,6 @@ export default class WeatherDevice extends Homey.Device {
         if (addedConvertibleCapability) {
             await this.applyUnitSystemCapabilityOptions();
         }
-    }
-
-    private getTargetDateInTimezone(timeZone: string, forecast: number) {
-        return Utils.createDateFromParts(Utils.getDatePartsInTimeZone(Date.now(), timeZone, forecast));
-    }
-
-    private getNowInTimezone(timeZone: string) {
-        let parts = Utils.getDateTimePartsInTimeZone(Date.now(), timeZone);
-        return Utils.createDateFromParts(parts, parts);
-    }
-
-    private getTargetDateTimeInTimezone(timeZone: string, forecast: number) {
-        let targetDate = this.getTargetDateInTimezone(timeZone, forecast);
-        let nowInTimezone = this.getNowInTimezone(timeZone);
-        return Utils.createDateFromParts({
-            year: targetDate.getUTCFullYear(),
-            month: targetDate.getUTCMonth() + 1,
-            day: targetDate.getUTCDate(),
-        }, {
-            hour: nowInTimezone.getUTCHours(),
-            minute: nowInTimezone.getUTCMinutes(),
-            second: nowInTimezone.getUTCSeconds(),
-        });
     }
 
     private formatDateWithSetting(date: Date) {

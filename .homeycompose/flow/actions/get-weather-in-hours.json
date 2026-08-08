@@ -1,11 +1,11 @@
 {
   "title": {
-    "en": "Get weather forecast",
-    "de": "Wettervorhersage abrufen"
+    "en": "Get weather forecast in hours",
+    "de": "Wettervorhersage in Stunden abrufen"
   },
   "titleFormatted": {
-    "en": "Get weather in [[days]] day(s) at [[hour]]:00",
-    "de": "Wetter in [[days]] Tag(en) um [[hour]]:00 Uhr abrufen"
+    "en": "Get weather in [[hours]] hour(s)",
+    "de": "Wetter in [[hours]] Stunde(n) abrufen"
   },
   "args": [
     {
@@ -15,34 +15,18 @@
     },
     {
       "type": "number",
-      "name": "days",
+      "name": "hours",
       "required": true,
       "min": 0,
-      "max": 15,
+      "max": 360,
       "step": 1,
       "placeholder": {
-        "en": "Days (0-15)",
-        "de": "Tage (0-15)"
+        "en": "Hours (0-360)",
+        "de": "Stunden (0-360)"
       },
       "title": {
-        "en": "Days ahead",
-        "de": "Tage im Voraus"
-      }
-    },
-    {
-      "type": "number",
-      "name": "hour",
-      "required": true,
-      "min": 0,
-      "max": 23,
-      "step": 1,
-      "placeholder": {
-        "en": "Hour (0-23)",
-        "de": "Stunde (0-23)"
-      },
-      "title": {
-        "en": "Hour of day",
-        "de": "Tagesstunde"
+        "en": "Hours ahead",
+        "de": "Stunden im Voraus"
       }
     }
   ],
