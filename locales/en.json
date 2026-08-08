@@ -35,6 +35,22 @@
         "8day": "in 8 days",
         "9day": "in 9 days",
         "label": "Forecast for",
+        "mode": {
+          "label": "Forecast time",
+          "relativeHours": "In a number of hours",
+          "dayHour": "On a day at a specific hour"
+        },
+        "hours": {
+          "label": "Hours ahead (0-360)",
+          "hint": "0 uses the current weather; 2 uses the forecast for the current hour plus two hours."
+        },
+        "days": {
+          "label": "Day"
+        },
+        "hour": {
+          "label": "Hour (0-23)",
+          "hint": "Uses the hourly forecast at the selected local time."
+        },
         "today": "Current Day"
       },
       "hourlyForecast": {

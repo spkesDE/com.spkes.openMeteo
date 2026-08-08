@@ -54,9 +54,16 @@
         const selectedResult = form.querySelector("#selectedResult");
         const selectedResultItem = form.querySelector("#selectedResultItem");
         const timezone = form.querySelector("#select-timezone");
+        const forecastMode = form.querySelector("#select-forecast-mode");
         const forecast = form.querySelector("#select-forecast");
+        const forecastHours = form.querySelector("#forecast-hours");
+        const forecastHour = form.querySelector("#forecast-hour");
+        const forecastRelativeHoursFields = form.querySelector("#forecast-relative-hours-fields");
+        const forecastDayHourFields = form.querySelector("#forecast-day-hour-fields");
         const unitSystem = form.querySelector("#select-unit-system");
-        if (!input || !nextButton || !selectedResult || !selectedResultItem || !timezone || !forecast || !unitSystem) {
+        if (!input || !nextButton || !selectedResult || !selectedResultItem || !timezone ||
+            !forecastMode || !forecast || !forecastHours || !forecastHour ||
+            !forecastRelativeHoursFields || !forecastDayHourFields || !unitSystem) {
             throw new Error("Location setup view is missing required elements");
         }
         if (view) {
@@ -76,6 +83,17 @@
             unitSystemTouched = true;
         });
 
+        function updateForecastFields() {
+            const relativeHours = forecastMode.value === "relative_hours";
+            forecastRelativeHoursFields.classList.toggle("hidden", !relativeHours);
+            forecastDayHourFields.classList.toggle("hidden", relativeHours);
+            forecastHours.disabled = !relativeHours;
+            forecast.disabled = relativeHours;
+            forecastHour.disabled = relativeHours;
+        }
+
+        forecastMode.addEventListener("change", updateForecastFields);
+
         if (config.repair) {
             Homey.showLoadingOverlay(Homey.__("pair.setup.loading"));
             try {
@@ -87,6 +105,15 @@
                 if (result && result.forecast !== undefined) {
                     forecast.value = result.forecast;
                 }
+                if (result && result.forecastMode) {
+                    forecastMode.value = result.forecastMode;
+                }
+                if (result && result.forecastHours !== undefined) {
+                    forecastHours.value = result.forecastHours;
+                }
+                if (result && result.forecastHour !== undefined) {
+                    forecastHour.value = result.forecastHour;
+                }
                 if (result && result.unitSystem) {
                     unitSystem.value = result.unitSystem;
                 }
@@ -94,6 +121,8 @@
                 Homey.hideLoadingOverlay();
             }
         }
+
+        updateForecastFields();
 
         function renderSelection() {
             selectedResultItem.textContent = "";
@@ -253,7 +282,10 @@
                 location: locationObject,
                 timezone: timezone.value,
                 unitSystem: unitSystem.value,
-                forecast: forecast.value
+                forecastMode: forecastMode.value,
+                forecast: forecast.value,
+                forecastHours: forecastHours.value,
+                forecastHour: forecastHour.value
             }, function (error, valid) {
                 if (error) {
                     Homey.error(error);

@@ -19,6 +19,14 @@ import QuickChart from "quickchart-js";
 import path from "path";
 import Utils from "@/lib/utils";
 import WeatherUnits, {WeatherUnitSystem} from "@/lib/weather/weatherUnits";
+import {
+    ForecastTarget,
+    normalizeForecastDays,
+    normalizeForecastHour,
+    normalizeForecastHours,
+    normalizeForecastMode,
+    resolveForecastTarget,
+} from "@/lib/weather/forecastTarget";
 
 class WeatherDriver extends Homey.Driver {
     /**
@@ -35,6 +43,7 @@ class WeatherDriver extends Homey.Driver {
         this._createWeatherStateConditionFlow();
         this._createForecastValueConditionFlow();
         this._createGetWeatherForecastFlow();
+        this._createGetWeatherInHoursFlow();
     }
 
     private _createChartFlow() {
@@ -201,6 +210,11 @@ class WeatherDriver extends Homey.Driver {
                     location: state.location ?? null,
                     timezone: state.timezone ?? "auto",
                     forecast: state.forecast,
+                    forecastMode: state.forecastMode === "legacy_day" ? "day_hour" : state.forecastMode,
+                    forecastHours: state.forecastHours,
+                    forecastHour: state.forecastMode === "legacy_day"
+                        ? Utils.getDateTimePartsInTimeZone(Date.now(), state.timezone ?? "UTC").hour
+                        : state.forecastHour,
                     unitSystem: state.unitSystem,
                 }
             }
@@ -223,12 +237,18 @@ class WeatherDriver extends Homey.Driver {
             }
             await device.setStoreValue("location", data.location);
             await device.setStoreValue("timezone", data.timezone == "auto" ? data.location.timezone : data.timezone);
-            await device.setStoreValue("forecast", data.forecast);
+            await device.setStoreValue("forecast", normalizeForecastDays(data.forecast));
+            await device.setStoreValue("forecastMode", normalizeForecastMode(data.forecastMode));
+            await device.setStoreValue("forecastHours", normalizeForecastHours(data.forecastHours));
+            await device.setStoreValue("forecastHour", normalizeForecastHour(data.forecastHour));
             await device.setStoreValue("unitSystem", WeatherUnits.normalize(data.unitSystem));
             state.unitSystem = WeatherUnits.normalize(data.unitSystem);
             state.location = data.location;
             state.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
-            state.forecast = data.forecast;
+            state.forecast = normalizeForecastDays(data.forecast);
+            state.forecastMode = normalizeForecastMode(data.forecastMode);
+            state.forecastHours = normalizeForecastHours(data.forecastHours);
+            state.forecastHour = normalizeForecastHour(data.forecastHour);
             return true;
         });
         session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
@@ -279,7 +299,10 @@ class WeatherDriver extends Homey.Driver {
             state.location = data.location;
             state.timezone = data.timezone == "auto" ? data.location.timezone : data.timezone;
             state.unitSystem = WeatherUnits.normalize(data.unitSystem);
-            state.forecast = data.forecast;
+            state.forecast = normalizeForecastDays(data.forecast);
+            state.forecastMode = normalizeForecastMode(data.forecastMode);
+            state.forecastHours = normalizeForecastHours(data.forecastHours);
+            state.forecastHour = normalizeForecastHour(data.forecastHour);
             return true;
         });
 
@@ -308,10 +331,7 @@ class WeatherDriver extends Homey.Driver {
                 return [];
             }
 
-            let nameExtension = "";
-            if(state.forecast > 0){
-                nameExtension = ` (+${state.forecast}d)`
-            }
+            let nameExtension = this.getForecastNameExtension(state);
             let capabilities = this.variablesToCapabilities(state);
             return [
                 {
@@ -330,6 +350,9 @@ class WeatherDriver extends Homey.Driver {
                         hourlyWeatherVariables: state.hourlyWeatherVariables,
                         hourlyAirQualityValues: state.hourlyAirQualityValues,
                         forecast: state.forecast,
+                        forecastMode: state.forecastMode,
+                        forecastHours: state.forecastHours,
+                        forecastHour: state.forecastHour,
                     },
                     capabilities,
                     capabilitiesOptions: WeatherUnits.getCapabilitiesOptions(capabilities, state.unitSystem),
@@ -354,8 +377,21 @@ class WeatherDriver extends Homey.Driver {
             hourlyWeatherVariables: this.normalizeStringArray(store?.hourlyWeatherVariables),
             dailyWeatherVariables: this.normalizeStringArray(store?.dailyWeatherVariables),
             hourlyAirQualityValues: this.normalizeStringArray(store?.hourlyAirQualityValues),
-            forecast: this.normalizeForecast(store?.forecast),
+            forecast: normalizeForecastDays(store?.forecast),
+            forecastMode: normalizeForecastMode(store?.forecastMode, store?.forecast !== undefined),
+            forecastHours: normalizeForecastHours(store?.forecastHours),
+            forecastHour: normalizeForecastHour(store?.forecastHour),
         };
+    }
+
+    private getForecastNameExtension(state: SessionState) {
+        if (state.forecastMode === "relative_hours") {
+            return state.forecastHours > 0 ? ` (+${state.forecastHours}h)` : "";
+        }
+        if (state.forecastMode === "day_hour") {
+            return ` (+${state.forecast}d ${String(state.forecastHour).padStart(2, "0")}:00)`;
+        }
+        return state.forecast > 0 ? ` (+${state.forecast}d)` : "";
     }
 
     private async getChartSeries(device: WeatherDevice, weatherVariable: ChartVariableArgument, period: string) {
@@ -375,7 +411,7 @@ class WeatherDriver extends Homey.Driver {
             throw new Error("Missing location or timezone");
         }
 
-        let baseDate = this.getBaseDateInTimezone(store.timezone, store.forecast);
+        let baseDate = resolveForecastTarget(store.timezone, store).dateTime;
         let config = device.getConfig(variable, "weather");
         let apiValue = config ? getApiValue(config) : variable;
         let response = await (this.homey.app as OpenMeteo).getApi().get<Forecast>("", {
@@ -410,7 +446,7 @@ class WeatherDriver extends Homey.Driver {
             throw new Error("Missing location or timezone");
         }
 
-        let baseDate = this.getBaseDateInTimezone(store.timezone, store.forecast);
+        let baseDate = resolveForecastTarget(store.timezone, store).dateTime;
         let config = device.getConfig(variable, "weatherDaily");
         let apiValue = config ? getApiValue(config) : variable;
         let response = await (this.homey.app as OpenMeteo).getApi().get<Forecast>("", {
@@ -445,7 +481,7 @@ class WeatherDriver extends Homey.Driver {
             throw new Error("Missing location");
         }
 
-        let baseDate = this.getBaseDateInTimezone(store.timezone ?? "UTC", store.forecast);
+        let baseDate = resolveForecastTarget(store.timezone ?? "UTC", store).dateTime;
         let config = device.getConfig(variable, "airQuality");
         let apiValue = config ? getApiValue(config) : variable;
         let response = await (this.homey.app as OpenMeteo).getAirQualityApi().get<AirQualityForecast>("", {
@@ -497,108 +533,130 @@ class WeatherDriver extends Homey.Driver {
                     throw new Error("Missing location or timezone on device");
                 }
 
-                let days = Math.max(0, Math.min(16, Math.floor(args.days ?? 0)));
-                let hour = Math.max(0, Math.min(23, Math.floor(args.hour ?? 12)));
-
-                let baseDate = this.getBaseDateInTimezone(store.timezone, days);
-                let dateStr = Utils.toIsoDate(baseDate);
-
-                let response = await (this.homey.app as OpenMeteo).getApi().get<Forecast>("", {
-                    params: {
-                        latitude: store.location.latitude,
-                        longitude: store.location.longitude,
-                        timezone: store.timezone,
-                        start_date: dateStr,
-                        end_date: dateStr,
-                        hourly: [
-                            "temperature_2m", "apparent_temperature", "dew_point_2m",
-                            "relative_humidity_2m", "precipitation_probability", "precipitation",
-                            "rain", "showers", "snowfall", "weather_code", "cloud_cover",
-                            "visibility", "pressure_msl", "wind_speed_10m", "wind_direction_10m",
-                            "wind_gusts_10m",
-                        ].join(","),
-                        daily: [
-                            "temperature_2m_min", "temperature_2m_max",
-                            "apparent_temperature_min", "apparent_temperature_max",
-                            "precipitation_sum", "uv_index_max", "wind_gusts_10m_max",
-                            "sunrise", "sunset",
-                        ].join(","),
-                    }
+                let days = normalizeForecastDays(args.days);
+                let hour = normalizeForecastHour(args.hour);
+                let dateParts = Utils.getDatePartsInTimeZone(Date.now(), store.timezone, days);
+                let dateTime = Utils.createDateFromParts(dateParts, {hour});
+                return this.getWeatherForecastTokens(args.device, store, {
+                    dateTime,
+                    date: Utils.toIsoDate(dateTime),
+                    dayOffset: days,
+                    useCurrent: false,
                 });
-
-                let data = response.data;
-                let times = data.hourly?.["time"] as string[] | undefined ?? [];
-                let targetHourStr = `${dateStr}T${String(hour).padStart(2, "0")}:00`;
-                let hourIndex = times.findIndex((t) => t === targetHourStr);
-                if (hourIndex < 0) hourIndex = Math.min(hour, Math.max(0, times.length - 1));
-
-                let getHourly = (key: string) => {
-                    let arr = data.hourly?.[key];
-                    if (!Array.isArray(arr)) return null;
-                    let val = arr[hourIndex];
-                    return typeof val === "number" ? val : null;
-                };
-                let getDaily = (key: string) => {
-                    let arr = data.daily?.[key];
-                    if (!Array.isArray(arr)) return null;
-                    let val = arr[0];
-                    return typeof val === "number" ? val : null;
-                };
-                let getDailyTime = (key: string) => {
-                    let arr = data.daily?.[key];
-                    if (!Array.isArray(arr)) return null;
-                    let val = arr[0];
-                    return Utils.formatTimeValue(val, this.getTimeFormatSetting(args.device));
-                };
-
-                let weatherCode = getHourly("weather_code") ?? -1;
-                let displayValue = (capabilityId: string, value: number | null) => value === null
-                    ? null
-                    : WeatherUnits.convertCapabilityValue(capabilityId, value, store.unitSystem);
-                return {
-                    temperature: getHourly("temperature_2m"),
-                    apparent_temperature: getHourly("apparent_temperature"),
-                    dewpoint: getHourly("dew_point_2m"),
-                    weather_condition: this.homey.__(`wmo.${weatherCode}`) ?? `Unknown (${weatherCode})`,
-                    weather_code: weatherCode,
-                    humidity: getHourly("relative_humidity_2m"),
-                    precipitation_probability: getHourly("precipitation_probability"),
-                    precipitation: displayValue("measure_precipitation", getHourly("precipitation")),
-                    rain: displayValue("measure_rain", getHourly("rain")),
-                    showers: displayValue("measure_showers", getHourly("showers")),
-                    snowfall: displayValue("measure_snowfall", getHourly("snowfall")),
-                    cloudcover: getHourly("cloud_cover"),
-                    visibility: displayValue("measure_visibility", getHourly("visibility")),
-                    pressure_msl: getHourly("pressure_msl"),
-                    wind_speed: displayValue("measure_wind_strength", getHourly("wind_speed_10m")),
-                    wind_direction: getHourly("wind_direction_10m"),
-                    wind_gusts: displayValue("measure_gust_strength", getHourly("wind_gusts_10m")),
-                    temperature_min: getDaily("temperature_2m_min"),
-                    temperature_max: getDaily("temperature_2m_max"),
-                    apparent_temperature_min: getDaily("apparent_temperature_min"),
-                    apparent_temperature_max: getDaily("apparent_temperature_max"),
-                    precipitation_sum: displayValue("measure_precipitation_sum", getDaily("precipitation_sum")),
-                    uv_index_max: getDaily("uv_index_max"),
-                    wind_gusts_max: displayValue("measure_windgusts_max", getDaily("wind_gusts_10m_max")),
-                    sunrise: getDailyTime("sunrise"),
-                    sunset: getDailyTime("sunset"),
-                };
             });
     }
 
-    private normalizeForecast(forecast: number | string | undefined) {
-        let parsed = Number(forecast ?? 0);
-        if (!Number.isFinite(parsed)) return 0;
-        return Math.max(0, Math.floor(parsed));
+    private _createGetWeatherInHoursFlow() {
+        this.homey.flow
+            .getActionCard("get-weather-in-hours")
+            .registerRunListener(async (args: { device: WeatherDevice; hours: number }) => {
+                let store = this.createSessionState(args.device.getStore());
+                if (!store.location || !store.timezone) {
+                    throw new Error("Missing location or timezone on device");
+                }
+                let target = resolveForecastTarget(store.timezone, {
+                    ...store,
+                    forecastMode: "relative_hours",
+                    forecastHours: normalizeForecastHours(args.hours),
+                });
+                return this.getWeatherForecastTokens(args.device, store, target);
+            });
+    }
+
+    private async getWeatherForecastTokens(
+        device: WeatherDevice,
+        store: SessionState,
+        target: ForecastTarget,
+    ) {
+        if (!store.location || !store.timezone) {
+            throw new Error("Missing location or timezone on device");
+        }
+        let response = await (this.homey.app as OpenMeteo).getApi().get<Forecast>("", {
+            params: {
+                latitude: store.location.latitude,
+                longitude: store.location.longitude,
+                timezone: store.timezone,
+                start_date: target.date,
+                end_date: target.date,
+                hourly: [
+                    "temperature_2m", "apparent_temperature", "dew_point_2m",
+                    "relative_humidity_2m", "precipitation_probability", "precipitation",
+                    "rain", "showers", "snowfall", "weather_code", "cloud_cover",
+                    "visibility", "pressure_msl", "wind_speed_10m", "wind_direction_10m",
+                    "wind_gusts_10m",
+                ].join(","),
+                daily: [
+                    "temperature_2m_min", "temperature_2m_max",
+                    "apparent_temperature_min", "apparent_temperature_max",
+                    "precipitation_sum", "uv_index_max", "wind_gusts_10m_max",
+                    "sunrise", "sunset",
+                ].join(","),
+            }
+        });
+
+        let data = response.data;
+        let times = data.hourly?.["time"] as string[] | undefined ?? [];
+        let targetHourStr = `${target.date}T${String(target.dateTime.getUTCHours()).padStart(2, "0")}:00`;
+        let hourIndex = times.findIndex((time) => time === targetHourStr);
+        if (hourIndex < 0) {
+            throw new Error(`No hourly forecast returned for ${targetHourStr}`);
+        }
+
+        let getHourly = (key: string) => {
+            let values = data.hourly?.[key];
+            if (!Array.isArray(values)) return null;
+            let value = values[hourIndex];
+            return typeof value === "number" ? value : null;
+        };
+        let getDaily = (key: string) => {
+            let values = data.daily?.[key];
+            if (!Array.isArray(values)) return null;
+            let value = values[0];
+            return typeof value === "number" ? value : null;
+        };
+        let getDailyTime = (key: string) => {
+            let values = data.daily?.[key];
+            if (!Array.isArray(values)) return null;
+            return Utils.formatTimeValue(values[0], this.getTimeFormatSetting(device));
+        };
+
+        let weatherCode = getHourly("weather_code") ?? -1;
+        let displayValue = (capabilityId: string, value: number | null) => value === null
+            ? null
+            : WeatherUnits.convertCapabilityValue(capabilityId, value, store.unitSystem);
+        return {
+            temperature: getHourly("temperature_2m"),
+            apparent_temperature: getHourly("apparent_temperature"),
+            dewpoint: getHourly("dew_point_2m"),
+            weather_condition: this.homey.__(`wmo.${weatherCode}`) ?? `Unknown (${weatherCode})`,
+            weather_code: weatherCode,
+            humidity: getHourly("relative_humidity_2m"),
+            precipitation_probability: getHourly("precipitation_probability"),
+            precipitation: displayValue("measure_precipitation", getHourly("precipitation")),
+            rain: displayValue("measure_rain", getHourly("rain")),
+            showers: displayValue("measure_showers", getHourly("showers")),
+            snowfall: displayValue("measure_snowfall", getHourly("snowfall")),
+            cloudcover: getHourly("cloud_cover"),
+            visibility: displayValue("measure_visibility", getHourly("visibility")),
+            pressure_msl: getHourly("pressure_msl"),
+            wind_speed: displayValue("measure_wind_strength", getHourly("wind_speed_10m")),
+            wind_direction: getHourly("wind_direction_10m"),
+            wind_gusts: displayValue("measure_gust_strength", getHourly("wind_gusts_10m")),
+            temperature_min: getDaily("temperature_2m_min"),
+            temperature_max: getDaily("temperature_2m_max"),
+            apparent_temperature_min: getDaily("apparent_temperature_min"),
+            apparent_temperature_max: getDaily("apparent_temperature_max"),
+            precipitation_sum: displayValue("measure_precipitation_sum", getDaily("precipitation_sum")),
+            uv_index_max: getDaily("uv_index_max"),
+            wind_gusts_max: displayValue("measure_windgusts_max", getDaily("wind_gusts_10m_max")),
+            sunrise: getDailyTime("sunrise"),
+            sunset: getDailyTime("sunset"),
+        };
     }
 
     private normalizeStringArray(values: string[] | undefined) {
         if (!Array.isArray(values)) return [];
         return [...new Set(values.filter((value): value is string => typeof value === "string" && value.length > 0))];
-    }
-
-    private getBaseDateInTimezone(timeZone: string, forecast: number) {
-        return Utils.createDateFromParts(Utils.getDatePartsInTimeZone(Date.now(), timeZone, forecast));
     }
 
     private addDays(date: Date, days: number) {
