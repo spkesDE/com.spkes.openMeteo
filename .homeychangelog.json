@@ -97,5 +97,8 @@
   },
   "2.0.9": {
     "en": "Enhance forecast setup UI and functionality"
+  },
+  "2.0.10": {
+    "en": "Add region-aware weather model selection"
   }
 }
