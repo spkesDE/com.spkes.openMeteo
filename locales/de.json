@@ -61,6 +61,10 @@
         },
         "today": "Heute"
       },
+      "forecastAndModel": {
+        "title": "Vorhersagezeitpunkt und Wettermodell",
+        "hint": "Wähle den Zeitpunkt der Vorhersage und das verwendete Wettermodell."
+      },
       "hourlyForecast": {
         "current": "Aktuelle Zeit (+0h)",
         "label": "Stündliche Vorhersage abrufen"
@@ -89,6 +93,47 @@
       "timezone": {
         "auto": "Zeitzone automatisch erkennen",
         "label": "Zeitzone"
+      },
+      "weatherModel": {
+        "label": "Wettermodell",
+        "runFrequency": "Modelllauf",
+        "updateInterval": "Update-Intervall",
+        "forecastHorizon": "Vorhersagezeitraum",
+        "horizonDays": "%days% Tage",
+        "filteredForLocation": "%count% passende Modelle für %location%",
+        "timingValues": {
+          "dependsLocal": "Abhängig vom Standortmodell",
+          "dependsComponent": "Abhängig vom Teilmodell",
+          "hourly": "stündlich",
+          "every3Hours": "alle 3 Stunden",
+          "every6Hours": "alle 6 Stunden",
+          "every12Hours": "alle 12 Stunden",
+          "runs0018Utc": "00, 06, 12 und 18 UTC"
+        },
+        "options": {
+          "best_match": "Beste Auswahl (empfohlen)", "ecmwf_ifs04": "ECMWF IFS HRES (9 km)", "ecmwf_ifs025": "ECMWF IFS Open Data (25 km)", "icon_seamless": "DWD ICON Seamless", "icon_global": "DWD ICON Global (11 km)", "icon_eu": "DWD ICON-EU (7 km)", "icon_d2": "DWD ICON-D2 (2 km)", "gfs_seamless": "NOAA GFS Seamless", "gfs_global": "NOAA GFS Global (25 km)", "meteofrance_seamless": "Météo-France Seamless"
+        },
+        "descriptions": {
+          "best_match": "Open-Meteo kombiniert automatisch die besten verfügbaren Modelle für diesen Standort.", "ecmwf_ifs04": "Globales Hochauflösungsmodell des ECMWF.", "ecmwf_ifs": "Globale hochaufgelöste ECMWF-Vorhersage.", "ecmwf_ifs025": "Globale ECMWF-Vorhersage aus dem Open-Data-Angebot.", "ecmwf_aifs025_single": "Globale KI-basierte ECMWF-Vorhersage.", "cma_grapes_global": "Globale Vorhersage der chinesischen Wetterbehörde CMA.", "bom_access_global": "Globale Vorhersage des australischen Wetterdienstes.",
+          "ncep_gfs_seamless": "Kombiniert GFS mit regionalen NOAA-Modellen, soweit verfügbar.", "ncep_gfs_global": "Globale NOAA-GFS-Vorhersage mit Druckniveaudaten.", "ncep_hrrr_conus": "Schnell aktualisierte Vorhersage für die kontinentalen USA.", "ncep_nbm_conus": "Nationaler Modellmix für die kontinentalen USA.", "ncep_nam_conus": "Hochaufgelöste mesoskalige Vorhersage für Nordamerika.", "ncep_gfs_graphcast025": "Globale KI-Vorhersage auf Basis von GraphCast.", "ncep_aigfs025": "Globale KI-basierte NOAA-Vorhersage.", "ncep_hgefs025_ensemble_mean": "Globaler Mittelwert eines Machine-Learning-Ensembles.",
+          "jma_seamless": "Kombiniert regionale und globale JMA-Vorhersagen.", "jma_msm": "Regionale Vorhersage für Japan und Korea.", "jma_gsm": "Globale Vorhersage der japanischen Wetterbehörde.", "kma_seamless": "Kombiniert regionale und globale KMA-Vorhersagen.", "kma_ldps": "Hochaufgelöste Vorhersage für Nord- und Südkorea.", "kma_gdps": "Globale Vorhersage der koreanischen Wetterbehörde.",
+          "icon_seamless": "Kombiniert ICON-D2, ICON-EU und ICON Global.", "icon_global": "Globale Vorhersage des Deutschen Wetterdienstes.", "icon_eu": "Hochaufgelöste Regionalvorhersage für Europa.", "icon_d2": "Hochaufgelöste Vorhersage für Mitteleuropa.",
+          "cmc_gem_seamless": "Kombiniert regionale und globale kanadische GEM-Vorhersagen.", "cmc_gem_gdps": "Globale kanadische GEM-Vorhersage.", "cmc_gem_rdps": "Regionale kanadische Vorhersage für Nordamerika.", "cmc_gem_hrdps": "Hochaufgelöste kanadische Kontinentalvorhersage.", "cmc_gem_hrdps_west": "Hochaufgelöste Vorhersage für Westkanada.",
+          "meteofrance_seamless": "Kombiniert ARPEGE- und AROME-Vorhersagen.", "meteofrance_arpege_world": "Globale ARPEGE-Vorhersage von Météo-France.", "meteofrance_arpege_europe": "Regionale ARPEGE-Vorhersage für Europa.", "meteofrance_arome_france": "Hochaufgelöste Vorhersage für Frankreich und angrenzende Gebiete.", "meteofrance_arome_france_hd": "AROME-Vorhersage mit höchster Auflösung für Frankreich.", "italia_meteo_arpae_icon_2i": "Hochaufgelöste Regionalvorhersage für Italien.",
+          "metno_seamless": "Kombiniert lokal MET Nordic mit ECMWF für längere Vorhersagen.", "metno_nordic": "Nachbearbeitete hochaufgelöste Vorhersage für Nordeuropa.", "knmi_seamless": "Kombiniert lokal KNMI HARMONIE mit ECMWF.", "knmi_harmonie_arome_europe": "Hochaufgelöste HARMONIE-Vorhersage für Europa.", "knmi_harmonie_arome_netherlands": "Hochaufgelöste Vorhersage für die Niederlande.", "dmi_seamless": "Kombiniert lokal DMI HARMONIE mit ECMWF.", "dmi_harmonie_arome_europe": "Hochaufgelöste DMI-Vorhersage für Europa.",
+          "ukmo_seamless": "Kombiniert UKV mit der globalen UKMO-Vorhersage.", "ukmo_global_deterministic_10km": "Globale deterministische Vorhersage des UK Met Office.", "ukmo_uk_deterministic_2km": "Hochaufgelöste Vorhersage für Großbritannien und Irland.", "meteoswiss_icon_seamless": "Kombiniert MeteoSwiss-ICON-Modelle für Mitteleuropa.", "meteoswiss_icon_ch1": "Ein-Kilometer-Vorhersage für die Schweiz und angrenzende Gebiete.", "meteoswiss_icon_ch2": "Zwei-Kilometer-Vorhersage für die Schweiz und angrenzende Gebiete.", "geosphere_seamless": "Kombiniert lokal AROME Austria mit ECMWF.", "geosphere_arome_austria": "Hochaufgelöste Regionalvorhersage für Österreich."
+        },
+        "timings": {
+          "best_match": { "run": "Abhängig vom Standortmodell", "update": "Abhängig vom Standortmodell" },
+          "ecmwf": { "run": "00, 06, 12 und 18 UTC", "update": "alle 6 Stunden" },
+          "icon_seamless": { "run": "Abhängig vom Teilmodell", "update": "alle 3 Stunden" },
+          "icon_global": { "run": "00, 06, 12 und 18 UTC", "update": "alle 6 Stunden" },
+          "icon_eu": { "run": "alle 3 Stunden", "update": "alle 3 Stunden" },
+          "icon_d2": { "run": "alle 3 Stunden", "update": "alle 3 Stunden" },
+          "gfs_seamless": { "run": "Abhängig vom Teilmodell", "update": "stündlich" },
+          "gfs_global": { "run": "00, 06, 12 und 18 UTC", "update": "alle 6 Stunden" },
+          "meteofrance_seamless": { "run": "Abhängig vom Teilmodell", "update": "stündlich" }
+        }
       },
       "unitSystem": {
         "label": "Einheiten",

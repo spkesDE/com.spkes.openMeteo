@@ -1,0 +1,109 @@
+<link rel="stylesheet" type="text/css" href="../../../assets/css/setup.css"/>
+<script src="../../../assets/js/forecastModelSetup.js"></script>
+
+<div class="hy-view __private__open_meteo-setup__view" data-id="forecastAndModel">
+    <div class="__private__open_meteo-setup">
+        <form class="__private__open_meteo-setup__form homey-form forecast-model-form" action="/" method="post" onsubmit="return false;">
+            <div class="__private__open_meteo-setup__center location-setup-center">
+                <h1 class="homey-title homey-text-align-center" data-i18n="pair.setup.forecastAndModel.title">Forecast time and weather model</h1>
+
+                <fieldset class="homey-form-fieldset forecast-schedule">
+                    <legend class="homey-form-legend" id="forecast-mode-legend" data-i18n="pair.setup.forecast.mode.label">Forecast time</legend>
+                    <div class="forecast-card">
+                        <div class="forecast-mode-segmented" id="forecast-mode-control" data-mode="relative_hours" role="radiogroup" aria-labelledby="forecast-mode-legend">
+                            <label class="forecast-mode-segment">
+                                <input class="forecast-mode-input" type="radio" name="forecast-mode" value="relative_hours" checked>
+                                <span data-i18n="pair.setup.forecast.mode.hoursSegment">Hours</span>
+                            </label>
+                            <label class="forecast-mode-segment">
+                                <input class="forecast-mode-input" type="radio" name="forecast-mode" value="day_hour">
+                                <span data-i18n="pair.setup.forecast.mode.daySegment">Day &amp; time</span>
+                            </label>
+                            <span class="forecast-mode-indicator" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="forecast-choice-panel" id="forecast-relative-hours-fields">
+                            <div class="forecast-range-heading">
+                                <label data-i18n="pair.setup.forecast.hours.label" class="homey-form-label" for="forecast-hours-range">Hours ahead</label>
+                                <output id="forecast-hours-value" for="forecast-hours-range forecast-hours">0 h</output>
+                            </div>
+                            <input class="forecast-range" id="forecast-hours-range" type="range" value="0" min="0" max="360" step="1">
+                            <div class="forecast-hours-input-row">
+                                <input class="homey-form-input" id="forecast-hours" name="forecast-hours" type="number" value="0" min="0" max="360" step="1" required>
+                                <span aria-hidden="true">h</span>
+                            </div>
+                            <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hours.hint">Move the slider or enter the exact number of hours.</p>
+                            <div class="forecast-preview" aria-live="polite">
+                                <span class="forecast-preview-label" data-i18n="pair.setup.forecast.preview.label">Selected forecast</span>
+                                <strong id="forecast-relative-preview"></strong>
+                            </div>
+                        </div>
+
+                        <div id="forecast-day-hour-fields" class="forecast-choice-panel hidden">
+                            <div class="homey-form-group">
+                                <label data-i18n="pair.setup.forecast.days.label" class="homey-form-label" for="select-forecast">Day</label>
+                                <select class="homey-form-select" name="select-forecast" id="select-forecast">
+                                    <option data-i18n="pair.setup.forecast.today" selected value="0">Current Day</option>
+                                    <option data-i18n="pair.setup.forecast.1day" value="1">Tomorrow</option>
+                                    <option data-i18n="pair.setup.forecast.2day" value="2">In 2 days</option>
+                                    <option data-i18n="pair.setup.forecast.3day" value="3">In 3 days</option>
+                                    <option data-i18n="pair.setup.forecast.4day" value="4">In 4 days</option>
+                                    <option data-i18n="pair.setup.forecast.5day" value="5">In 5 days</option>
+                                    <option data-i18n="pair.setup.forecast.6day" value="6">In 6 days</option>
+                                    <option data-i18n="pair.setup.forecast.7day" value="7">In 7 days</option>
+                                    <option data-i18n="pair.setup.forecast.8day" value="8">In 8 days</option>
+                                    <option data-i18n="pair.setup.forecast.9day" value="9">In 9 days</option>
+                                    <option data-i18n="pair.setup.forecast.10day" value="10">In 10 days</option>
+                                    <option data-i18n="pair.setup.forecast.11day" value="11">In 11 days</option>
+                                    <option data-i18n="pair.setup.forecast.12day" value="12">In 12 days</option>
+                                    <option data-i18n="pair.setup.forecast.13day" value="13">In 13 days</option>
+                                    <option data-i18n="pair.setup.forecast.14day" value="14">In 14 days</option>
+                                    <option data-i18n="pair.setup.forecast.15day" value="15">In 15 days</option>
+                                </select>
+                            </div>
+                            <div class="homey-form-group">
+                                <label data-i18n="pair.setup.forecast.hour.label" class="homey-form-label" for="forecast-hour">Hour</label>
+                                <select class="homey-form-select" id="forecast-hour" name="forecast-hour" required disabled></select>
+                                <p class="forecast-setup-hint" data-i18n="pair.setup.forecast.hour.hint">Uses the hourly forecast at the selected local time.</p>
+                            </div>
+                            <div class="forecast-preview" aria-live="polite">
+                                <span class="forecast-preview-label" data-i18n="pair.setup.forecast.preview.label">Selected forecast</span>
+                                <strong id="forecast-fixed-preview"></strong>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="homey-form-group weather-model-group">
+                    <label data-i18n="pair.setup.weatherModel.label" class="homey-form-label" for="forecast-weather-model">Weather model</label>
+                    <select class="homey-form-select" id="forecast-weather-model">
+                        <option value="best_match" data-i18n="pair.setup.weatherModel.options.best_match" data-description-i18n="pair.setup.weatherModel.descriptions.best_match">Best Match (recommended)</option>
+                        <option value="ecmwf_ifs" data-i18n="pair.setup.weatherModel.options.ecmwf_ifs04" data-description-i18n="pair.setup.weatherModel.descriptions.ecmwf_ifs04">ECMWF IFS HRES (9 km)</option>
+                        <option value="ecmwf_ifs025" data-i18n="pair.setup.weatherModel.options.ecmwf_ifs025" data-description-i18n="pair.setup.weatherModel.descriptions.ecmwf_ifs025">ECMWF IFS Open Data (25 km)</option>
+                        <option value="icon_seamless" data-i18n="pair.setup.weatherModel.options.icon_seamless" data-description-i18n="pair.setup.weatherModel.descriptions.icon_seamless">DWD ICON Seamless</option>
+                        <option value="icon_global" data-i18n="pair.setup.weatherModel.options.icon_global" data-description-i18n="pair.setup.weatherModel.descriptions.icon_global">DWD ICON Global (11 km)</option>
+                        <option value="icon_eu" data-i18n="pair.setup.weatherModel.options.icon_eu" data-description-i18n="pair.setup.weatherModel.descriptions.icon_eu">DWD ICON-EU (7 km)</option>
+                        <option value="icon_d2" data-i18n="pair.setup.weatherModel.options.icon_d2" data-description-i18n="pair.setup.weatherModel.descriptions.icon_d2">DWD ICON-D2 (2 km)</option>
+                        <option value="ncep_gfs_seamless" data-i18n="pair.setup.weatherModel.options.gfs_seamless" data-description-i18n="pair.setup.weatherModel.descriptions.gfs_seamless">NOAA GFS Seamless</option>
+                        <option value="ncep_gfs_global" data-i18n="pair.setup.weatherModel.options.gfs_global" data-description-i18n="pair.setup.weatherModel.descriptions.gfs_global">NOAA GFS Global (25 km)</option>
+                        <option value="meteofrance_seamless" data-i18n="pair.setup.weatherModel.options.meteofrance_seamless" data-description-i18n="pair.setup.weatherModel.descriptions.meteofrance_seamless">Météo-France Seamless</option>
+                    </select>
+                    <p class="forecast-model-filter-summary" id="forecast-weather-model-filter-summary"></p>
+                    <p class="forecast-setup-hint" id="forecast-weather-model-description"></p>
+                    <dl class="weather-model-meta"><div><dt data-i18n="pair.setup.weatherModel.runFrequency">Model run</dt><dd id="forecast-weather-model-run"></dd></div><div><dt data-i18n="pair.setup.weatherModel.updateInterval">Update interval</dt><dd id="forecast-weather-model-update"></dd></div><div><dt data-i18n="pair.setup.weatherModel.forecastHorizon">Forecast range</dt><dd id="forecast-weather-model-horizon"></dd></div></dl>
+                </div>
+            </div>
+            <div class="location-setup-bottom"><div class="__private__open_meteo-setup__footer"><button class="homey-button-primary-shadow-full __private__open_meteo-setup__button" type="submit" data-i18n="pair.setup.next">Next</button></div></div>
+        </form>
+    </div>
+</div>
+<script>
+        (function initializeForecastModelSetup(attempt) {
+            if (window.OpenMeteoForecastModelSetup) {
+                window.OpenMeteoForecastModelSetup.init({ repair: false }).catch(Homey.error);
+                return;
+            }
+            if (attempt < 50) return window.setTimeout(function () { initializeForecastModelSetup(attempt + 1); }, 20);
+            Homey.error(new Error("Failed to load the forecast and model setup script"));
+        })(0);
+</script>

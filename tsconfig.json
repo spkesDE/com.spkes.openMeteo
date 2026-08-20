@@ -11,6 +11,7 @@
   },
   "exclude": [
     ".homeybuild",
+    "assets/js/forecastModelSetup.js",
     "assets/js/locationSetup.js",
     "assets/js/weatherVariableSelector.js",
     "node_modules",

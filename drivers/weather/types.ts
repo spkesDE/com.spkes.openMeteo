@@ -11,6 +11,7 @@ export interface DeviceStore extends Partial<WeatherVariableSelection> {
     forecastMode?: ForecastMode;
     forecastHours?: number | string;
     forecastHour?: number | string;
+    weatherModel?: string;
     unitSystem?: WeatherUnitSystem;
     tempUnit?: string;
     windSpeedUnit?: string;
@@ -24,6 +25,7 @@ export interface NormalizedDeviceStore extends WeatherVariableSelection {
     forecastMode: ForecastMode;
     forecastHours: number;
     forecastHour: number;
+    weatherModel: string;
     unitSystem: WeatherUnitSystem;
 }
 
@@ -48,6 +50,7 @@ export interface SessionState extends WeatherVariableSelection {
     forecastMode: ForecastMode;
     forecastHours: number;
     forecastHour: number;
+    weatherModel: string;
 }
 
 export type SessionStateStore = Partial<SessionState> & Pick<
@@ -56,7 +59,15 @@ export type SessionStateStore = Partial<SessionState> & Pick<
 >;
 
 export interface SessionViewRequest {
-    view: "setup" | "dailyWeatherVariables" | "hourlyWeatherVariables" | "hourlyAirQualityValues";
+    view: "setup" | "forecastAndModel" | "dailyWeatherVariables" | "hourlyWeatherVariables" | "hourlyAirQualityValues";
+}
+
+export interface ForecastAndModelPayload {
+    forecast: number | string;
+    forecastMode: ForecastMode;
+    forecastHours: number | string;
+    forecastHour: number | string;
+    weatherModel: string;
 }
 
 export interface SetupPayload {
@@ -67,6 +78,7 @@ export interface SetupPayload {
     forecastMode: ForecastMode;
     forecastHours: number | string;
     forecastHour: number | string;
+    weatherModel: string;
 }
 
 export interface ChartVariableArgument {

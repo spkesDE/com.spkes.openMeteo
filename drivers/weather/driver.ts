@@ -10,6 +10,7 @@ import {
     ChartVariableArgument,
     CreateChartFlowArgs,
     ForecastConditionArgs,
+    ForecastAndModelPayload,
     SessionState,
     SessionStateStore,
     SessionViewRequest,
@@ -27,6 +28,11 @@ import {
     normalizeForecastMode,
     resolveForecastTarget,
 } from "@/lib/weather/forecastTarget";
+import {
+    getWeatherModelsForLocation,
+    normalizeWeatherModel,
+    normalizeWeatherModelForLocation,
+} from "@/lib/weather/weatherModels";
 
 class WeatherDriver extends Homey.Driver {
     /**
@@ -215,8 +221,15 @@ class WeatherDriver extends Homey.Driver {
                     forecastHour: state.forecastMode === "legacy_day"
                         ? Utils.getDateTimePartsInTimeZone(Date.now(), state.timezone ?? "UTC").hour
                         : state.forecastHour,
+                    weatherModel: state.weatherModel,
                     unitSystem: state.unitSystem,
                 }
+            }
+            if (data.view === "forecastAndModel") {
+                return {
+                    ...state,
+                    weatherModels: getWeatherModelsForLocation(state.location),
+                };
             }
             if (data.view === "dailyWeatherVariables" ||
                 data.view === "hourlyWeatherVariables" ||
@@ -241,6 +254,8 @@ class WeatherDriver extends Homey.Driver {
             await device.setStoreValue("forecastMode", normalizeForecastMode(data.forecastMode));
             await device.setStoreValue("forecastHours", normalizeForecastHours(data.forecastHours));
             await device.setStoreValue("forecastHour", normalizeForecastHour(data.forecastHour));
+            const weatherModel = normalizeWeatherModelForLocation(data.weatherModel, data.location);
+            await device.setStoreValue("weatherModel", weatherModel);
             await device.setStoreValue("unitSystem", WeatherUnits.normalize(data.unitSystem));
             state.unitSystem = WeatherUnits.normalize(data.unitSystem);
             state.location = data.location;
@@ -249,6 +264,21 @@ class WeatherDriver extends Homey.Driver {
             state.forecastMode = normalizeForecastMode(data.forecastMode);
             state.forecastHours = normalizeForecastHours(data.forecastHours);
             state.forecastHour = normalizeForecastHour(data.forecastHour);
+            state.weatherModel = weatherModel;
+            return true;
+        });
+        session.setHandler("forecastAndModel", async (data: ForecastAndModelPayload) => {
+            const weatherModel = normalizeWeatherModelForLocation(data.weatherModel, state.location);
+            await device.setStoreValue("forecast", normalizeForecastDays(data.forecast));
+            await device.setStoreValue("forecastMode", normalizeForecastMode(data.forecastMode));
+            await device.setStoreValue("forecastHours", normalizeForecastHours(data.forecastHours));
+            await device.setStoreValue("forecastHour", normalizeForecastHour(data.forecastHour));
+            await device.setStoreValue("weatherModel", weatherModel);
+            state.forecast = normalizeForecastDays(data.forecast);
+            state.forecastMode = normalizeForecastMode(data.forecastMode);
+            state.forecastHours = normalizeForecastHours(data.forecastHours);
+            state.forecastHour = normalizeForecastHour(data.forecastHour);
+            state.weatherModel = weatherModel;
             return true;
         });
         session.setHandler("hourlyWeatherVariables", async (data: string[]) => {
@@ -289,6 +319,13 @@ class WeatherDriver extends Homey.Driver {
 
         session.setHandler('showView', async (data: any) => {
         });
+        session.setHandler("getData", async (data: SessionViewRequest) => {
+            if (data.view === "forecastAndModel") return {
+                ...state,
+                weatherModels: getWeatherModelsForLocation(state.location),
+            };
+            return undefined;
+        });
 
         //Handle Setup
         session.setHandler("setup", async (data: SetupPayload) => {
@@ -303,6 +340,15 @@ class WeatherDriver extends Homey.Driver {
             state.forecastMode = normalizeForecastMode(data.forecastMode);
             state.forecastHours = normalizeForecastHours(data.forecastHours);
             state.forecastHour = normalizeForecastHour(data.forecastHour);
+            state.weatherModel = normalizeWeatherModel(data.weatherModel);
+            return true;
+        });
+        session.setHandler("forecastAndModel", async (data: ForecastAndModelPayload) => {
+            state.forecast = normalizeForecastDays(data.forecast);
+            state.forecastMode = normalizeForecastMode(data.forecastMode);
+            state.forecastHours = normalizeForecastHours(data.forecastHours);
+            state.forecastHour = normalizeForecastHour(data.forecastHour);
+            state.weatherModel = normalizeWeatherModelForLocation(data.weatherModel, state.location);
             return true;
         });
 
@@ -353,6 +399,7 @@ class WeatherDriver extends Homey.Driver {
                         forecastMode: state.forecastMode,
                         forecastHours: state.forecastHours,
                         forecastHour: state.forecastHour,
+                        weatherModel: state.weatherModel,
                     },
                     capabilities,
                     capabilitiesOptions: WeatherUnits.getCapabilitiesOptions(capabilities, state.unitSystem),
@@ -381,6 +428,7 @@ class WeatherDriver extends Homey.Driver {
             forecastMode: normalizeForecastMode(store?.forecastMode, store?.forecast !== undefined),
             forecastHours: normalizeForecastHours(store?.forecastHours),
             forecastHour: normalizeForecastHour(store?.forecastHour),
+            weatherModel: normalizeWeatherModel(store?.weatherModel),
         };
     }
 

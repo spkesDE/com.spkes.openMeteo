@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                <fieldset class="homey-form-fieldset forecast-schedule">
+                <fieldset class="homey-form-fieldset forecast-schedule hidden" hidden style="display:none">
                     <legend class="homey-form-legend"
                             id="forecast-mode-legend"
                             data-i18n="pair.setup.forecast.mode.label">
@@ -167,6 +167,27 @@
                         </div>
                     </div>
                 </fieldset>
+
+                <div class="homey-form-group weather-model-group hidden" hidden style="display:none">
+                    <label data-i18n="pair.setup.weatherModel.label" class="homey-form-label" for="select-weather-model">Weather model</label>
+                    <select class="homey-form-select" id="select-weather-model" name="select-weather-model">
+                        <option value="best_match" selected data-i18n="pair.setup.weatherModel.options.best_match" data-description-i18n="pair.setup.weatherModel.descriptions.best_match">Best Match (recommended)</option>
+                        <option value="ecmwf_ifs" data-i18n="pair.setup.weatherModel.options.ecmwf_ifs04" data-description-i18n="pair.setup.weatherModel.descriptions.ecmwf_ifs04">ECMWF IFS HRES (9 km)</option>
+                        <option value="ecmwf_ifs025" data-i18n="pair.setup.weatherModel.options.ecmwf_ifs025" data-description-i18n="pair.setup.weatherModel.descriptions.ecmwf_ifs025">ECMWF IFS Open Data (25 km)</option>
+                        <option value="icon_seamless" data-i18n="pair.setup.weatherModel.options.icon_seamless" data-description-i18n="pair.setup.weatherModel.descriptions.icon_seamless">DWD ICON Seamless</option>
+                        <option value="icon_global" data-i18n="pair.setup.weatherModel.options.icon_global" data-description-i18n="pair.setup.weatherModel.descriptions.icon_global">DWD ICON Global (11 km)</option>
+                        <option value="icon_eu" data-i18n="pair.setup.weatherModel.options.icon_eu" data-description-i18n="pair.setup.weatherModel.descriptions.icon_eu">DWD ICON-EU (7 km)</option>
+                        <option value="icon_d2" data-i18n="pair.setup.weatherModel.options.icon_d2" data-description-i18n="pair.setup.weatherModel.descriptions.icon_d2">DWD ICON-D2 (2 km)</option>
+                        <option value="ncep_gfs_seamless" data-i18n="pair.setup.weatherModel.options.gfs_seamless" data-description-i18n="pair.setup.weatherModel.descriptions.gfs_seamless">NOAA GFS Seamless</option>
+                        <option value="ncep_gfs_global" data-i18n="pair.setup.weatherModel.options.gfs_global" data-description-i18n="pair.setup.weatherModel.descriptions.gfs_global">NOAA GFS Global (25 km)</option>
+                        <option value="meteofrance_seamless" data-i18n="pair.setup.weatherModel.options.meteofrance_seamless" data-description-i18n="pair.setup.weatherModel.descriptions.meteofrance_seamless">Météo-France Seamless</option>
+                    </select>
+                    <p class="forecast-setup-hint" id="weather-model-description"></p>
+                    <dl class="weather-model-meta" id="weather-model-meta">
+                        <div><dt data-i18n="pair.setup.weatherModel.runFrequency">Model run</dt><dd id="weather-model-run"></dd></div>
+                        <div><dt data-i18n="pair.setup.weatherModel.updateInterval">Update interval</dt><dd id="weather-model-update"></dd></div>
+                    </dl>
+                </div>
 
                 <div class="homey-form-group">
                     <label data-i18n="pair.setup.unitSystem.label"

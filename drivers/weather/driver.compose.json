@@ -27,6 +27,10 @@
       "$template": "setup"
     },
     {
+      "id": "forecastAndModel",
+      "$template": "forecastAndModel"
+    },
+    {
       "id": "hourlyWeatherVariables",
       "$template": "weatherVariables",
       "options": {
@@ -85,6 +89,10 @@
     {
       "id": "setup",
       "$template": "setup"
+    },
+    {
+      "id": "forecastAndModel",
+      "$template": "forecastAndModel"
     },
     {
       "id": "hourlyWeatherVariables",
