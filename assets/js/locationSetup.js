@@ -82,10 +82,15 @@
         const forecastRelativePreview = form.querySelector("#forecast-relative-preview");
         const forecastFixedPreview = form.querySelector("#forecast-fixed-preview");
         const unitSystem = form.querySelector("#select-unit-system");
+        const weatherModel = form.querySelector("#select-weather-model");
+        const weatherModelDescription = form.querySelector("#weather-model-description");
+        const weatherModelRun = form.querySelector("#weather-model-run");
+        const weatherModelUpdate = form.querySelector("#weather-model-update");
         if (!input || !nextButton || !selectedResult || !selectedResultItem || !timezone ||
             !forecastModeControl || forecastModes.length !== 2 || !forecast || !forecastHours || !forecastHoursRange ||
             !forecastHoursValue || !forecastHour || !forecastRelativeHoursFields ||
-            !forecastDayHourFields || !forecastRelativePreview || !forecastFixedPreview || !unitSystem) {
+            !forecastDayHourFields || !forecastRelativePreview || !forecastFixedPreview || !unitSystem ||
+            !weatherModel || !weatherModelDescription || !weatherModelRun || !weatherModelUpdate) {
             throw new Error("Location setup view is missing required elements");
         }
         if (view) {
@@ -98,12 +103,37 @@
         let locationObject;
         let working = false;
         let unitSystemTouched = false;
+        const weatherModelTimings = {
+            best_match: ["pair.setup.weatherModel.timings.best_match.run", "pair.setup.weatherModel.timings.best_match.update"],
+            ecmwf_ifs: ["pair.setup.weatherModel.timings.ecmwf.run", "pair.setup.weatherModel.timings.ecmwf.update"],
+            ecmwf_ifs025: ["pair.setup.weatherModel.timings.ecmwf.run", "pair.setup.weatherModel.timings.ecmwf.update"],
+            icon_seamless: ["pair.setup.weatherModel.timings.icon_seamless.run", "pair.setup.weatherModel.timings.icon_seamless.update"],
+            icon_global: ["pair.setup.weatherModel.timings.icon_global.run", "pair.setup.weatherModel.timings.icon_global.update"],
+            icon_eu: ["pair.setup.weatherModel.timings.icon_eu.run", "pair.setup.weatherModel.timings.icon_eu.update"],
+            icon_d2: ["pair.setup.weatherModel.timings.icon_d2.run", "pair.setup.weatherModel.timings.icon_d2.update"],
+            ncep_gfs_seamless: ["pair.setup.weatherModel.timings.gfs_seamless.run", "pair.setup.weatherModel.timings.gfs_seamless.update"],
+            ncep_gfs_global: ["pair.setup.weatherModel.timings.gfs_global.run", "pair.setup.weatherModel.timings.gfs_global.update"],
+            meteofrance_seamless: ["pair.setup.weatherModel.timings.meteofrance_seamless.run", "pair.setup.weatherModel.timings.meteofrance_seamless.update"]
+        };
 
         Homey.setTitle(null);
         input.placeholder = translate("pair.setup.location.placeholder", "Hamburg");
         unitSystem.addEventListener("change", function () {
             unitSystemTouched = true;
         });
+
+        function renderWeatherModelInfo() {
+            const option = weatherModel.options[weatherModel.selectedIndex];
+            const timing = weatherModelTimings[weatherModel.value] || weatherModelTimings.best_match;
+            weatherModelDescription.textContent = translate(
+                option.dataset.descriptionI18n,
+                ""
+            );
+            weatherModelRun.textContent = translate(timing[0], "—");
+            weatherModelUpdate.textContent = translate(timing[1], "—");
+        }
+
+        weatherModel.addEventListener("change", renderWeatherModelInfo);
 
         for (let hour = 0; hour < 24; hour += 1) {
             const option = document.createElement("option");
@@ -284,12 +314,16 @@
                 if (result && result.unitSystem) {
                     unitSystem.value = result.unitSystem;
                 }
+                if (result && result.weatherModel) {
+                    weatherModel.value = result.weatherModel;
+                }
             } finally {
                 Homey.hideLoadingOverlay();
             }
         }
 
         updateForecastFields();
+        renderWeatherModelInfo();
 
         function renderSelection() {
             selectedResultItem.textContent = "";
@@ -454,7 +488,8 @@
                 forecastMode: getForecastMode(),
                 forecast: forecast.value,
                 forecastHours: forecastHours.value,
-                forecastHour: forecastHour.value
+                forecastHour: forecastHour.value,
+                weatherModel: weatherModel.value
             }, function (error, valid) {
                 if (error) {
                     Homey.error(error);

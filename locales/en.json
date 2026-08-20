@@ -61,6 +61,10 @@
         },
         "today": "Current Day"
       },
+      "forecastAndModel": {
+        "title": "Forecast time and weather model",
+        "hint": "Choose when the forecast should apply and which model to use."
+      },
       "hourlyForecast": {
         "current": "Current (+0h)",
         "label": "Get hourly forecast"
@@ -89,6 +93,40 @@
       "timezone": {
         "auto": "Automatically detect time zone",
         "label": "Time zone"
+      },
+      "weatherModel": {
+        "label": "Weather model",
+        "runFrequency": "Model run",
+        "updateInterval": "Update interval",
+        "forecastHorizon": "Forecast range",
+        "horizonDays": "%days% days",
+        "filteredForLocation": "%count% suitable models for %location%",
+        "timingValues": {
+          "dependsLocal": "Depends on the local model",
+          "dependsComponent": "Depends on the component model",
+          "hourly": "Hourly",
+          "every3Hours": "Every 3 hours",
+          "every6Hours": "Every 6 hours",
+          "every12Hours": "Every 12 hours",
+          "runs0018Utc": "00, 06, 12 and 18 UTC"
+        },
+        "options": {
+          "best_match": "Best Match (recommended)", "ecmwf_ifs04": "ECMWF IFS HRES (9 km)", "ecmwf_ifs025": "ECMWF IFS Open Data (25 km)", "icon_seamless": "DWD ICON Seamless", "icon_global": "DWD ICON Global (11 km)", "icon_eu": "DWD ICON-EU (7 km)", "icon_d2": "DWD ICON-D2 (2 km)", "gfs_seamless": "NOAA GFS Seamless", "gfs_global": "NOAA GFS Global (25 km)", "meteofrance_seamless": "Météo-France Seamless"
+        },
+        "descriptions": {
+          "best_match": "Open-Meteo automatically selects the most suitable high-resolution model for this location.", "ecmwf_ifs04": "Global high-resolution ECMWF model.", "ecmwf_ifs025": "Global ECMWF model from the open-data service.", "icon_seamless": "Combines the DWD ICON-D2, ICON-EU and ICON Global models for the region.", "icon_global": "Global weather model from the German Weather Service.", "icon_eu": "Regional model for Europe.", "icon_d2": "High-resolution model for Germany, Switzerland and Austria.", "gfs_seamless": "Combines GFS with regional NOAA models where available.", "gfs_global": "Global weather model from NOAA.", "meteofrance_seamless": "Combines ARPEGE and AROME for Europe and France."
+        },
+        "timings": {
+          "best_match": { "run": "Depends on the local model", "update": "Depends on the local model" },
+          "ecmwf": { "run": "00, 06, 12 and 18 UTC", "update": "Every 6 hours" },
+          "icon_seamless": { "run": "Depends on the component model", "update": "Every 3 hours" },
+          "icon_global": { "run": "00, 06, 12 and 18 UTC", "update": "Every 6 hours" },
+          "icon_eu": { "run": "Every 3 hours", "update": "Every 3 hours" },
+          "icon_d2": { "run": "Every 3 hours", "update": "Every 3 hours" },
+          "gfs_seamless": { "run": "Depends on the component model", "update": "Hourly" },
+          "gfs_global": { "run": "00, 06, 12 and 18 UTC", "update": "Every 6 hours" },
+          "meteofrance_seamless": { "run": "Depends on the component model", "update": "Hourly" }
+        }
       },
       "unitSystem": {
         "label": "Units",

@@ -7,6 +7,7 @@ export function buildWeatherParams(
     hourlyWeatherValues: string[],
     dailyWeatherValues: string[],
     currentWeatherValues: string[],
+    weatherModel?: string,
 ) {
     let params: Record<string, string | number | boolean> = {
         latitude: location.latitude,
@@ -26,6 +27,10 @@ export function buildWeatherParams(
 
     if (currentWeatherValues.length > 0) {
         params.current = currentWeatherValues.join(",");
+    }
+
+    if (weatherModel && weatherModel !== "best_match") {
+        params.models = weatherModel;
     }
 
     return params;

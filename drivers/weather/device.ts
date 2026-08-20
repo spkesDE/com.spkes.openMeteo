@@ -23,6 +23,7 @@ import {
     normalizeForecastMode,
     resolveForecastTarget,
 } from "@/lib/weather/forecastTarget";
+import {normalizeWeatherModel} from "@/lib/weather/weatherModels";
 
 export default class WeatherDevice extends Homey.Device {
     private static readonly DEFAULT_TIME_FORMAT = "HH:mm";
@@ -80,7 +81,8 @@ export default class WeatherDevice extends Homey.Device {
                 target.useCurrent
                     ? this.getRequestedCurrentWeatherVariables(store.hourlyWeatherVariables)
                     : [],
-                startDate
+                startDate,
+                store.weatherModel,
             );
             this.latestWeatherReport = weather;
 
@@ -460,6 +462,7 @@ export default class WeatherDevice extends Homey.Device {
         dailyWeatherValues: string[],
         currentWeatherValues: string[],
         startDate: string,
+        weatherModel: string,
     ): Promise<Forecast> {
         if (this.isUninitializing) {
             throw new Error("Device is shutting down");
@@ -478,6 +481,7 @@ export default class WeatherDevice extends Homey.Device {
                         .filter((config): config is WeatherConfig => config?.apiVar === true)
                         .map(getApiValue),
                     currentWeatherValues,
+                    weatherModel,
                 )
             })
             .then((r) => {
@@ -603,6 +607,7 @@ export default class WeatherDevice extends Homey.Device {
             forecastMode: normalizeForecastMode(store.forecastMode, store.forecast !== undefined),
             forecastHours: normalizeForecastHours(store.forecastHours),
             forecastHour: normalizeForecastHour(store.forecastHour),
+            weatherModel: normalizeWeatherModel(store.weatherModel),
             unitSystem: WeatherUnits.normalize(
                 store.unitSystem,
                 store.windSpeedUnit,
